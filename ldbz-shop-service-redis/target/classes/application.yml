@@ -1,0 +1,49 @@
+#DUBBOX
+#dubbox:
+#  check: false
+#  application: 
+#    name: ldbz-shop-service-redis
+#    organization: dubbox
+#    owner: binux
+#  registry: 
+#    protocol: zookeeper
+#    address: 127.0.0.1:2181
+#  annotation:
+#    package: cn.ldbz.redis
+#  protocol:
+#    name: dubbo
+#    port: 20881
+#    host: 127.0.0.1
+#    timeout: 30000
+#    threadpool: fixed
+#    threads: 500
+#    accepts: 1000
+#    serialization: kryo
+#    optimizer: cn.ldbz.serial.SerializationOptimizerImpl
+#  monitor:
+#    enabled: false
+#    address: 127.0.0.1:6060
+#    username: admin
+#    password: admin
+
+spring:
+  dubbo:
+    consumer:
+      check: false
+    application:
+      id: ldbz-shop-service-redis
+      name: ldbz-shop-service-redis
+    registry:
+      address: zookeeper://127.0.0.1:2181
+    annotation:
+      package: cn.ldbz.redis
+    server: true
+    protocol:
+      name: dubbo
+      port: 20880
+
+# REDIS (RedisProperties)
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password:

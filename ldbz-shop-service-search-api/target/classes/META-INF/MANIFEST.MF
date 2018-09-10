@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: ldbz-shop-service-search-api
+Implementation-Version: 1.0-SNAPSHOT
+Built-By: Administrator
+Implementation-Vendor-Id: cn.ldbz
+Build-Jdk: 1.8.0_131
+Implementation-URL: http://laodaobazi.iteye.com/ldbz-shop-service-sear
+ ch-api
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

@@ -1,0 +1,29 @@
+spring:
+  mvc:
+    view:
+      suffix: .html
+  dubbo:
+    consumer:
+      check: false
+    application:
+      id: ldbz-shop-web-portal
+      name: ldbz-shop-web-portal
+    registry:
+      protocol: zookeeper
+      address: zookeeper://127.0.0.1:2181
+    annotation:
+      package: cn.ldbz.portal.controller
+
+  thymeleaf:
+    content-type: text/html
+    mode: LEGACYHTML5
+    cache: false
+
+server:
+  port: 8101
+
+# swagger2
+swagger2.package: cn.ldbz.portal.controller
+
+# 广告Cid
+big_ad_index: 1

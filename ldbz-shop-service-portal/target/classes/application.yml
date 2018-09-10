@@ -1,0 +1,145 @@
+#DUBBOX
+#dubbox:
+#  application: 
+#    name: ldbz-shop-service-protal
+#    organization: dubbox
+#    owner: binux
+#  registry: 
+#    protocol: zookeeper
+#    address: 127.0.0.1:2181
+#  annotation:
+#    package: cn.ldbz.portal
+#  protocol:
+#    name: dubbo
+#    port: 20883
+#    host: 127.0.0.1
+#    timeout: 30000
+#    threadpool: fixed
+#    threads: 500
+#    accepts: 1000
+#    serialization: kryo
+#    optimizer: cn.ldbz.serial.SerializationOptimizerImpl
+#  monitor:
+#    enabled: false
+#    address: 127.0.0.1:6060
+#    username: admin
+#    password: admin
+
+
+
+
+
+spring:
+  dubbo:
+    consumer:
+      check: false
+    application:
+      id: ldbz-shop-service-portal
+      name: ldbz-shop-service-portal
+    registry:
+      address: zookeeper://127.0.0.1:2181
+    annotation:
+      package: cn.ldbz.portal
+    server: true
+    protocol:
+      name: dubbo
+      port: 20883
+      timeout: 30000
+
+
+
+
+
+
+
+  datasource:
+    druid:
+      url: jdbc:mysql://192.168.136.134:3306/xbin?characterEncoding=utf-8
+      username: root
+      password: libiao
+      driver-class-name: com.mysql.jdbc.Driver
+      initial-size: 10
+      max-active: 80
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 'x'
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      filters: stat
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+        session-stat-enable: false
+        session-stat-max-count: 1000
+        principal-session-name: admin
+        principal-cookie-name: admin
+        profile-enable: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: admin
+        login-password: admin
+        allow: 127.0.0.1
+        deny: localhost
+
+      
+
+
+#druid:
+#    url: jdbc:mysql://192.168.136.134:3306/xbin?characterEncoding=utf-8
+#    driver-class: com.mysql.jdbc.Driver
+#    username: root
+#    password: libiao
+#    initial-size: 1
+#    min-idle: 1
+#    max-active: 20
+#    test-on-borrow: true
+#    max-wait: 60000
+#    time-between-eviction-runs-millis: 60000
+#    min-evictable-idle-time-millis: 300000
+#    validation-query: SELECT 1 FROM DUAL
+#    test-While-Idle: true
+#    test-on-return: false
+#    pool-prepared-statements: false
+#    max-pool-prepared-statement-per-connection-size: 20
+#    filters: stat,wall,log4j,config
+#    connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;config.decrypt=false
+#    monitor:
+#          enabled: false
+#          druid-stat-view: /druid/*
+#          druid-web-stat-filter: /*
+#          allow: 219.230.50.107,127.0.0.1
+#          deny: 192.168.1.73
+#          login-username: admin
+#          login-password: 123456
+#          exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+#          reset-enable: false
+mybatis:
+    type-aliases-package: cn.ldbz.pojo
+    mapper-locations: classpath:mapper/*.xml
+
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+
+# Redis
+redisKey:
+  # 缓存时间 默认半小时
+  expire_time: 1800
+  prefix:
+    # 首页大广告
+    index_ad: INDEX_AD
+
+server:
+  port: 8513
