@@ -9,11 +9,11 @@
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<!-- Boostrap style -->
-	<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/bootstrap.min.css" />
 	<!-- Theme style -->
-	<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/style.css" />
 	<!-- Reponsive -->
-	<link rel="stylesheet" type="text/css" href="stylesheets/responsive.css" />
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/responsive.css" />
 </head>
 <body class="header_sticky">
 	<div class="boxed">
@@ -66,7 +66,9 @@
 		<!-- 弹出框 end -->
 
 		<!-- 页头 -->
-		<section id="header" class="header" th:include="inc_header"></section>
+		<section id="header" class="header" >
+			<%include("/inc_header.html"){}%>
+		</section>
 
 		<section class="flat-row flat-slider">
 			<div class="container">
@@ -280,10 +282,10 @@
 		</section><!-- /.flat-banner-box -->
 
 		<!-- 新品，特色，热卖 -->
-		<section th:replace="sec_2"></section>
+		<%include("/sec_2.html"){}%>
 
 		<!-- 自营 -->
-		<section th:replace="sec_3"></section>
+		<%include("/sec_3.html"){}%>
 		
 		<section class="flat-imagebox style2 background">
 			<div class="container">
@@ -2514,26 +2516,29 @@
 			</div><!-- /.container -->
 		</section><!-- /.flat-iconbox -->
 
-		<section th:replace="inc_footer"></section>
+		<%include("/inc_footer.html"){}%>
 		
-		<section class="footer-bottom"  th:include="inc_copyright"></section>
+		
+		<section class="footer-bottom">
+			<%include("/inc_copyright.html"){}%>
+		</section>
 
 	</div><!-- /.boxed -->
 
 		<!-- Javascript -->
-		<script type="text/javascript" src="javascript/jquery.min.js"></script>
-		<script type="text/javascript" src="javascript/tether.min.js"></script>
-		<script type="text/javascript" src="javascript/bootstrap.min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/javascript/jquery.min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/javascript/tether.min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/javascript/bootstrap.min.js"></script>
 <!-- 		<script type="text/javascript" src="javascript/waypoints.min.js"></script> -->
 		<script type="text/javascript" src="javascript/easing.js"></script>
 <!-- 		<script type="text/javascript" src="javascript/jquery.flexslider-min.js"></script> -->
-		<script type="text/javascript" src="javascript/owl.carousel.js"></script>
-		<script type="text/javascript" src="javascript/smoothscroll.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/javascript/owl.carousel.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/javascript/smoothscroll.js"></script>
 <!-- 		<script type="text/javascript" src="javascript/jquery.mCustomScrollbar.js"></script> -->
 <!-- 	   	<script type="text/javascript" src="javascript/waves.min.js"></script>  -->
-		<script type="text/javascript" src="javascript/jquery.countdown.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/javascript/jquery.countdown.js"></script>
 
-		<script type="text/javascript" src="javascript/main.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/javascript/main.js"></script>
 
 </body>	
 </html>

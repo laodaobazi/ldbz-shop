@@ -23,7 +23,7 @@ public class ItemController {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 
-    @Reference(version = Const.XBIN_STORE_ITEM_VERSION)
+    @Reference(version = Const.XBIN_STORE_ITEM_VERSION , timeout=30000)
     private ItemService itemService;
 
     @RequestMapping("/item/{id}")

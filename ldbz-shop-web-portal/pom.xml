@@ -29,12 +29,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>com.piggsoft</groupId>
 			<artifactId>beetl-spring-boot-starter</artifactId>
 			<version>0.0.3</version>
-		</dependency> -->
-		<dependency>  
+		</dependency>
+		<!-- <dependency>  
             <groupId>org.springframework.boot</groupId>  
             <artifactId>spring-boot-starter-thymeleaf</artifactId>  
             <version>1.0.2.RELEASE</version>  
@@ -43,7 +43,7 @@
 		    <groupId>net.sourceforge.nekohtml</groupId>
 		    <artifactId>nekohtml</artifactId>
 		    <version>1.9.22</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>cn.ldbz</groupId>

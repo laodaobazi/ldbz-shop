@@ -1,10 +1,15 @@
 package cn.ldbz.redis.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.ctrip.framework.apollo.model.ConfigChange;
+import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 
 import cn.ldbz.constant.Const;
 import cn.ldbz.redis.service.JedisClient;
@@ -16,16 +21,35 @@ import redis.clients.jedis.JedisPool;
 @Service(version = Const.XBIN_STORE_REDIS_VERSION)
 public class JedisClientSingle implements JedisClient {
 
+    private static final Logger logger = LoggerFactory.getLogger(JedisClientSingle.class);
+
     private JedisPool jedisPool;
 
-    @Value("${redis.password}")
+    @Value("${redis.single.password:}")
     private String password;
     
-    @Value("${redis.port}")
+    @Value("${redis.single.port:6379}")
     private int port;
     
-	@Value("${redis.host}")
+	@Value("${redis.single.host:127.0.0.1}")
     private String host;
+	
+	@ApolloConfigChangeListener
+	public void onChange(ConfigChangeEvent changeEvent) {
+		for (String key : changeEvent.changedKeys()) {
+			ConfigChange change = changeEvent.getChange(key);
+			logger.debug(String.format("Found change - key: %s, oldValue: %s, newValue: %s, changeType: %s",
+					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType()));
+			switch(key) {
+				case "redis.single.password" : 
+					password = change.getNewValue() ;
+				case "redis.single.port" : 
+					port = Integer.valueOf(change.getNewValue()) ;
+				case "redis.single.host" : 
+					host = change.getNewValue() ;
+			}
+		}
+	}
 	
     private Jedis getResource() {
     	if(jedisPool==null) {
