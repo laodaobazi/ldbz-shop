@@ -4,14 +4,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 
 @EnableDubboConfiguration
-//@EnableApolloConfig
+@EnableApolloConfig
 @SpringBootApplication
-public class XbinStoreWebOrderApplication {
+public class LdbzShopServiceNotifyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(XbinStoreWebOrderApplication.class, args);
+		SpringApplication.run(LdbzShopServiceNotifyApplication.class, args);
 	}
 	
 }

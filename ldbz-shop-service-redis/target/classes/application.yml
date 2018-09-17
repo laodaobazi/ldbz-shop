@@ -1,5 +1,0 @@
-app:
-  id: ldbz-shop-service-redis
-apollo:
-  meta: http://192.168.136.133:8080
-  

@@ -1,29 +1,5 @@
-spring:
-  mvc:
-    view:
-      suffix: .html
-  dubbo:
-    consumer:
-      check: false
-    application:
-      id: ldbz-shop-web-search
-      name: ldbz-shop-web-search
-    registry:
-      protocol: zookeeper
-      address: zookeeper://127.0.0.1:2181
-    annotation:
-      package: cn.ldbz.search.controller
-
-beetl:
-  templates-path: templates/
-  config:
-      html-tag-flag: true
-
-server:
-  port: 8102
-
-# swagger2
-swagger2.package: cn.ldbz.search.controller
-
-## Search Rows
-search_result_rows: 60
+app:
+  id: ldbz-shop-web-search
+apollo:
+  meta: http://192.168.136.133:8080
+  

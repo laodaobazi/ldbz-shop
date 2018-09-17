@@ -6,16 +6,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 
 @EnableDubboConfiguration
-//@EnableApolloConfig
+@EnableApolloConfig
 @SpringBootApplication
 @EnableTransactionManagement
 @MapperScan(basePackages = "cn.ldbz.mapper")
-public class XbinStoreServiceCartApplication {
+public class LdbzShopServiceSSOApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(XbinStoreServiceCartApplication.class, args);
+		SpringApplication.run(LdbzShopServiceSSOApplication.class, args);
 	}
 	
 }

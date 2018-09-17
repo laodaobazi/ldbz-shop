@@ -1,38 +1,8 @@
-spring:
-  mvc:
-    view:
-      suffix: .html
-  dubbo:
-    consumer:
-      check: false
-    application:
-      id: ldbz-shop-web-sso
-      name: ldbz-shop-web-sso
-    registry:
-      protocol: zookeeper
-      address: zookeeper://127.0.0.1:2181
-    annotation:
-      package: cn.ldbz.sso.controller
-
-beetl:
-  templates-path: templates/
-  config:
-      html-tag-flag: true
-
-server:
-  port: 8104
-
-
-# swagger2
-swagger2.package: cn.ldbz.sso.controller
-
-# Redis
-redisKey:
-  # 缓存时间
-  expire_time: 120
-  prefix:
-    # 验证码Redis前缀
-    verifycode: 'VERIFYCODE:'
+app:
+  id: ldbz-shop-web-sso
+apollo:
+  meta: http://192.168.136.133:8080
+  
 
 # 密码错误
 password_error: '({"pwd":"\u8d26\u6237\u540d\u4e0e\u5bc6\u7801\u4e0d\u5339\u914d\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165\","_t":"_ntInoTX"})'
