@@ -50,6 +50,8 @@ spring:
   datasource:
     druid:
       url: jdbc:mysql://192.168.136.134:3306/xbin?characterEncoding=utf-8
+      connect-properties:
+        config.decrypt: "true"
       username: root
       password: libiao
       driver-class-name: com.mysql.jdbc.Driver

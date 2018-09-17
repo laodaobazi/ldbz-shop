@@ -1,35 +1,14 @@
-spring:
-  mvc:
-    view:
-      suffix: .html
-  dubbo:
-    consumer:
-      check: false
-    application:
-      id: ldbz-shop-web-admin
-      name: ldbz-shop-web-admin
-    registry:
-      protocol: zookeeper
-      address: zookeeper://127.0.0.1:2181
-    annotation:
-      package: cn.ldbz.admin.controller
+app:
+  id: ldbz-shop-web-admin
+apollo:
+  meta: http://192.168.136.133:8080
 
-  thymeleaf:
-    content-type: text/html
-    mode: LEGACYHTML5
-    cache: false
-
-server:
-  port: 8100
-
-# swagger2
-swagger2.package: cn.ldbz.admin.controller
 
 # fastdfs url
-fastdfs.base.url: http://127.0.0.132/
+#fastdfs.base.url: http://127.0.0.132/
 
 # fastdfs storage
-storage:
-  type: fastdfs
-  fastdfs:
-    tracker_server: 127.0.0.129:22122
+#storage:
+#  type: fastdfs
+#  fastdfs:
+#    tracker_server: 127.0.0.129:22122

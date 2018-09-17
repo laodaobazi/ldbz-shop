@@ -12,9 +12,6 @@ import cn.ldbz.utils.impl.FastdfsStorageService;
 
 /**
  * 存储设置的工厂类
- * 
- * @author Li Jian
- *
  */
 public class StorageFactory implements FactoryBean<StorageService> {
 
@@ -22,7 +19,7 @@ public class StorageFactory implements FactoryBean<StorageService> {
 	private AutowireCapableBeanFactory acbf;
 
 	/** 存储服务的类型，目前仅支持fastdfs */
-	@Value("${storage.type}")
+//	@Value("${storage.type}")
 	private String type;
 
 	private Map<String, Class<? extends StorageService>> classMap;

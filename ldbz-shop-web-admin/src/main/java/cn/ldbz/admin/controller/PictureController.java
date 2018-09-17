@@ -5,13 +5,11 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.ldbz.utils.FastDFSClientUtils;
 import cn.ldbz.utils.FastJsonConvert;
 import cn.ldbz.utils.StorageService;
 
@@ -24,10 +22,10 @@ public class PictureController {
 
     private static Logger logger = Logger.getLogger(PictureController.class);
 
-    @Value("${fastdfs.base.url}")
-    private String FASTDFS_BASE_URL;
+//    @Value("${fastdfs.base.url}")
+//    private String FASTDFS_BASE_URL;
     
-    @Autowired
+//    @Autowired
     private StorageService storageService;
 
     @RequestMapping("/pic/upload")
@@ -45,7 +43,7 @@ public class PictureController {
                 // String uploadUrl = FastDFSClientUtils.upload(uploadFile.getBytes(), extName);
             	String uploadUrl = storageService.upload(uploadFile.getBytes(), extName);
                 map.put("success", "上传成功");
-                map.put("url", FASTDFS_BASE_URL + uploadUrl);
+                map.put("url", uploadUrl);
 
             } catch (IOException e) {
                 logger.error("图片上传失败！");
@@ -62,7 +60,7 @@ public class PictureController {
             try {
                 //String uploadUrl = FastDFSClientUtils.upload(wangEditorH5File.getBytes(), extName);
             	String uploadUrl = storageService.upload(wangEditorH5File.getBytes(), extName);
-                String url = FASTDFS_BASE_URL + uploadUrl;
+                String url = uploadUrl;
 
                 return url;
             } catch (IOException e) {

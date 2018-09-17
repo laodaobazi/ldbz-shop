@@ -31,7 +31,7 @@ public class FastdfsStorageService implements StorageService, InitializingBean {
 
 	private TrackerClient trackerClient;
 
-	@Value("${storage.fastdfs.tracker_server}")
+//	@Value("${storage.fastdfs.tracker_server}")
 	private String trackerServer;
 
 	@Override

@@ -14,10 +14,10 @@ spring:
     annotation:
       package: cn.ldbz.sso.controller
 
-  thymeleaf:
-    content-type: text/html
-    mode: LEGACYHTML5
-    cache: false
+beetl:
+  templates-path: templates/
+  config:
+      html-tag-flag: true
 
 server:
   port: 8104
