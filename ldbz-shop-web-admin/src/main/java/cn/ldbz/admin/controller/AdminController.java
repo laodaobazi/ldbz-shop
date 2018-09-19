@@ -21,14 +21,12 @@ import java.util.Random;
 /**
  * Admin 首页Controller
  *
- * @author xubin.
- * @create 2017-02-11 下午3:38
  */
 
 @Controller
 public class AdminController {
 
-    @Reference(version = Const.XBIN_STORE_ADMIN_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_ADMIN_VERSION)
     private ContentService contentService;
 
     private Random random = new Random();

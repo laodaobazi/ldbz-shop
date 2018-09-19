@@ -19,12 +19,12 @@ import java.util.HashMap;
  *
  */
 @Component
-@Service(version = Const.XBIN_STORE_NOTIFY_VERSION)
+@Service(version = Const.LDBZ_SHOP_NOTIFY_VERSION)
 public class NotifyUserServiceImpl implements NotifyUserService {
 
     private static final Logger logger = LoggerFactory.getLogger(NotifyUserServiceImpl.class);
 
-    @Reference(version = Const.XBIN_STORE_REDIS_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
     @Value("${redisKey.prefix.mobile_login_code.key}")

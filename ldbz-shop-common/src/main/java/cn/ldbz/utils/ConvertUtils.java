@@ -3,8 +3,6 @@ package cn.ldbz.utils;
 /**
  * String编码转换
  *
- * @author xubin.
- * @create 2017-02-09 下午4:55
  */
 
 

@@ -3,8 +3,6 @@ package cn.ldbz.notify.service;
 /**
  * 用户通知服务接口
  *
- * @author xubin.
- * @create 2017-02-09 下午6:01
  */
 
 public interface NotifyUserService {

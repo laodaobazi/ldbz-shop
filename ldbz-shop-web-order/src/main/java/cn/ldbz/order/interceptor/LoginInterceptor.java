@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 拦截用户登录
  *
- * @author xubin.
- * @create 2017-02-22 下午9:27
  */
 
 public class LoginInterceptor implements HandlerInterceptor {
@@ -27,7 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Value("${redisKey.prefix.cart_order_info_profix}")
     private String CART_ORDER_INFO_PROFIX;
 
-    @Reference(version = Const.XBIN_STORE_SSO_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_SSO_VERSION)
     private UserService userService;
 
     @Override

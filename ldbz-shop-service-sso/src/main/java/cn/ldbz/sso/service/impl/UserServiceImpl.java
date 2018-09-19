@@ -26,7 +26,7 @@ import java.util.*;
  *
  */
 @Component
-@Service(version = Const.XBIN_STORE_SSO_VERSION)
+@Service(version = Const.LDBZ_SHOP_SSO_VERSION)
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private TbUserMapper userMapper;
 
-    @Reference(version = Const.XBIN_STORE_REDIS_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
     @Value("${redisKey.prefix.user_session}")

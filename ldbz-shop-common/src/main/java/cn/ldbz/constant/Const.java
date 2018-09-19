@@ -85,15 +85,15 @@ public final class Const {
     /**cookie 购物车 key*/
     public static final String CART_KEY = "_xca";
 
-    // Dubbox版本
-    public static final String XBIN_STORE_REDIS_VERSION = "1.0.0";
-    public static final String XBIN_STORE_SSO_VERSION = "1.0.0";
-    public static final String XBIN_STORE_NOTIFY_VERSION = "1.0.0";
-    public static final String XBIN_STORE_ADMIN_VERSION = "1.0.0";
-    public static final String XBIN_STORE_SEARCH_VERSION = "1.0.0";
-    public static final String XBIN_STORE_PORTAL_VERSION = "1.0.0";
-    public static final String XBIN_STORE_ORDER_VERSION = "1.0.0";
-    public static final String XBIN_STORE_CART_VERSION = "1.0.0";
-    public static final String XBIN_STORE_ITEM_VERSION = "1.0.0";
+    // Dubbo版本
+    public static final String LDBZ_SHOP_REDIS_VERSION = "1.0.0";
+    public static final String LDBZ_SHOP_SSO_VERSION = "1.0.0";
+    public static final String LDBZ_SHOP_NOTIFY_VERSION = "1.0.0";
+    public static final String LDBZ_SHOP_ADMIN_VERSION = "1.0.0";
+    public static final String LDBZ_SHOP_SEARCH_VERSION = "1.0.0";
+    public static final String LDBZ_SHOP_PORTAL_VERSION = "1.0.0";
+    public static final String LDBZ_SHOP_ORDER_VERSION = "1.0.0";
+    public static final String LDBZ_SHOP_CART_VERSION = "1.0.0";
+    public static final String LDBZ_SHOP_ITEM_VERSION = "1.0.0";
 
 }

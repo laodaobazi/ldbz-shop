@@ -8,8 +8,6 @@ import java.util.List;
 /**
  * 查询返回POJO
  *
- * @author 許彬.
- * @creater 2016-08-23 22:03
  */
 
 @Data

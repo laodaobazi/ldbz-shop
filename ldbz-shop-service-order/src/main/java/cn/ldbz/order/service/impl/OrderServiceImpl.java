@@ -27,16 +27,16 @@ import java.util.List;
  *
  */
 @Component
-@Service(version = Const.XBIN_STORE_ORDER_VERSION)
+@Service(version = Const.LDBZ_SHOP_ORDER_VERSION)
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
-    @Reference(version = Const.XBIN_STORE_SSO_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_SSO_VERSION)
     private UserService userService;
 
-    @Reference(version = Const.XBIN_STORE_REDIS_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
     @Autowired

@@ -24,7 +24,7 @@ import java.util.Map;
  *
  */
 @Component
-@Service(version = Const.XBIN_STORE_ADMIN_VERSION)
+@Service(version = Const.LDBZ_SHOP_ADMIN_VERSION)
 @Transactional
 public class ContentServiceImpl implements ContentService {
 

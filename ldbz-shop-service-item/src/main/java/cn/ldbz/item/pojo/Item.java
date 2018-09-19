@@ -7,8 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * TbItem 扩展pojo
  *
- * @author xubin.
- * @create 2017-02-06 下午3:12
  */
 
 

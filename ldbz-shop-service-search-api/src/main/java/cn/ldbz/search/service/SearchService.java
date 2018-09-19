@@ -6,8 +6,6 @@ import cn.ldbz.pojo.LdbzResult;
 /**
  * Solr Service
  *
- * @author xubin.
- * @create 2017-02-04 下午4:35
  */
 
 

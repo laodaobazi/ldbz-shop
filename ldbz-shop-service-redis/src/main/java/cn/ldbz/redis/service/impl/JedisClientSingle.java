@@ -18,7 +18,7 @@ import redis.clients.jedis.JedisPool;
 
 
 @Component
-@Service(version = Const.XBIN_STORE_REDIS_VERSION)
+@Service(version = Const.LDBZ_SHOP_REDIS_VERSION)
 public class JedisClientSingle implements JedisClient {
 
     private static final Logger logger = LoggerFactory.getLogger(JedisClientSingle.class);

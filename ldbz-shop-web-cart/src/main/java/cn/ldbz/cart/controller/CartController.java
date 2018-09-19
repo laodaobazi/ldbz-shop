@@ -27,8 +27,6 @@ import java.util.UUID;
 /**
  * 购物车 Controller
  *
- * @author xubin.
- * @create 2017-02-22 上午10:48
  */
 
 @Controller
@@ -36,9 +34,9 @@ public class CartController {
 
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
-    @Reference(version = Const.XBIN_STORE_CART_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_CART_VERSION)
     private CartService cartService;
-    @Reference(version = Const.XBIN_STORE_REDIS_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
     @Value("${redisKey.prefix.user_session}")

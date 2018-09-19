@@ -27,7 +27,7 @@ import java.util.List;
  *
  */
 @Component
-@Service(version = Const.XBIN_STORE_CART_VERSION)
+@Service(version = Const.LDBZ_SHOP_CART_VERSION)
 @Transactional
 public class CartServiceImpl implements CartService {
 
@@ -42,7 +42,7 @@ public class CartServiceImpl implements CartService {
     @Value("${redisKey.prefix.item_info_base_suffix}")
     private String ITEM_INFO_BASE_SUFFIX;
 
-    @Reference(version = Const.XBIN_STORE_REDIS_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
     @Autowired

@@ -9,8 +9,6 @@ import java.io.Serializable;
 /**
  * 购物车 pojo
  *
- * @author xubin.
- * @create 2017-02-22 下午12:58
  */
 
 @Data

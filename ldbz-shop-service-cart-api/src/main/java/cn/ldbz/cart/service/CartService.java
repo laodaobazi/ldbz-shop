@@ -9,8 +9,6 @@ import java.util.List;
 /**
  * 购物车相关操作 Service
  *
- * @author xubin.
- * @create 2017-02-22 下午12:51
  */
 
 public interface CartService {

@@ -26,8 +26,6 @@ import java.util.List;
 /**
  * 订单Controller
  *
- * @author xubin.
- * @create 2017-02-24 上午8:57
  */
 
 @Controller
@@ -42,13 +40,13 @@ public class OrderController {
     @Value("${redisKey.prefix.cart_order_index_profix}")
     private String CART_ORDER_INDEX_PROFIX;
 
-    @Reference(version = Const.XBIN_STORE_CART_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_CART_VERSION)
     private CartService cartService;
 
-    @Reference(version = Const.XBIN_STORE_REDIS_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
-    @Reference(version = Const.XBIN_STORE_ORDER_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_ORDER_VERSION)
     private OrderService orderService;
 
 

@@ -26,7 +26,7 @@ import java.util.Map;
  *
  */
 @Component
-@Service(version = Const.XBIN_STORE_SEARCH_VERSION)
+@Service(version = Const.LDBZ_SHOP_SEARCH_VERSION)
 public class SearchServiceImpl implements SearchService {
 
     @Autowired

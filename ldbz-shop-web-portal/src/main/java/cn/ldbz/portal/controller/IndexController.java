@@ -14,7 +14,7 @@ import cn.ldbz.portal.service.PortalContentService;
 @Controller
 public class IndexController {
 
-    @Reference(version = Const.XBIN_STORE_PORTAL_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_PORTAL_VERSION)
     private PortalContentService portalContentService;
 
     @Value("${big_ad_index}")

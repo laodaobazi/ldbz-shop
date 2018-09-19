@@ -20,17 +20,15 @@ import java.util.UUID;
 /**
  * 用户登录注册 Controller
  *
- * @author xubin.
- * @create 2017-04-08
  */
 
 @Controller
 public class UserController {
 
-    @Reference(version = Const.XBIN_STORE_SSO_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_SSO_VERSION)
     private UserService userService;
 
-    @Reference(version = Const.XBIN_STORE_NOTIFY_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_NOTIFY_VERSION)
     private NotifyUserService notifyUserService;
 
     @Value("${user_not_exist}")

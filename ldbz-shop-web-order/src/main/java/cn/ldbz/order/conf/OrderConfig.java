@@ -9,8 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 /**
  * 订单 配置
  *
- * @author xubin.
- * @create 2017-04-21 下午12:55
  */
 
 @Configuration

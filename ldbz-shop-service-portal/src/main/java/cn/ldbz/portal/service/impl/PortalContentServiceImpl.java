@@ -22,7 +22,7 @@ import java.util.List;
  * 首页内容Service
  */
 @Component
-@Service(version = Const.XBIN_STORE_PORTAL_VERSION)
+@Service(version = Const.LDBZ_SHOP_PORTAL_VERSION)
 @Transactional
 public class PortalContentServiceImpl implements PortalContentService {
 
@@ -31,7 +31,7 @@ public class PortalContentServiceImpl implements PortalContentService {
     @Autowired
     private TbContentMapper contentMapper;
 
-    @Reference(version = Const.XBIN_STORE_REDIS_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
     @Value("${redisKey.prefix.index_ad}")

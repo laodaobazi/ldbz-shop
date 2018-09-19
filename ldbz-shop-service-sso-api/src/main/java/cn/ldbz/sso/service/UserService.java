@@ -10,8 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * 用户登录相关服务
  *
- * @author xubin.
- * @create 2017-02-08 下午2:47
  */
 //@Path("/user")
 //@Consumes({ContentType.TEXT_PLAIN_UTF_8,ContentType.APPLICATION_JSON_UTF_8})
@@ -78,7 +76,7 @@ public interface UserService {
      * @return {
      *           status: 200 //200 成功 400 没有此token 500 系统异常
      *           msg: "OK" //错误 没有此token.
-     *           data: {"username":"xbin"} //返回用户名
+     *           data: {"username":"laodaobazi"} //返回用户名
      *         }
      */
 

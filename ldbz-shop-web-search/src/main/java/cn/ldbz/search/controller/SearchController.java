@@ -16,14 +16,12 @@ import java.io.UnsupportedEncodingException;
 /**
  * 搜索 Controller
  *
- * @author xubin.
- * @create 2017-02-04 下午7:10
  */
 
 @Controller
 public class SearchController {
 
-    @Reference(version = Const.XBIN_STORE_SEARCH_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_SEARCH_VERSION)
     private SearchService searchService;
 
     @Value("${search_result_rows}")

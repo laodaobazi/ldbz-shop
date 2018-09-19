@@ -21,8 +21,6 @@ import cn.ldbz.utils.StorageService;
 
 /**
  * FastDFS存储服务
- * 
- * @author Li Jian
  *
  */
 public class FastdfsStorageService implements StorageService, InitializingBean {

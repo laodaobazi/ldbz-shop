@@ -4,8 +4,6 @@ package cn.ldbz.order.service;
 import cn.ldbz.pojo.LdbzResult;
 
 /**
- * @author xubin.
- * @create 2017-02-28 下午9:04
  */
 
 public interface OrderService {

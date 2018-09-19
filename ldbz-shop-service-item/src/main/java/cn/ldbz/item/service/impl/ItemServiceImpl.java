@@ -25,7 +25,7 @@ import cn.ldbz.utils.FastJsonConvert;
  *
  */
 @Component
-@Service(version = Const.XBIN_STORE_ITEM_VERSION)
+@Service(version = Const.LDBZ_SHOP_ITEM_VERSION)
 public class ItemServiceImpl implements ItemService {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemServiceImpl.class);
@@ -36,7 +36,7 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private TbItemDescMapper itemDescMapper;
 
-    @Reference(version = Const.XBIN_STORE_REDIS_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
     @Value("${redisKey.prefix.item_info_profix}")

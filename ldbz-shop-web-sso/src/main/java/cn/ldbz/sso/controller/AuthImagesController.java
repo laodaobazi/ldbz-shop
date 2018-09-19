@@ -19,8 +19,6 @@ import java.io.IOException;
 /**
  * 验证码 Controller
  *
- * @author xubin.
- * @create 2017-04-08
  */
 
 @Controller
@@ -28,7 +26,7 @@ public class AuthImagesController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthImagesController.class);
 
-    @Reference(version = Const.XBIN_STORE_REDIS_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
     @Value("${redisKey.prefix.verifycode}")

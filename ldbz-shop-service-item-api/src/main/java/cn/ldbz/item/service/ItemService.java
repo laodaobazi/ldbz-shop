@@ -6,8 +6,6 @@ import cn.ldbz.pojo.TbItemDesc;
 /**
  * 商品 Service
  *
- * @author xubin.
- * @create 2017-02-06 下午3:31
  */
 
 //@Path("/ItemService")
