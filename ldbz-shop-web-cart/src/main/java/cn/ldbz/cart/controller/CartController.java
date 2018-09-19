@@ -4,7 +4,7 @@ import cn.ldbz.cart.service.CartService;
 import cn.ldbz.constant.Const;
 import cn.ldbz.pojo.CartInfo;
 import cn.ldbz.pojo.TbUser;
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.redis.service.JedisClient;
 import cn.ldbz.utils.CookieUtils;
 import cn.ldbz.utils.FastJsonConvert;
@@ -120,14 +120,14 @@ public class CartController {
 
             CookieUtils.setCookie(request, response, Const.CART_KEY, uuid);
 
-            XbinResult result = cartService.addCart(pid, pcount, uuid);
+            LdbzResult result = cartService.addCart(pid, pcount, uuid);
 
             model.addAttribute("cartInfo", (CartInfo) result.getData());
 
             return "success";
 
         } else {
-            XbinResult result = cartService.addCart(pid, pcount, cookieUUID);
+            LdbzResult result = cartService.addCart(pid, pcount, cookieUUID);
 
             model.addAttribute("cartInfo", (CartInfo)result.getData());
 
@@ -151,13 +151,13 @@ public class CartController {
      */
     @RequestMapping("/decreOrIncre")
     @ResponseBody
-    public XbinResult decreOrIncre(Long pid, Integer pcount,Integer type,Integer index, HttpServletRequest request, HttpServletResponse response, Model model) {
+    public LdbzResult decreOrIncre(Long pid, Integer pcount,Integer type,Integer index, HttpServletRequest request, HttpServletResponse response, Model model) {
         String cookieUUID = CookieUtils.getCookieValue(request, Const.CART_KEY);
         if (StringUtils.isBlank(cookieUUID)) {
 
             model.addAttribute("msg","没有此Cookie!");
 
-            return XbinResult.build(400,"请先去购物!");
+            return LdbzResult.build(400,"请先去购物!");
 
         } else {
             return cartService.decreOrIncre(pid, pcount,type,index, cookieUUID);

@@ -4,7 +4,7 @@ import cn.ldbz.cart.service.CartService;
 import cn.ldbz.constant.Const;
 import cn.ldbz.order.service.OrderService;
 import cn.ldbz.pojo.CartInfo;
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.redis.service.JedisClient;
 import cn.ldbz.utils.CookieUtils;
 import cn.ldbz.utils.FastJsonConvert;
@@ -126,7 +126,7 @@ public class OrderController {
         String cartCookieValue = CookieUtils.getCookieValue(request, Const.CART_KEY);
         String userCookieValue = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
 
-        XbinResult result = orderService.generateOrder(userCookieValue,cartCookieValue,addrId, noAnnoyance, paymentType,orderId, shippingName);
+        LdbzResult result = orderService.generateOrder(userCookieValue,cartCookieValue,addrId, noAnnoyance, paymentType,orderId, shippingName);
 
 
         return "success";

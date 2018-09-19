@@ -3,7 +3,7 @@ package cn.ldbz.search.service.impl;
 import cn.ldbz.constant.Const;
 import cn.ldbz.pojo.SearchResult;
 import cn.ldbz.pojo.SolrItem;
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.search.mapper.SearchMapper;
 import cn.ldbz.search.service.SearchService;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -41,7 +41,7 @@ public class SearchServiceImpl implements SearchService {
     private static Logger logger = Logger.getLogger(SearchServiceImpl.class);
 
     @Override
-    public XbinResult importAllItems() {
+    public LdbzResult importAllItems() {
 
         List<SolrItem> solrItemList = searchMapper.getSolrItemList();
 
@@ -73,7 +73,7 @@ public class SearchServiceImpl implements SearchService {
             logger.error("===========>导入Solr索引失败");
         }
 
-        return XbinResult.ok();
+        return LdbzResult.ok();
     }
 
     @Override

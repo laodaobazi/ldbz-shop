@@ -4,7 +4,7 @@ import cn.ldbz.admin.service.ContentService;
 import cn.ldbz.admin.vo.ManageUserVO;
 import cn.ldbz.constant.Const;
 import cn.ldbz.pojo.TbCategorySecondary;
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -129,14 +129,14 @@ public class AdminController {
 
     @RequestMapping("/save/category")
     @ResponseBody
-    public XbinResult saveCategory(String id, String name, Integer sort_order) {
+    public LdbzResult saveCategory(String id, String name, Integer sort_order) {
 
 
         return contentService.saveCategory(id, name, sort_order);
     }
     @RequestMapping("/save/category/secondary")
     @ResponseBody
-    public XbinResult saveCategorySecondary(TbCategorySecondary categorySecondary) {
+    public LdbzResult saveCategorySecondary(TbCategorySecondary categorySecondary) {
 
 
         return contentService.saveCategorySecondary(categorySecondary);

@@ -4,7 +4,7 @@ import cn.ldbz.constant.Const;
 import cn.ldbz.mapper.TbUserMapper;
 import cn.ldbz.pojo.TbUser;
 import cn.ldbz.pojo.TbUserExample;
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.redis.service.JedisClient;
 import cn.ldbz.sso.service.UserService;
 import cn.ldbz.utils.FastJsonConvert;
@@ -82,10 +82,10 @@ public class UserServiceImpl implements UserService {
      *         }
      */
     @Override
-    public XbinResult checkUserDate(String data, Integer type, String callback) {
+    public LdbzResult checkUserDate(String data, Integer type, String callback) {
 
         if (StringUtils.isNotBlank(callback)) {
-            return XbinResult.ok(callback);
+            return LdbzResult.ok(callback);
         }
 
         TbUserExample example = new TbUserExample();
@@ -105,16 +105,16 @@ public class UserServiceImpl implements UserService {
                 break;
             default:
                 logger.error("type参数传递错误！");
-                return XbinResult.build(400,"error", "参数错误");
+                return LdbzResult.build(400,"error", "参数错误");
         }
 
         List<TbUser> list = userMapper.selectByExample(example);
 
         if (list != null && list.size() > 0) {
-            return XbinResult.ok(false);
+            return LdbzResult.ok(false);
         }
 
-        return XbinResult.ok(true);
+        return LdbzResult.ok(true);
     }
 
     /**
@@ -129,10 +129,10 @@ public class UserServiceImpl implements UserService {
      *         }
      */
     @Override
-    public XbinResult register(TbUser user) {
+    public LdbzResult register(TbUser user) {
 
         if (user == null) {
-            return XbinResult.build(400, "error", "数据为空");
+            return LdbzResult.build(400, "error", "数据为空");
         }
 
         boolean usernameb = (boolean) checkUserDate(user.getUsername(), ERROR, null).getData();
@@ -150,12 +150,12 @@ public class UserServiceImpl implements UserService {
             } catch (Exception e) {
 
                 logger.error("保存数据库失败！注册失败", e);
-                return XbinResult.build(500, "error", "系统异常. 请稍后重试");
+                return LdbzResult.build(500, "error", "系统异常. 请稍后重试");
             }
-            return XbinResult.ok();
+            return LdbzResult.ok();
         }
 
-        return XbinResult.build(400, "error", "注册失败. 请校验数据后请再提交数据");
+        return LdbzResult.build(400, "error", "注册失败. 请校验数据后请再提交数据");
 
 
     }
@@ -173,10 +173,10 @@ public class UserServiceImpl implements UserService {
      */
 
     @Override
-    public XbinResult login(TbUser user) {
+    public LdbzResult login(TbUser user) {
 
         if (user == null) {
-            return XbinResult.build(400, "error", "数据为空");
+            return LdbzResult.build(400, "error", "数据为空");
         }
 
         TbUserExample example = new TbUserExample();
@@ -189,13 +189,13 @@ public class UserServiceImpl implements UserService {
         List<TbUser> list = userMapper.selectByExample(example);
 
         if (list == null || list.size() == 0) {
-            return XbinResult.build(400, "用户名不存在");
+            return LdbzResult.build(400, "用户名不存在");
         }
 
         TbUser check = list.get(0);
 
         if (!check.getPassword().equals(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()))) {
-            return XbinResult.build(401, "用户名或密码错误");
+            return LdbzResult.build(401, "用户名或密码错误");
         }
 
         TbUser result = new TbUser();
@@ -210,7 +210,7 @@ public class UserServiceImpl implements UserService {
 
         jedisClient.expire(key, EXPIRE_TIME);
 
-        return XbinResult.ok(token);
+        return LdbzResult.ok(token);
     }
 
     /**
@@ -226,10 +226,10 @@ public class UserServiceImpl implements UserService {
      *         }
      */
     @Override
-    public XbinResult token(String token, String callback) {
+    public LdbzResult token(String token, String callback) {
 
         if (StringUtils.isNotBlank(callback)) {
-            return XbinResult.ok(callback);
+            return LdbzResult.ok(callback);
         }
 
         try {
@@ -237,7 +237,7 @@ public class UserServiceImpl implements UserService {
 
             if (StringUtils.isNotBlank(user)) {
 
-                return XbinResult.ok(user);
+                return LdbzResult.ok(user);
             }
 
         } catch (Exception e) {
@@ -246,7 +246,7 @@ public class UserServiceImpl implements UserService {
 
         }
 
-        return XbinResult.build(400, "没有此用户");
+        return LdbzResult.build(400, "没有此用户");
     }
 
     /**
@@ -262,10 +262,10 @@ public class UserServiceImpl implements UserService {
      *         }
      */
     @Override
-    public XbinResult logout(String token, String callback) {
+    public LdbzResult logout(String token, String callback) {
 
         if (StringUtils.isNotBlank(callback)) {
-            return XbinResult.ok(callback);
+            return LdbzResult.ok(callback);
         }
 
         try {
@@ -273,10 +273,10 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             logger.error("没有登录", e);
 
-            return XbinResult.build(400, "没有登录");
+            return LdbzResult.build(400, "没有登录");
         }
 
-        return XbinResult.ok();
+        return LdbzResult.ok();
     }
 
     /**

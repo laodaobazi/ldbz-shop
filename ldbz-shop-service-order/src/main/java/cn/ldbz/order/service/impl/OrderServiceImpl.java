@@ -59,13 +59,13 @@ public class OrderServiceImpl implements OrderService {
     private String CART_INFO_PROFIX;
 
     @Override
-    public XbinResult generateOrder(String userCookieValue, String cartCookieValue, Integer addrId, Integer noAnnoyance, Integer paymentType, String orderId, String shippingName) {
+    public LdbzResult generateOrder(String userCookieValue, String cartCookieValue, Integer addrId, Integer noAnnoyance, Integer paymentType, String orderId, String shippingName) {
 
 
-        XbinResult result = userService.token(userCookieValue, "");
+        LdbzResult result = userService.token(userCookieValue, "");
         if (result.getData() == null) {
             logger.error("用户没有登录!");
-            return XbinResult.build(400, "系统错误!");
+            return LdbzResult.build(400, "系统错误!");
         }
 
         String data = (String) result.getData();
@@ -120,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
             String cartInfoListString = jedisClient.get(key3);
 
             if (StringUtils.isBlank(cartInfo) || StringUtils.isBlank(cartIndex) || StringUtils.isBlank(cartInfoListString)) {
-                return XbinResult.build(400, "系统错误!");
+                return LdbzResult.build(400, "系统错误!");
             }
 
             cartInfos = FastJsonConvert.convertJSONToArray(cartInfo, CartInfo.class);
@@ -171,7 +171,7 @@ public class OrderServiceImpl implements OrderService {
             logger.debug("移除购物车购买商品！数量:" + split.length);
         } else {
             logger.error("订单项数量小于和index数量");
-            return XbinResult.build(400, "系统错误!");
+            return LdbzResult.build(400, "系统错误!");
         }
 
         try {

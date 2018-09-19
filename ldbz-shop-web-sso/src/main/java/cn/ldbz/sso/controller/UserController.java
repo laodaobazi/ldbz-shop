@@ -3,7 +3,7 @@ package cn.ldbz.sso.controller;
 import cn.ldbz.constant.Const;
 import cn.ldbz.notify.service.NotifyUserService;
 import cn.ldbz.pojo.TbUser;
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.sso.service.UserService;
 import cn.ldbz.utils.CookieUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -90,7 +90,7 @@ public class UserController {
      */
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     @ResponseBody
-    public XbinResult register(TbUser user) {
+    public LdbzResult register(TbUser user) {
         return userService.register(user);
     }
 
@@ -106,7 +106,7 @@ public class UserController {
     @ResponseBody
     public String login(TbUser user, String returnUrl, HttpServletResponse response, HttpServletRequest request) {
 
-        XbinResult result = userService.login(user);
+        LdbzResult result = userService.login(user);
 
         if (result.getStatus() == 200) {
 

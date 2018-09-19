@@ -60,7 +60,7 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public XbinResult saveCategory(String id, String name, Integer sort_order) {
+    public LdbzResult saveCategory(String id, String name, Integer sort_order) {
 
         TbCategory category = new TbCategory();
         category.setId(id);
@@ -70,7 +70,7 @@ public class ContentServiceImpl implements ContentService {
 
         int i = categoryMapper.updateByPrimaryKey(category);
 
-        return i > 0 ? XbinResult.ok() : XbinResult.build(400, "更新失败！");
+        return i > 0 ? LdbzResult.ok() : LdbzResult.build(400, "更新失败！");
     }
 
     @Override
@@ -122,12 +122,12 @@ public class ContentServiceImpl implements ContentService {
     }
 
     @Override
-    public XbinResult saveCategorySecondary(TbCategorySecondary categorySecondary) {
+    public LdbzResult saveCategorySecondary(TbCategorySecondary categorySecondary) {
 
         categorySecondary.setUpdated(new Date());
 
         int i = categorySecondaryMapper.updateByPrimaryKeySelective(categorySecondary);
 
-        return i>0?XbinResult.ok():XbinResult.build(400,"服务器出错!");
+        return i>0?LdbzResult.ok():LdbzResult.build(400,"服务器出错!");
     }
 }

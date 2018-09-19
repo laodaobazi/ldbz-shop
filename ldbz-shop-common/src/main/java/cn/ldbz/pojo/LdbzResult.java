@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * 自定义响应结构
  */
-public class XbinResult implements Serializable {
+public class LdbzResult implements Serializable {
 
     // 定义jackson对象
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -21,33 +21,33 @@ public class XbinResult implements Serializable {
     // 响应中的数据
     private Object data;
 
-    public static XbinResult build(Integer status, String msg, Object data) {
-        return new XbinResult(status, msg, data);
+    public static LdbzResult build(Integer status, String msg, Object data) {
+        return new LdbzResult(status, msg, data);
     }
 
-    public static XbinResult ok(Object data) {
-        return new XbinResult(data);
+    public static LdbzResult ok(Object data) {
+        return new LdbzResult(data);
     }
 
-    public static XbinResult ok() {
-        return new XbinResult(null);
+    public static LdbzResult ok() {
+        return new LdbzResult(null);
     }
 
-    public XbinResult() {
+    public LdbzResult() {
 
     }
 
-    public static XbinResult build(Integer status, String msg) {
-        return new XbinResult(status, msg, null);
+    public static LdbzResult build(Integer status, String msg) {
+        return new LdbzResult(status, msg, null);
     }
 
-    public XbinResult(Integer status, String msg, Object data) {
+    public LdbzResult(Integer status, String msg, Object data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
     }
 
-    public XbinResult(Object data) {
+    public LdbzResult(Object data) {
         this.status = 200;
         this.msg = "OK";
         this.data = data;

@@ -1,7 +1,7 @@
 package cn.ldbz.order.interceptor;
 
 import cn.ldbz.constant.Const;
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.sso.service.UserService;
 import cn.ldbz.utils.CookieUtils;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -48,7 +48,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        XbinResult result = userService.token(cookieValue, "");
+        LdbzResult result = userService.token(cookieValue, "");
 
         if (result.getStatus() != 200) {
             //跳转登录页面

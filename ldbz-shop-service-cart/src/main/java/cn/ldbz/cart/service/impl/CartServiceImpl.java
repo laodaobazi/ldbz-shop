@@ -6,7 +6,7 @@ import cn.ldbz.mapper.TbItemMapper;
 import cn.ldbz.pojo.CartInfo;
 import cn.ldbz.pojo.TbItem;
 import cn.ldbz.pojo.TbItemExample;
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.redis.service.JedisClient;
 import cn.ldbz.utils.FastJsonConvert;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -49,7 +49,7 @@ public class CartServiceImpl implements CartService {
     private TbItemMapper itemMapper;
 
     @Override
-    public XbinResult addCart(Long pid, Integer pcount, String uuid) {
+    public LdbzResult addCart(Long pid, Integer pcount, String uuid) {
 
 
         String key = CART_INFO_PROFIX + uuid;
@@ -79,7 +79,7 @@ public class CartServiceImpl implements CartService {
                 if (itemList != null && itemList.size() > 0) {
                     item = itemList.get(0);
                 } else {
-                    return XbinResult.build(500, "商品查询不到!");
+                    return LdbzResult.build(500, "商品查询不到!");
                 }
             }
 
@@ -113,7 +113,7 @@ public class CartServiceImpl implements CartService {
                     logger.error("Redis出错!", e);
                 }
 
-                return XbinResult.build(200, "ok", cartInfo);
+                return LdbzResult.build(200, "ok", cartInfo);
 
             } else {
                 List<CartInfo> list = FastJsonConvert.convertJSONToArray(cartInfoString, CartInfo.class);
@@ -145,7 +145,7 @@ public class CartServiceImpl implements CartService {
                     logger.error("Redis出错!", e);
                 }
 
-                return XbinResult.build(200, "ok", cartInfo);
+                return LdbzResult.build(200, "ok", cartInfo);
             }
     }
 
@@ -174,13 +174,13 @@ public class CartServiceImpl implements CartService {
      * @return
      */
     @Override
-    public XbinResult decreOrIncre(Long pid, Integer pcount, Integer type, Integer index, String cookieUUID) {
+    public LdbzResult decreOrIncre(Long pid, Integer pcount, Integer type, Integer index, String cookieUUID) {
 
         String key = CART_INFO_PROFIX + cookieUUID;
 
         List<CartInfo> cartInfoList = getCartInfoListByCookiesId(cookieUUID);
         if (cartInfoList == null || cartInfoList.size() == 0) {
-            return XbinResult.build(400, "购物车没有此商品 请不要非法操作!");
+            return LdbzResult.build(400, "购物车没有此商品 请不要非法操作!");
         }
 
         CartInfo cartInfo = cartInfoList.get(index);
@@ -195,7 +195,7 @@ public class CartServiceImpl implements CartService {
         jedisClient.set(key, FastJsonConvert.convertObjectToJSON(cartInfoList));
         jedisClient.expire(key,REDIS_CART_EXPIRE_TIME);
 
-        return XbinResult.ok();
+        return LdbzResult.ok();
     }
 
 

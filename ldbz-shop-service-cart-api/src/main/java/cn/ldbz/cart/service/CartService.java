@@ -2,7 +2,7 @@ package cn.ldbz.cart.service;
 
 
 import cn.ldbz.pojo.CartInfo;
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface CartService {
 
-    XbinResult addCart(Long pid, Integer pcount, String uuid);
+    LdbzResult addCart(Long pid, Integer pcount, String uuid);
 
     List<CartInfo> getCartInfoListByCookiesId(String cookieUUID);
 
@@ -29,7 +29,7 @@ public interface CartService {
      * @param index     商品位置   ps:用于直接定位商品 不用遍历整个购物车
      * @return
      */
-    XbinResult decreOrIncre(Long pid, Integer pcount, Integer type, Integer index, String cookieUUID);
+    LdbzResult decreOrIncre(Long pid, Integer pcount, Integer type, Integer index, String cookieUUID);
 
 
 }

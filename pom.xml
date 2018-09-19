@@ -12,8 +12,6 @@
         <module>ldbz-shop-common</module>
         <module>ldbz-shop-common-mapper</module>
         <module>ldbz-shop-common-pojo</module>
-        <module>ldbz-shop-common-config</module>
-        <module>ldbz-shop-service-redis-api</module>
         <module>ldbz-shop-service-redis</module>
         <module>ldbz-shop-service-portal-api</module>
         <module>ldbz-shop-service-portal</module>

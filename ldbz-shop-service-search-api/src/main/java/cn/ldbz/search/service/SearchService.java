@@ -1,7 +1,7 @@
 package cn.ldbz.search.service;
 
 
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 
 /**
  * Solr Service
@@ -19,7 +19,7 @@ public interface SearchService {
      *
      * @return
      */
-    XbinResult importAllItems();
+    LdbzResult importAllItems();
 
     //http://localhost:8512/search/SolrService/search/查询条件/1/60
     /**

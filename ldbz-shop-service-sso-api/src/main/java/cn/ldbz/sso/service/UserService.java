@@ -1,7 +1,7 @@
 package cn.ldbz.sso.service;
 
 import cn.ldbz.pojo.TbUser;
-import cn.ldbz.pojo.XbinResult;
+import cn.ldbz.pojo.LdbzResult;
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.alibaba.fastjson.JSONObject;
 
@@ -34,7 +34,7 @@ public interface UserService {
      */
     //@GET
     //@Path("/check/{param}/{type}")
-    XbinResult checkUserDate(/**@PathParam("param")*/ String data, /**@PathParam("type")*/ Integer type, String callback);
+    LdbzResult checkUserDate(/**@PathParam("param")*/ String data, /**@PathParam("type")*/ Integer type, String callback);
 
     //http://127.0.0.1:8515/user/register
     /**
@@ -50,7 +50,7 @@ public interface UserService {
      */
     //@POST
     //@Path("/register")
-    XbinResult register(TbUser user);
+    LdbzResult register(TbUser user);
 
     //http://127.0.0.1:8515/user/register
     /**
@@ -66,7 +66,7 @@ public interface UserService {
      */
     //@POST
     //@Path("/login")
-    XbinResult login(TbUser user);
+    LdbzResult login(TbUser user);
 
     //http://127.0.0.1:8515/user/token/fe5cb546aeb3ce1bf37abcb08a40493e
     /**
@@ -84,7 +84,7 @@ public interface UserService {
 
     //@GET
     //@Path("/token/{token}")
-    XbinResult token(/**@PathParam("token")*/ String token, String callback);
+    LdbzResult token(/**@PathParam("token")*/ String token, String callback);
 
     //http://127.0.0.1:8515/user/token/fe5cb546aeb3ce1bf37abcb08a40493e
     /**
@@ -101,7 +101,7 @@ public interface UserService {
      */
     //@GET
     //@Path("/logout/{token}")
-    XbinResult logout(/**@PathParam("token")*/ String token, String callback);
+    LdbzResult logout(/**@PathParam("token")*/ String token, String callback);
 
     /**
      * 请求格式 POST
