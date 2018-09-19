@@ -42,28 +42,14 @@
         <!--<module>ldbz-shop-service-message</module>-->
     </modules>
     <name>ldbz-shop</name>
-    <url>http://laodaobazi.iteye.com</url>
+    <url>https://github.com/laodaobazi/ldbz-shop</url>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.1.RELEASE</version>
     </parent>
-
-    <!-- 配置maven地址 -->
-    <!-- <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <name>Nexus Release Repository</name>
-            <url>http://182.92.218.12:8077/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>http://182.92.218.12:8077/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement> -->
-
+    
     <repositories>
         <repository>
             <id>nexus</id>
@@ -95,6 +81,7 @@
         <springboot.druid.version>1.1.10</springboot.druid.version>
         <springboot.mybatis.version>1.2.0</springboot.mybatis.version>
         <springboot.pagehelper.version>1.1.0</springboot.pagehelper.version>
+        <springboot.dubbo.starter>2.0.0</springboot.dubbo.starter>
         <junit.version>4.12</junit.version>
         <cglib.version>3.2.2</cglib.version>
         <mysql.version>5.1.32</mysql.version>
@@ -276,11 +263,11 @@
                 </exclusion></exclusions>
             </dependency>
             <!-- freemarker -->
-            <dependency>
+            <!-- <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
                 <version>${freemarker.version}</version>
-            </dependency>
+            </dependency> -->
             <!-- activemq jar begin -->
             <dependency>
                 <groupId>org.apache.activemq</groupId>
@@ -301,7 +288,7 @@
         <dependency>
 	        <groupId>com.alibaba.spring.boot</groupId>
 	        <artifactId>dubbo-spring-boot-starter</artifactId>
-	        <version>2.0.0</version>
+	        <version>${springboot.dubbo.starter}</version>
 	        <exclusions>
 		        <exclusion>
 		            <groupId>com.alibaba</groupId>

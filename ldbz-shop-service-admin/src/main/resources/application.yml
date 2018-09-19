@@ -4,6 +4,8 @@ apollo:
   meta: http://192.168.136.133:8080
 
 spring:
+  dubbo:
+    server: true
   datasource:
     druid:
       filter:
