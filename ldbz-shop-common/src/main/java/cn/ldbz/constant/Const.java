@@ -95,5 +95,6 @@ public final class Const {
     public static final String LDBZ_SHOP_ORDER_VERSION = "1.0.0";
     public static final String LDBZ_SHOP_CART_VERSION = "1.0.0";
     public static final String LDBZ_SHOP_ITEM_VERSION = "1.0.0";
+    public static final String LDBZ_SHOP_ADVERTISEMENT_VERSION = "1.0.0";
 
 }
