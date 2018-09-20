@@ -36,8 +36,8 @@
         <module>ldbz-shop-service-order-api</module>
         <module>ldbz-shop-service-order</module>
         <module>ldbz-shop-web-order</module>
-        <!--<module>ldbz-shop-service-message-api</module>-->
-        <!--<module>ldbz-shop-service-message</module>-->
+        <module>ldbz-shop-service-advertisement-api</module>
+        <module>ldbz-shop-service-advertisement</module>
     </modules>
     <name>ldbz-shop</name>
     <url>https://github.com/laodaobazi/ldbz-shop</url>
