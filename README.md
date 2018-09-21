@@ -46,4 +46,8 @@
 | Search-Service   | 20888 |
 | SSO-Service      | 20889 |
 
+## Dubbo Admin 管控台查看服务
+![dubbo.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/dubbo.png)
 
+## Apollo配置中心查看配置
+![apollo.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/apollo.png)
