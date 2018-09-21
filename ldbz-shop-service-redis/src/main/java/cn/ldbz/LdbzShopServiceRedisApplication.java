@@ -3,7 +3,6 @@ package cn.ldbz;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.alibaba.dubbo.container.Main;
 import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 
@@ -14,7 +13,6 @@ public class LdbzShopServiceRedisApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LdbzShopServiceRedisApplication.class, args);
-		Main.main(args);
 	}
 	
 }
