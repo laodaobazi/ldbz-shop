@@ -64,10 +64,10 @@
             <artifactId>junit</artifactId>
         </dependency>
         <!-- 日志处理 -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
+        </dependency> -->
         <!-- Spring -->
         <!-- zookeeper -->
         <dependency>
@@ -81,12 +81,10 @@
         <dependency>
 		    <groupId>com.alibaba</groupId>
 		    <artifactId>dubbo</artifactId>
-		    <version>2.6.1</version>
 		</dependency>
         <dependency>
 	        <groupId>com.alibaba.spring.boot</groupId>
 	        <artifactId>dubbo-spring-boot-starter</artifactId>
-	        <version>2.0.0</version>
 	        <exclusions>
 		        <exclusion>
 		            <groupId>com.alibaba</groupId>

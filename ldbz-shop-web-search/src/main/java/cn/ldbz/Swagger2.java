@@ -42,7 +42,7 @@ public class Swagger2 {
     }
 
     private ApiInfo apiInfo() {
-        Contact contact=new Contact("Binux",
+        Contact contact=new Contact("LDBZ",
                 "https://github.com/laodaobazi/ldbz-shop","biao.li@neusoft.com");
 
         return new ApiInfoBuilder()

@@ -29,12 +29,6 @@
 			<groupId>cn.ldbz</groupId>
 			<artifactId>ldbz-shop-common</artifactId>
 			<version>1.0-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
