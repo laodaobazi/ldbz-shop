@@ -43,7 +43,7 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         Contact contact=new Contact("Binux",
-                "http://git.oschina.net/binu/ldbz-shop","xu.binux@gmail.com");
+                "https://github.com/laodaobazi/ldbz-shop","biao.li@neusoft.com");
 
         return new ApiInfoBuilder()
                 .title(title + " RESTful APIs")

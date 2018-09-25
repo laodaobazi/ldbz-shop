@@ -77,16 +77,4 @@ public class IDUtils {
 		return data + millis + str;
 	}
 
-
-	public static void main(String[] args) {
-		//for(int i=0;i< 100;i++)
-		//System.out.println(genOrderId());
-
-		//String s = "1";
-		//s = "0000" + s;
-		//s = s.substring(s.length() - 4, s.length());
-		//System.out.println(s);
-
-		System.out.println(genOrderItemId());
-	}
 }
