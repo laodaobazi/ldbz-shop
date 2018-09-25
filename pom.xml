@@ -475,6 +475,14 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
                     <encoding>UTF-8</encoding>
+                    <nonFilteredFileExtensions>
+                    <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+                    <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+                    <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+                    <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                    <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                    <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+                </nonFilteredFileExtensions>
                 </configuration>
             </plugin>
             <!-- java编译插件 -->
