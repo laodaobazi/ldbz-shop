@@ -167,6 +167,9 @@
 					<include>**/*.yml</include>
 					<include>**/*.txt</include>
 					<include>**/*.json</include>
+					<include>**/*.ico</include>
+					<include>static/**</include>
+					<include>templates/**</include>
 				</includes>
 				<filtering>false</filtering>
 			</resource>
@@ -182,6 +185,9 @@
 					<include>**/*.yml</include>
 					<include>**/*.txt</include>
 					<include>**/*.json</include>
+					<include>**/*.ico</include>
+					<include>static/**</include>
+					<include>templates/**</include>
 				</includes>
 			</resource>
 
