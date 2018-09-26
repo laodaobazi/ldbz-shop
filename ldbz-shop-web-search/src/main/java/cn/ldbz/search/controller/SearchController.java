@@ -32,30 +32,30 @@ public class SearchController {
                          @RequestParam(defaultValue = "1") Integer page,
                          @RequestParam(defaultValue = "0") Integer rows, Model model) throws Exception {
 
-        if (rows == 0) {
-            rows = SEARCH_RESULT_ROWS;
-        }
-
-        if (queryString != null) {
-
-            String string = null;
-            try {
-                string = new String(queryString.getBytes("iso8859-1"), "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-
-            SearchResult search  = searchService.search(string, page, rows);
-
-            // 异常测试
-            //int i = 1 / 0;
-
-            model.addAttribute("query", string);
-            model.addAttribute("totalPages", search.getPageCount());
-            model.addAttribute("itemList", search.getItemList());
-            model.addAttribute("page", search.getCurPage());
-
-        }
+//        if (rows == 0) {
+//            rows = SEARCH_RESULT_ROWS;
+//        }
+//
+//        if (queryString != null) {
+//
+//            String string = null;
+//            try {
+//                string = new String(queryString.getBytes("iso8859-1"), "utf-8");
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+//
+//            SearchResult search  = searchService.search(string, page, rows);
+//
+//            // 异常测试
+//            //int i = 1 / 0;
+//
+//            model.addAttribute("query", string);
+//            model.addAttribute("totalPages", search.getPageCount());
+//            model.addAttribute("itemList", search.getItemList());
+//            model.addAttribute("page", search.getCurPage());
+//
+//        }
 
         return "search";
     }
