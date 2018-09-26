@@ -29,12 +29,12 @@ public class ItemController {
     @RequestMapping("/item/{id}")
     public String  getItemByItemId(@PathVariable("id") Long itemId, Model model) {
 
-        TbItemVO item = new TbItemVO(itemService.getItemById(itemId));
-
-        TbItemDesc itemDesc = itemService.getItemDescById(itemId);
-
-        model.addAttribute("item", item);
-        model.addAttribute("itemDesc", itemDesc);
+//        TbItemVO item = new TbItemVO(itemService.getItemById(itemId));
+//
+//        TbItemDesc itemDesc = itemService.getItemDescById(itemId);
+//
+//        model.addAttribute("item", item);
+//        model.addAttribute("itemDesc", itemDesc);
 
         return "item";
     }
