@@ -19,7 +19,6 @@ import java.util.UUID;
 
 /**
  * 用户登录注册 Controller
- *
  */
 
 @Controller
@@ -48,9 +47,7 @@ public class UserController {
      */
     @RequestMapping(value = "/register",method = RequestMethod.GET)
     public String showRegister(Model model, String returnUrl) {
-
         model.addAttribute("uid", UUID.randomUUID().toString());
-
         return "register";
     }
 
@@ -62,10 +59,7 @@ public class UserController {
      */
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String showLogin(Model model, String returnUrl) {
-
         model.addAttribute("returnUrl", returnUrl);
-
-
         return "login";
     }
 
