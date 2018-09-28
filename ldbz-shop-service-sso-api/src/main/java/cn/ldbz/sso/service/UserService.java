@@ -1,56 +1,13 @@
 package cn.ldbz.sso.service;
 
-import cn.ldbz.pojo.TbUser;
 import cn.ldbz.pojo.LdbzResult;
-import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
-import com.alibaba.fastjson.JSONObject;
-
-//import javax.ws.rs.*;
+import cn.ldbz.pojo.TbUser;
 
 /**
  * 用户登录相关服务
- *
  */
-//@Path("/user")
-//@Consumes({ContentType.TEXT_PLAIN_UTF_8,ContentType.APPLICATION_JSON_UTF_8})
-//@Produces({ContentType.APPLICATION_JSON_UTF_8,ContentType.TEXT_PLAIN_UTF_8})
 public interface UserService {
 
-    //http://127.0.0.1:8515/user/check/{param}/{type}
-    /**
-     * 请求格式 GET
-     * 注册数据校验
-     *
-     * @param data 校验数据
-     * @param type 类型 可选参数1、2、3分别代表username、phone、email
-     * @param callback 可选参数 有参表示jsonp调用
-     * @return  {
-     *           status: 200 //200 成功 400 参数错误 500 系统异常
-     *           msg: "OK" // 错误 参数错误
-     *           data: false // 返回数据，true：数据可用，false：数据不可用
-     *          }
-     */
-    //@GET
-    //@Path("/check/{param}/{type}")
-    LdbzResult checkUserDate(/**@PathParam("param")*/ String data, /**@PathParam("type")*/ Integer type, String callback);
-
-    //http://127.0.0.1:8515/user/register
-    /**
-     * 请求格式 POST
-     * 用户注册
-     *
-     * @param user Tbuser POJO Json
-     * @return {
-     *           status: 200 //200 成功 400 数据错误 500 系统异常
-     *           msg: "OK" //错误 注册失败. 请校验数据后请再提交数据.
-     *           data: null
-     *         }
-     */
-    //@POST
-    //@Path("/register")
-    LdbzResult register(TbUser user);
-
-    //http://127.0.0.1:8515/user/register
     /**
      * 请求格式 POST
      * 用户登录
@@ -62,14 +19,11 @@ public interface UserService {
      *           data: "fe5cb546aeb3ce1bf37abcb08a40493e" //登录成功，返回token
      *         }
      */
-    //@POST
-    //@Path("/login")
     LdbzResult login(TbUser user);
 
-    //http://127.0.0.1:8515/user/token/fe5cb546aeb3ce1bf37abcb08a40493e
     /**
      * 请求格式 GET
-     * 根据token值获取用户信息
+     * 根据token值获取用户信息(判断当前用户是否存在)
      *
      * @param token token值
      * @param callback 可选参数 有参表示jsonp调用
@@ -80,11 +34,8 @@ public interface UserService {
      *         }
      */
 
-    //@GET
-    //@Path("/token/{token}")
-    LdbzResult token(/**@PathParam("token")*/ String token, String callback);
+    LdbzResult token(String token, String callback);
 
-    //http://127.0.0.1:8515/user/token/fe5cb546aeb3ce1bf37abcb08a40493e
     /**
      * 请求格式 GET
      * 根据token值 退出登录
@@ -97,51 +48,30 @@ public interface UserService {
      *           data: null
      *         }
      */
-    //@GET
-    //@Path("/logout/{token}")
-    LdbzResult logout(/**@PathParam("token")*/ String token, String callback);
+    LdbzResult logout(String token, String callback);
 
     /**
-     * 请求格式 POST
      * 注册检查是否可用
      *
-     * @param isEngaged 需要检查是否使用的名称
+     * @param isEngaged 需要检查nick，email
      * @return {
-     *           "success": 0 可用 1 不可用
+     *           "success": true 可用 false不可用
      *           "morePin":["sssss740","sssss5601","sssss76676"] //isEngaged = isPinEngaged时返回推荐
      *         }
      */
-    //@POST
-    //@Path("/validateuser/{isEngaged}")
-    String validateUser(/**@PathParam("isEngaged")*/ String isEngaged,String regName,String email,String phone);
+    String validateUser(String isEngaged,String regName,String email);
 
     /**
-     * 请求格式 POST
-     * 验证验证码
-     *
-     * @param authCode 输入的验证码
-     * @param uuid Redis验证码uuid
-     * @return {
-     *           "success": 0 可用 1 不可用
-     *         }
-     */
-    //@POST
-    //@Path("/validate/validateuser")
-    String validateAuthCode(String authCode,String uuid);
-
-    /**
-     * 请求格式 POST
-     * 注册
+     * 用户注册
      *
      * @param regName       注册名
      * @param pwd           第一次密码
      * @param pwdRepeat     第二次密码
-     * @param phone         电话
-     * @param mobileCode    手机验证码
+     * @param emailCode    邮箱验证码
      * @param email         邮箱
      * @param authCode      输入的验证码
      * @param uuid          Redis验证码uuid
      * @return
      */
-    String register(String regName, String pwd, String pwdRepeat, String phone, String mobileCode, String uuid, String authCode, String s);
+    String register(String regName, String pwd, String pwdRepeat, String emailCode, String uuid, String authCode, String s);
 }

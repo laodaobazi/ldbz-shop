@@ -18,9 +18,7 @@ import java.io.IOException;
 
 /**
  * 验证码 Controller
- *
  */
-
 @Controller
 public class AuthImagesController {
 
@@ -28,11 +26,10 @@ public class AuthImagesController {
 
     @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
+    
+    private final String REDIS_KEY_VERIFYCODE = "VERIFYCODE:" ;
 
-    @Value("${redisKey.prefix.verifycode}")
-    private String VERIFYCODE;
-
-    @Value("${redisKey.expire_time}")
+    @Value("${redisKey.expire_time:180}")
     private Integer EXPIRE_TIME;
 
     @ApiOperation(value = "生成图片验证码",notes = "需要传递一个uuid作为用户本次登录的唯一表示")
@@ -46,11 +43,10 @@ public class AuthImagesController {
 
         //生成随机字串
         String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
+        logger.info(" Image verifyCode : {}" , verifyCode);
         //存入Redis
-
-        String key = VERIFYCODE + uid;
+        String key = REDIS_KEY_VERIFYCODE + uid;
         jedisClient.set(key, verifyCode);
-
         jedisClient.expire(key, EXPIRE_TIME);
 
         //生成图片
@@ -60,7 +56,6 @@ public class AuthImagesController {
         } catch (IOException e) {
             logger.error("验证码生成失败", e);
         }
-
     }
 
 }

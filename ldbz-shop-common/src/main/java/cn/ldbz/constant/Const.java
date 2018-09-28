@@ -81,9 +81,9 @@ public final class Const {
     /**已评价*/
     public static final Integer EVALUATE_YES = 8;
     /**cookie 用户登录token*/
-    public static final String TOKEN_LOGIN = "_xlg";
+    public static final String TOKEN_LOGIN = "_ldbzlg";
     /**cookie 购物车 key*/
-    public static final String CART_KEY = "_xca";
+    public static final String CART_KEY = "_ldbzca";
 
     // Dubbo版本
     public static final String LDBZ_SHOP_REDIS_VERSION = "1.0.0";

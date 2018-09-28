@@ -2,7 +2,6 @@ app:
   id: ldbz-shop-service-sso
 apollo:
   meta: http://192.168.136.133:8080
-  
 
 spring:
   dubbo:
@@ -14,15 +13,5 @@ spring:
           enabled: true
           
 login:
-  # 验证名
-  validation:
-    #登录名
-    ispinengaged: isPinEngaged
-    #邮箱
-    isemailengaged: isEmailEngaged
-    #手机
-    ismobileengaged: isMobileEngaged
-  # 推荐登录名后缀随机数取值范围
-  random_number: 50000
   # 登录成功页面
   success_url: http://localhost:8104/success

@@ -11,7 +11,3 @@ spring:
       filter:
         config:
           enabled: true
-
-# Redis 一段时间允许发送几条短信
-mobile_number_ceiling: 3
-

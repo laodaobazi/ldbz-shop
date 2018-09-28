@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.ldbz.mapper.TbUserMapper" >
+
   <resultMap id="BaseResultMap" type="cn.ldbz.pojo.TbUser" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="username" property="username" jdbcType="VARCHAR" />
@@ -10,6 +11,8 @@
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
   </resultMap>
+  
+  <!--   设置查询 where 条件   -->
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -68,9 +71,23 @@
       </foreach>
     </where>
   </sql>
+  
+  <!--    表中的字段   -->
   <sql id="Base_Column_List" >
     id, username, password, phone, email, created, updated
   </sql>
+  
+  <!--    用户注册    -->
+  <insert id="insert" parameterType="cn.ldbz.pojo.TbUser" >
+    insert into tb_user (id, username, password, 
+      phone, email, created, 
+      updated)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{updated,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <!--   用户注册检验（昵称和邮箱的）唯一性  -->
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.ldbz.pojo.TbUserExample" >
     select
     <if test="distinct" >
@@ -85,30 +102,27 @@
       order by ${orderByClause}
     </if>
   </select>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from tb_user
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  
   <delete id="deleteByExample" parameterType="cn.ldbz.pojo.TbUserExample" >
     delete from tb_user
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.ldbz.pojo.TbUser" >
-    insert into tb_user (id, username, password, 
-      phone, email, created, 
-      updated)
-    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP})
-  </insert>
+  
   <insert id="insertSelective" parameterType="cn.ldbz.pojo.TbUser" >
     insert into tb_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -158,12 +172,14 @@
       </if>
     </trim>
   </insert>
+  
   <select id="countByExample" parameterType="cn.ldbz.pojo.TbUserExample" resultType="java.lang.Integer" >
     select count(*) from tb_user
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  
   <update id="updateByExampleSelective" parameterType="map" >
     update tb_user
     <set >
@@ -193,6 +209,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
   <update id="updateByExample" parameterType="map" >
     update tb_user
     set id = #{record.id,jdbcType=BIGINT},
@@ -206,6 +223,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
   <update id="updateByPrimaryKeySelective" parameterType="cn.ldbz.pojo.TbUser" >
     update tb_user
     <set >
@@ -230,6 +248,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="cn.ldbz.pojo.TbUser" >
     update tb_user
     set username = #{username,jdbcType=VARCHAR},
@@ -240,4 +259,5 @@
       updated = #{updated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
 </mapper>

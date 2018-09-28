@@ -1,0 +1,96 @@
+{
+  "data": [
+    {
+      "text": "LAYUI基础",
+      "icon": "&#xe620;",
+      "subset": [
+        {
+          "text": "按钮",
+          "icon": "&#xe621;",
+          "href": "demo/btn.html"
+        },{
+          "text": "表单",
+          "icon": "&#xe621;",
+          "href": "demo/form.html"
+        },{
+          "text": "表格",
+          "icon": "&#xe621;",
+          "href": "demo/table.html"
+        },{
+          "text": "选项卡",
+          "icon": "&#xe621;",
+          "href": "demo/tab-card.html"
+        },{
+          "text": "进度条",
+          "icon": "&#xe621;",
+          "href": "demo/progress-bar.html"
+        },{
+          "text": "折叠面板",
+          "icon": "&#xe621;",
+          "href": "demo/folding-panel.html"
+        },{
+          "text": "辅助元素",
+          "icon": "&#xe621;",
+          "href": "demo/auxiliar.html"
+        },{
+          "text": "更多示例",
+          "icon": "&#xe621;",
+          "target": true,
+          "href": "http://www.layui.com/demo/"
+        }
+      ]
+    },{
+      "text": "扩展",
+      "icon": "&#xe628;",
+      "href": "",
+      "subset": [
+        {
+          "text": "登录页",
+          "icon": "&#xe621;",
+          "href": "demo/login.html"
+        },{
+          "text": "登录页2",
+          "icon": "&#xe621;",
+          "href": "demo/login2.html"
+        },{
+          "text": "注册页",
+          "icon": "&#xe621;",
+          "href": "demo/register.html"
+        },{
+          "text": "图表",
+          "icon": "&#xe621;",
+          "href": "demo/map.html"
+        },{
+          "text": "添加-修改",
+          "icon": "&#xe621;",
+          "href": "demo/add-edit.html"
+        },{
+          "text": "data-table 表格",
+          "icon": "&#xe621;",
+          "href": "demo/data-table.html"
+        },{
+          "text": "tree-table 树表格",
+          "icon": "&#xe621;",
+          "href": "demo/tree-table.html"
+        },{
+          "text": "404页",
+          "icon": "&#xe621;",
+          "href": "demo/404.html"
+        },{
+          "text": "提示页",
+          "icon": "&#xe621;",
+          "href": "demo/tips.html"
+        }
+      ]
+    },{
+      "text": "子窗口操作",
+      "icon": "&#xe638;",
+      "href": "demo/children.html"
+    },{
+      "text": "加入群下载源码",
+      "icon": "&#xe601;",
+      "target": true,
+      "href": "//shang.qq.com/wpa/qunwpa?idkey=ad6ba602ae228be2222ddb804086e0cfa42da3d74e34b383b665c2bec1adfc6e"
+    }
+  ]
+}
