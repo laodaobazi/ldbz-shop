@@ -85,15 +85,12 @@ public class UserController {
             CookieUtils.setCookie(request, response, Const.TOKEN_LOGIN, result.getData().toString());
             //有返回URL 跳转
             if (StringUtils.isNotBlank(returnUrl)) {
-                return "({'success':'" + returnUrl + "'})";
+                return "{\"success\":true , \"info\":\"" + returnUrl + "\"}";
             }
-            return PORTAL_PATH;
+            return "{\"success\":true , \"info\":\"" + PORTAL_PATH + "\"}";
         }
         if (result.getStatus() == 400) {
             return USER_NOT_EXIST;
-        }
-        if (result.getStatus() == 401) {
-            return PASSWORD_ERROR;
         }
         return PASSWORD_ERROR;
     }

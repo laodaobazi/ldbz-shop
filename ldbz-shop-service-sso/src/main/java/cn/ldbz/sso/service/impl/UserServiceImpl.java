@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     private static final String IS_EMAIL_ENGAGED = "email" ;
     private static final String EMAIL_LOGIN_CODE = "EMAIL_LOGIN_CODE:";
 
-    private final String REDIS_KEY_USER_SESSION = "_ldbz-us";
+    private static final String REDIS_KEY_USER_SESSION = "_ldbz-us";
     private final String REDIS_KEY_VERIFYCODE = "VERIFYCODE:" ;
 
     @Autowired
@@ -122,7 +122,6 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 请求格式 GET
      * 根据token值获取用户信息
      *
      * @param token    token值
@@ -130,7 +129,7 @@ public class UserServiceImpl implements UserService {
      * @return {
      *          status: 200 //200 成功 400 没有此token 500 系统异常
      *          msg: "OK" //错误 没有此token.
-     *          data: {"username":"xbin","id":"id"} //返回用户名
+     *          data: {"username":"ldbz","id":"id"} //返回用户名
      *         }
      */
     @Override
@@ -150,7 +149,6 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 请求格式 GET
      * 根据token值 退出登录
      *
      * @param token    token值
@@ -176,8 +174,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 请求格式 POST
-     * 注册检查是否可用
+     * 注册的时候校验用户名和邮箱的唯一性
      *
      * @param isEngaged 需要检查是否使用的名称
      * @return {
