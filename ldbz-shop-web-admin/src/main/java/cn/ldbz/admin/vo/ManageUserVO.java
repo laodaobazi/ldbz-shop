@@ -7,10 +7,7 @@ import java.text.SimpleDateFormat;
 
 /**
  * 后台用户展示VO
- *
  */
-
-
 public class ManageUserVO extends TbManageUser {
 
     private String joinus;
@@ -21,6 +18,5 @@ public class ManageUserVO extends TbManageUser {
 
         return format.format(this.getCreated()).toString() + "加入公司";
     }
-
 
 }

@@ -29,7 +29,7 @@ public class AuthImagesController {
     
     private final String REDIS_KEY_VERIFYCODE = "VERIFYCODE:" ;
 
-    @Value("${redisKey.expire_time:180}")
+    @Value("${redisKey.expire_time:300}")
     private Integer EXPIRE_TIME;
 
     @ApiOperation(value = "生成图片验证码",notes = "需要传递一个uuid作为用户本次登录的唯一表示")

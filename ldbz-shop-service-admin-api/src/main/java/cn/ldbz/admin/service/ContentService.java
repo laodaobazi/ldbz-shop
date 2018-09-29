@@ -10,8 +10,6 @@ import java.util.Map;
  * 内容维护
  *
  */
-
-
 public interface ContentService {
 
 
