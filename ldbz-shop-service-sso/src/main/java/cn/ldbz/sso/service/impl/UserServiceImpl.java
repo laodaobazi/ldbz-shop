@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     private static final String IS_EMAIL_ENGAGED = "email" ;
     private static final String EMAIL_LOGIN_CODE = "EMAIL_LOGIN_CODE:";
 
-    private static final String REDIS_KEY_USER_SESSION = "_ldbz-us";
+    private static final String REDIS_KEY_USER_SESSION = "ldbz-session-";
     private final String REDIS_KEY_VERIFYCODE = "VERIFYCODE:" ;
 
     @Autowired
@@ -97,8 +97,10 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public LdbzResult login(TbUser user) {
-        if (user == null) {
-            return LdbzResult.build(400, "error", "数据为空");
+        if (user == null || 
+        		StringUtils.isEmpty(user.getUsername()) ||
+        		StringUtils.isEmpty(user.getPassword())) {
+            return LdbzResult.build(500, "用户名密码不能为空");
         }
         TbUserExample example = new TbUserExample();
         TbUserExample.Criteria criteria = example.createCriteria();

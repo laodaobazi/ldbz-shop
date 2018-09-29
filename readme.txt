@@ -9,6 +9,13 @@ SpringBoot之class is not visible from class loader
        SpringApplication.run(Application.class, args);
    }
    
+   dubbo默认超时会重试两次，这样的重试有时会产生很大问题，所以建议关闭。关闭有两种方式：
+
+在服务上加注解:
+@Service(interfaceClass = AccountUpdateApi.class,retries = -1)
+注意这里重试次数写成-1，经测试，dubbo版本(2.6.0)写成0无效。
+另一种方式，配置文件：spring.dubbo.provider.retries=-1
+   
    
 privateKey:MIIBUwIBADANBgkqhkiG9w0BAQEFAASCAT0wggE5AgEAAkEArGK/GML72YZwqKe8e2oKUGhDscCMijl6G/QcVkR+gG4Vj+CGL11Hg5jXADk6P9lJQv6uipB0qtYdor9bpqdpwQIDAQABAkAFWEp0ihck93YmxIyjhvYq6BCxQjcZUg7nLvpx8
 13zUis12/6kC7er75/UsnnaKg6oL3lBi28MzIPBAiEA2m8MuxZrfo7GQSWs8ipqawNrpyf31sumct79mXMk1ycCIQDKCFiUVWbiJk7+quF7h2lariZceEbgG+TnG9vjboaI1wIgB+flChBxq473VfxLGii22VCyYMZtjfSo/ZdcjmVAfBkCIHpOoSlzpixEm

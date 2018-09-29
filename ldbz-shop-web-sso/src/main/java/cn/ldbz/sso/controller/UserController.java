@@ -30,17 +30,11 @@ import cn.ldbz.utils.CookieUtils;
 @Controller
 public class UserController {
 
-    @Reference(version = Const.LDBZ_SHOP_SSO_VERSION, timeout=30000 , retries=0)
+    @Reference(version = Const.LDBZ_SHOP_SSO_VERSION, timeout=30000)
     private UserService userService;
 
-    @Reference(version = Const.LDBZ_SHOP_NOTIFY_VERSION , timeout=30000 , retries=0)
+    @Reference(version = Const.LDBZ_SHOP_NOTIFY_VERSION , timeout=30000)
     private NotifyUserService notifyUserService;
-
-    @Value("${user_not_exist}")
-    private String USER_NOT_EXIST;
-
-    @Value("${password_error}")
-    private String PASSWORD_ERROR;
 
     @Value("${portal_path}")
     private String PORTAL_PATH;
@@ -77,8 +71,8 @@ public class UserController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     @ResponseBody
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public String login(TbUser user, String returnUrl, HttpServletResponse response, HttpServletRequest request) {
         LdbzResult result = userService.login(user);
         if (result.getStatus() == 200) {
@@ -90,9 +84,12 @@ public class UserController {
             return "{\"success\":true , \"info\":\"" + PORTAL_PATH + "\"}";
         }
         if (result.getStatus() == 400) {
-            return USER_NOT_EXIST;
+            return "{\"success\":false , \"info\":\"用户不存在\"}";
         }
-        return PASSWORD_ERROR;
+        if (result.getStatus() == 500) {
+        	return "{\"success\":false , \"info\":\"用户名密码不能为空\"}";
+        }
+        return "{\"success\":false , \"info\":\"用户名密码有误\"}";
     }
 
     @RequestMapping(value = "/loginservice")

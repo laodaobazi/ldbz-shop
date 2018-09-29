@@ -36,12 +36,8 @@
 								<a href="#" title="">Home</a>
 								<span><img src="images/icons/arrow-right.png" alt=""></span>
 							</li>
-							<li class="trail-item">
-								<a href="#" title="">Shop</a>
-								<span><img src="images/icons/arrow-right.png" alt=""></span>
-							</li>
 							<li class="trail-end">
-								<a href="#" title="">Smartphones</a>
+								<a href="#" title="">登录</a>
 							</li>
 						</ul><!-- /.breacrumbs -->
 					</div><!-- /.col-md-12 -->
@@ -57,22 +53,22 @@
 							<div class="title">
 								<h3>Login</h3>
 							</div>
-							<form action="#" method="get" id="form-login" accept-charset="utf-8">
+							<form action="return false;" method="post"  accept-charset="utf-8" class="col-md-12 layui-form">
 								<div class="form-box">
-									<label for="name-login">Username or email address * </label>
-									<input type="text" id="name-login" name="name-login" placeholder="Ali">
+									<label for="name-login">Username * </label>
+									<input type="text" id="username" name="username" placeholder="输入用户名" value="${parameter.username}">
 								</div><!-- /.form-box -->
 								<div class="form-box">
 									<label for="password-login">Password * </label>
-									<input type="text" id="password-login" name="password-login" placeholder="******">
+									<input type="password" id="password" name="password" placeholder="输入密码">
 								</div><!-- /.form-box -->
 								<div class="form-box checkbox">
-									<input type="checkbox" id="remember" checked name="remember">
+									<input type="checkbox" id="remember" name="remember">
 									<label for="remember">Remember me</label>
 								</div><!-- /.form-box -->
 								<div class="form-box">
-									<button type="submit" class="login">Login</button>
-									<a href="#" title="">Lost your password?</a>
+									<button type="submit" class="login" lay-submit="" lay-filter="btn_login">Login</button>
+									<a href="javascript:;" title="">Lost your password?</a>
 								</div><!-- /.form-box -->
 							</form><!-- /#form-login -->
 						</div><!-- /.form-login -->
@@ -89,13 +85,17 @@
 
 	</div><!-- /.boxed -->
 
-		<!-- Javascript -->
 		<script type="text/javascript" src="${request.contextPath}/javascript/jquery.min.js"></script>
 		<script type="text/javascript" src="${request.contextPath}/javascript/tether.min.js"></script>
 		<script type="text/javascript" src="${request.contextPath}/javascript/bootstrap.min.js"></script>
 		<script type="text/javascript" src="${request.contextPath}/javascript/waypoints.min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/layui/layui.all.js"></script>
 
+		<script type="text/javascript">
+			var contextPath = "${request.contextPath}";
+		</script>
 		<script type="text/javascript" src="${request.contextPath}/javascript/main.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/javascript/login.js"></script>
 
 </body>	
 </html>

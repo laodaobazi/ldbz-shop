@@ -1,35 +1,42 @@
 package cn.ldbz.notify.service.impl;
 
-import cn.ldbz.constant.Const;
-import cn.ldbz.notify.service.NotifyUserService;
-import cn.ldbz.redis.service.JedisClient;
-import cn.ldbz.utils.FastJsonConvert;
+import java.util.HashMap;
+
+import javax.mail.internet.MimeMessage;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.ctrip.framework.apollo.model.ConfigChange;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
-import com.esotericsoftware.minlog.Log;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
+import cn.ldbz.constant.Const;
+import cn.ldbz.notify.service.NotifyUserService;
+import cn.ldbz.redis.service.JedisClient;
+import cn.ldbz.utils.FastJsonConvert;
 
 /**
  * 用户通知服务实现
- *
  */
 @Component
-@Service(version = Const.LDBZ_SHOP_NOTIFY_VERSION)
+@Service(version = Const.LDBZ_SHOP_NOTIFY_VERSION , timeout=3000)
 public class NotifyUserServiceImpl implements NotifyUserService {
 
     private static final Logger logger = LoggerFactory.getLogger(NotifyUserServiceImpl.class);
+    
+    @Autowired
+    private JavaMailSender mailSender ;
 
-    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION , timeout=30000)
     private JedisClient jedisClient;
     
     private final String EMAIL_NUMBER_CEILING = "3" ;//一段时间允许发送的邮件数量
@@ -41,6 +48,9 @@ public class NotifyUserServiceImpl implements NotifyUserService {
 
     @Value("${redisKey.prefix.email_login_time.expire_time:3600}")
     private Integer EMAIL_LOGIN_TIME_EXPIRE;//发送的频次时间
+
+	@Value("${mail.auth.name}")
+	private String EMAIL_AUTHNAME;
     
     /**
      * 监听配置项是否有修改
@@ -88,12 +98,17 @@ public class NotifyUserServiceImpl implements NotifyUserService {
             String time = jedisClient.get(key);
             //查询不到
             if (StringUtils.isBlank(time)) {
+            	if(!sendEmailCode(email, code)) {
+            		//邮件发送失败
+            		map.put("success", false);
+                    map.put("message", "服务器繁忙，稍后再试");
+                    return FastJsonConvert.convertObjectToJSON(map);
+            	}
                 //保存登录次数到Redis
                 //初始化次数为3次
                 jedisClient.set(key, EMAIL_NUMBER_CEILING);
                 //设置过期时间
                 jedisClient.expire(key, EMAIL_LOGIN_TIME_EXPIRE);
-
                 //保存code到Redis
                 jedisClient.set(key1, code + "");
                 //设置过期时间
@@ -110,6 +125,12 @@ public class NotifyUserServiceImpl implements NotifyUserService {
                 map.put("message", "次数过多，一小时后再试。");
                 return FastJsonConvert.convertObjectToJSON(map);
             }
+        	if(!sendEmailCode(email, code)) {
+        		//邮件发送失败
+        		map.put("success", false);
+                map.put("message", "服务器繁忙，稍后再试");
+                return FastJsonConvert.convertObjectToJSON(map);
+        	}
             jedisClient.set(key, --nub + "");
             // 发送短信==================
             //保存code到Redis
@@ -126,6 +147,22 @@ public class NotifyUserServiceImpl implements NotifyUserService {
         map.put("success", false);
         map.put("message", "服务器繁忙，稍后再试");
         return FastJsonConvert.convertObjectToJSON(map);
+    }
+    
+    private boolean sendEmailCode(String toUser , int code) {
+    	try {
+			MimeMessage mailMessage = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true);
+			messageHelper.setTo(toUser);
+			messageHelper.setFrom(EMAIL_AUTHNAME);
+			messageHelper.setSubject("LDBZ-验证码");
+			messageHelper.setText("您的邮件验证码为：" + code, true);
+			mailSender.send(mailMessage);
+			return true ;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false ;
+		}
     }
     
 }

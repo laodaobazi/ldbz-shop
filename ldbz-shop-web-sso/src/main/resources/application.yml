@@ -3,9 +3,5 @@ app:
 apollo:
   meta: http://192.168.136.133:8080
 
-# 密码错误
-password_error: '{"info":"密码输入有误","success":false}'
-# 用户名不存在
-user_not_exist: '{"info":"用户不存在", "success":false}'
 # 成功响应首页
-portal_path: 'http://localhost:8101/'
+portal_path: 'http://localhost:8104/index'

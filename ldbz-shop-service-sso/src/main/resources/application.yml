@@ -13,5 +13,5 @@ spring:
           enabled: true
           
 login:
-  # 登录成功页面
-  success_url: http://localhost:8104/success
+  # 注册成功之后跳转到登录页面
+  success_url: http://localhost:8106/login
