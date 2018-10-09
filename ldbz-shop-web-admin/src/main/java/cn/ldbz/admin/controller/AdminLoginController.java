@@ -18,6 +18,7 @@ import cn.ldbz.admin.service.AdminLoginService;
 import cn.ldbz.admin.vo.ManageUserVO;
 import cn.ldbz.constant.Const;
 import cn.ldbz.pojo.LdbzResult;
+import cn.ldbz.utils.CookieUtils;
 import cn.ldbz.utils.FastJsonConvert;
 
 /**
@@ -44,6 +45,9 @@ public class AdminLoginController {
     @RequestMapping("/login")
     public String userLogin(String account, String password , String code , String uid , HttpServletRequest req , HttpServletResponse response) {
     	LdbzResult ret = adminLoginService.userLogin(account, password, code, uid);
+    	if(ret.isOK()) {
+    		CookieUtils.setCookie(req, response, Const.TOKEN_LOGIN, ret.getData().toString());
+    	}
     	return FastJsonConvert.convertObjectToJSON(ret);
     }
     

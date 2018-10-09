@@ -25,4 +25,6 @@ public interface StorageService {
 	 * @return 删除成功后返回0，失败后返回错误代码
 	 */
 	int delete(String fileId);
+	
+	
 }

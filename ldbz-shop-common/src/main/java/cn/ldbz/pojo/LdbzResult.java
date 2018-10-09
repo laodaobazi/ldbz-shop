@@ -81,6 +81,4 @@ public class LdbzResult implements Serializable {
         this.data = data;
     }
 
-
-
 }

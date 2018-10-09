@@ -7,6 +7,12 @@ sso:
   web:
     url: http://localhost:8106/
 
+
+spring:
+  http:
+    multipart:
+      enabled: false
+      
 # fastdfs url
 #fastdfs.base.url: http://127.0.0.132/
 

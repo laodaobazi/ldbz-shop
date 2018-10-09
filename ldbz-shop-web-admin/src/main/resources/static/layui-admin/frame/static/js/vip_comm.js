@@ -5,7 +5,7 @@
 
 // 配置
 layui.config({
-    base: './frame/static/js/'  // 模块目录
+    base: '../layui-admin/frame/static/js/'  // 模块目录
 }).extend({                     // 模块别名
     vip_nav: 'vip_nav'
     , vip_tab: 'vip_tab'
@@ -73,8 +73,8 @@ layui.use(['layer', 'element', 'util'], function () {
     // 添加TAB选项卡
     window.addTab = function (elem, tit, url) {
         var card = 'card';                                              // 选项卡对象
-        var title = tit ? tit : elem.children('a').html();              // 导航栏text
-        var src = url ? url : elem.children('a').attr('href-url');      // 导航栏跳转URL
+        var title = tit ? tit : elem.html();              // 导航栏text
+        var src = url ? url : elem.attr('href-url');      // 导航栏跳转URL
         var id = new Date().getTime();                                  // ID
         var flag = getTitleId(card, title);                             // 是否有该选项卡存在
         // 大于0就是有该选项卡了

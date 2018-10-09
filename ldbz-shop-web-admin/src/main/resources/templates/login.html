@@ -76,11 +76,13 @@
 
         // 提交监听
         form.on('submit(sub)', function (data) {
-            layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            });
             $.post("${request.contextPath}/admin/login" , data.field , function(ret){
-            	console.log(ret);
+            	var json = $.parseJSON(ret);
+            	if(json && json.status==200){
+	            	location.href = "${request.contextPath}/admin/info" ;
+            	}else{
+            		layer.msg(json.msg);
+            	}
             });
             return false;
         });

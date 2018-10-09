@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -26,7 +25,6 @@ import cn.ldbz.utils.FastJsonConvert;
 
 @Component
 @Service(version = Const.LDBZ_SHOP_ADMIN_VERSION)
-@Transactional
 public class AdminLoginServiceImpl implements AdminLoginService{
 
     private static final Logger logger = LoggerFactory.getLogger(AdminLoginServiceImpl.class);
@@ -80,7 +78,7 @@ public class AdminLoginServiceImpl implements AdminLoginService{
             return LdbzResult.build(401, "用户不存在");
         }
         TbManageUser user = users.get(0);
-        if (!user.getPassword().equals(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()))) {
+        if (!user.getPassword().equals(DigestUtils.md5DigestAsHex(password.getBytes()))) {
         	return LdbzResult.build(400, "用户名密码错误");
         }
         TbManageUser result = new TbManageUser();
