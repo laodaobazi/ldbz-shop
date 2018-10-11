@@ -45,7 +45,7 @@ public class AdminIndexSlideAdServiceImpl implements AdminIndexSlideAdService{
 	public LdbzResult deleteByKey(String id) {
 		if(StringUtils.contains(id, ",")) {
 			List<Long> ids = new ArrayList<Long>();
-			for(String _id : StringUtils.split(",")) {
+			for(String _id : StringUtils.split(id , ",")) {
 				ids.add(Long.valueOf(_id));
 			}
 			return LdbzResult.ok(indexSlideAdService.deleteByKeys(ids));

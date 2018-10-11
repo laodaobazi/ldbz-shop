@@ -104,7 +104,15 @@
           break;
           case 'del':
         	  if(data.length>0){
-        		  console.log(data);
+        		  layer.confirm('是否确定删除选中行记录', function(index){
+			          var ids = $(data).map(function(i , o){ return o.id ; }).get().join(",");
+                	  $.post("${request.contextPath}/admin/deleteByKey/" + ids , function(ret){
+                		  if(ret.data>0 && ret.msg=='OK'){
+                			  tableIns.reload('demo');
+        			          layer.close(index);
+                		  }
+                	  });
+                  });
         	  }else{
 	          	layer.msg("请选择要删除的记录。");
         	  }
@@ -116,7 +124,7 @@
       table.on('tool(test)', function(obj){
         var data = obj.data;
         if(obj.event === 'del'){
-          layer.confirm('是否确定删除改行记录', function(index){
+          layer.confirm('是否确定删除该行记录', function(index){
         	  $.post("${request.contextPath}/admin/deleteByKey/"+data.id, function(ret){
         		  if(ret.data>0 && ret.msg=='OK'){
 			          obj.del();
@@ -125,15 +133,7 @@
         	  });
           });
         } else if(obj.event === 'edit'){
-          layer.prompt({
-            formType: 2
-            ,value: data.email
-          }, function(value, index){
-            obj.update({
-              email: value
-            });
-            layer.close(index);
-          });
+        	editRec(data);
         }
       });
     

@@ -12,3 +12,7 @@ spring:
       filter:
         config:
           enabled: true
+          
+logging:
+  level:
+     cn.ldbz.mapper: debug
