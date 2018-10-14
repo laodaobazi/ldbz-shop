@@ -7,6 +7,33 @@
 </head>
 <body>
 
+
+	<form class="layui-form layui-row" action="return false;">
+	
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	    <label class="layui-form-label">创建时间</label>
+	    <div class="layui-input-block">
+	      <input class="layui-input" id="query_create_date" placeholder="创建时间" type="text">
+	    </div>
+	  </div>
+	  
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	    <label class="layui-form-label">状态</label>
+	    <div class="layui-input-block">
+	      <select id="query_status">
+	        <option value="">请选择</option>
+	        <option value="1">启用</option>
+	        <option value="0">禁用</option>
+	      </select>
+	    </div>
+	  </div>
+	  
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	  	<button id="btn_reload" class="layui-btn layui-btn-radius" style="margin-left:65px;" type="button">查询</button>
+	  </div>
+	  
+	</form>
+	
 	<table id="demo" lay-filter="test"></table>
 	
 	<script type="text/html" id="toolbarDemo">
@@ -25,8 +52,13 @@
 	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
 	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/static/js/ldbz_util.js"></script>
 	<script>
-    layui.use(['table','jquery'], function(){
-      var table = layui.table , $ = jQuery = layui.$;
+    layui.use(['table','jquery','laydate'], function(){
+      var table = layui.table , $ = jQuery = layui.$ , laydate = layui.laydate;
+      
+      //日期
+      laydate.render({
+        elem: '#query_create_date'
+      });
 
       table.init('demo', {
         height: 'full-10'
@@ -41,9 +73,9 @@
         ,method: 'post'
         ,limit: 10
         ,contentType: 'application/x-www-form-urlencoded'
-        ,where: {
-        	id : 1
-        }
+//         ,where: {
+//         	id : 1
+//         }
         ,parseData: function(res){ //res 即为原始返回的数据
     	    return {
     	      "code": res.status,
@@ -84,8 +116,6 @@
           ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
         ]]
       });
-      
-
       
       //头工具栏事件
       table.on('toolbar(test)', function(obj){
@@ -172,6 +202,25 @@
 			});
 		layer.full(edit_full);
       }
+      
+      $("#btn_reload").click(function(){
+          var _status = $("#query_status").val() ;
+          var _created = $("#query_create_date").val() ;
+          
+          console.log(_created);
+          console.log(_created ? new Date(_created) : undefined);
+          
+	       table.reload('demo', {
+	 	          page: {
+	 	            curr: 1 //重新从第 1 页开始
+	 	          }
+	 	          ,where: {
+	 	        	  status : _status ,
+	 	        	 created : _created ? new Date(_created) : undefined
+	 	          }
+	 	    });
+    	  
+      });
       
     });
     </script>
