@@ -11,7 +11,7 @@ public interface LdbzBaseMapper<T> {
 	 * @param entity
 	 * @return
 	 */
-	List<T> selectByEntity(T entity , @Param("start")int start , @Param("limit")int limit);
+	List<T> selectByEntity(@Param("entity")T entity , @Param("start")int start , @Param("limit")int limit);
 	
 	/**
 	 * 根据Id获取实体

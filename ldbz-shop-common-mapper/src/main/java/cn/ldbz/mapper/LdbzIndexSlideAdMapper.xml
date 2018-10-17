@@ -21,10 +21,45 @@
     id, alt, href, src, status, sort_order, created , creator , creator_name, updated , updator, updator_name
   </sql>
   
-  <select id="selectByEntity" resultMap="BaseResultMap" parameterType="cn.ldbz.pojo.LdbzIndexSlideAd" >
+  <select id="selectByEntity" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from ldbz_index_slide_ad
+    <where>
+    	<if test="entity.alt != null and entity.alt != '' " >
+        and alt = #{entity.alt,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.href != null and entity.href != '' " >
+        and href = #{entity.href,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.src != null and entity.src != '' " >
+        and src = #{entity.src,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.status != null and entity.status != '' " >
+        and status = #{entity.status,jdbcType=INTEGER}
+      </if>
+      <if test="entity.sortOrder != null and entity.sortOrder != '' " >
+        and sort_order = #{entity.sortOrder,jdbcType=INTEGER}
+      </if>
+      <if test="entity.created != null" >
+        and date(created) = #{entity.created,jdbcType=DATE}
+      </if>
+      <if test="entity.creator != null and entity.creator != '' " >
+        and creator = #{entity.creator,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.creatorName != null and entity.creatorName != '' " >
+        and creator_name = #{entity.creatorName,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.updated != null" >
+        and date(updated) = #{entity.updated,jdbcType=DATE}
+      </if>
+      <if test="entity.updator != null and entity.updator != '' " >
+        and updator = #{entity.updator,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.updatorName != null and entity.updatorName != '' " >
+        and updator_name = #{entity.updatorName,jdbcType=VARCHAR}
+      </if>
+    </where>
     order by sort_order , updated desc
     limit #{start} , #{limit}
   </select>
@@ -145,7 +180,41 @@
   
   <select id="countByEntity" parameterType="cn.ldbz.pojo.LdbzIndexSlideAd" resultType="java.lang.Long" >
     select count(*) from ldbz_index_slide_ad
-    
+    <where>
+    	<if test="alt != null and alt != '' " >
+        and alt = #{alt,jdbcType=VARCHAR}
+      </if>
+      <if test="href != null and href != '' " >
+        and href = #{href,jdbcType=VARCHAR}
+      </if>
+      <if test="src != null and src != '' " >
+        and src = #{src,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' " >
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="sortOrder != null and sortOrder != '' " >
+        and sort_order = #{sortOrder,jdbcType=INTEGER}
+      </if>
+      <if test="created != null" >
+        and date(created) = #{created,jdbcType=DATE}
+      </if>
+      <if test="creator != null and creator != '' " >
+        and creator = #{creator,jdbcType=VARCHAR}
+      </if>
+      <if test="creatorName != null and creatorName != '' " >
+        and creator_name = #{creatorName,jdbcType=VARCHAR}
+      </if>
+      <if test="updated != null" >
+        and date(updated) = #{updated,jdbcType=DATE}
+      </if>
+      <if test="updator != null and updator != '' " >
+        and updator = #{updator,jdbcType=VARCHAR}
+      </if>
+      <if test="updatorName != null and updatorName != '' " >
+        and updator_name = #{updatorName,jdbcType=VARCHAR}
+      </if>
+    </where>
   </select>
   
   <update id="updateBySelective" parameterType="cn.ldbz.pojo.LdbzIndexSlideAd" >
@@ -238,10 +307,10 @@
       <if test="updated != null" >
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
-      <if test="creator != null" >
+      <if test="updator != null" >
         updator = #{updator,jdbcType=VARCHAR},
       </if>
-      <if test="creatorName != null" >
+      <if test="updatorName != null" >
         updator_name = #{updatorName,jdbcType=VARCHAR}
       </if>
     </set>

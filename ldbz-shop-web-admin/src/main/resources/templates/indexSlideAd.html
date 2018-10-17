@@ -206,14 +206,12 @@
       $("#btn_reload").click(function(){
           var _status = $("#query_status").val() ;
           var _created = $("#query_create_date").val() ;
-          
-          console.log(_created);
-          console.log(_created ? new Date(_created) : undefined);
-          
+          console.log(_created , '...' , _created ? new Date(_created) : undefined)
 	       table.reload('demo', {
 	 	          page: {
 	 	            curr: 1 //重新从第 1 页开始
 	 	          }
+	       		  ,coverWhere : true//覆盖之前的参数
 	 	          ,where: {
 	 	        	  status : _status ,
 	 	        	 created : _created ? new Date(_created) : undefined
