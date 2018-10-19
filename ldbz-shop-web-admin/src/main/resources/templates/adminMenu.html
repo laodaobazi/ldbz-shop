@@ -11,19 +11,19 @@
 	<form class="layui-form layui-row" action="return false;">
 	
 	  <div class="layui-col-xs4" style="margin-top: 20px;">
-	    <label class="layui-form-label">创建时间</label>
+	    <label class="layui-form-label">名称</label>
 	    <div class="layui-input-block">
-	      <input class="layui-input" id="query_create_date" placeholder="创建时间" type="text">
+	      <input class="layui-input" id="query_menu_name" placeholder="菜单名称" type="text">
 	    </div>
 	  </div>
 	  
 	  <div class="layui-col-xs4" style="margin-top: 20px;">
-	    <label class="layui-form-label">状态</label>
+	    <label class="layui-form-label">类型</label>
 	    <div class="layui-input-block">
-	      <select id="query_status">
+	      <select id="query_menu_type">
 	        <option value="">请选择</option>
-	        <option value="1">启用</option>
-	        <option value="0">禁用</option>
+	        <option value="1">普通菜单</option>
+	        <option value="2">分组菜单</option>
 	      </select>
 	    </div>
 	  </div>
@@ -55,11 +55,6 @@
     layui.use(['table','jquery','laydate'], function(){
       var table = layui.table , $ = jQuery = layui.$ , laydate = layui.laydate;
       
-      //日期
-      laydate.render({
-        elem: '#query_create_date'
-      });
-
       table.init('demo', {
         height: 'full-10'
         ,limit: 10
@@ -69,7 +64,7 @@
       var tableIns = table.render({
         elem: '#demo'
         ,toolbar: '#toolbarDemo'
-        ,url: '/admin/indexSlideAd/getIndexSlideAdPage' //数据接口
+        ,url: '/admin/adminMenu/getAdminMenuPage' //数据接口
         ,method: 'post'
         ,limit: 10
         ,contentType: 'application/x-www-form-urlencoded'
@@ -87,12 +82,9 @@
         ,page: true //开启分页
         ,cols: [[ //表头
           {type: 'checkbox', fixed: 'left'}
-          ,{field: 'src', title: '图片', width: 80}
-          ,{field: 'href', title: '网址', width: 80}
-          ,{field: 'alt', title: '提示', width: 80}
-          ,{field: 'status', title: '状态', width: 80 , templet: function(d){
-        	  return '<input type="checkbox" disabled lay-skin="switch" lay-text="ON|OFF" ' + ( d.status == 1 ? "checked" : "" ) + '>';
-          }}
+          ,{field: 'menuName', title: '名称', width: 80}
+          ,{field: 'menuParent', title: '父菜单', width: 80}
+          ,{field: 'menuType', title: '类型', width: 80}
           ,{field: 'sortOrder', title: '排序', width: 135}
           ,{field: 'id', title: 'ID', hide:true}
           ,{field: 'created', title: '创建时间', width:100 ,templet: function(d){
@@ -136,7 +128,7 @@
         	  if(data.length>0){
         		  layer.confirm('是否确定删除选中行记录', function(index){
 			          var ids = $(data).map(function(i , o){ return o.id ; }).get().join(",");
-                	  $.post("${request.contextPath}/admin/indexSlideAd/deleteByKey/" + ids , function(ret){
+                	  $.post("${request.contextPath}/admin/adminMenu/deleteByKey/" + ids , function(ret){
                 		  if(ret.data>0 && ret.msg=='OK'){
                 			  tableIns.reload('demo');
         			          layer.close(index);
@@ -155,7 +147,7 @@
         var data = obj.data;
         if(obj.event === 'del'){
           layer.confirm('是否确定删除该行记录', function(index){
-        	  $.post("${request.contextPath}/admin/indexSlideAd/deleteByKey/"+data.id, function(ret){
+        	  $.post("${request.contextPath}/admin/adminMenu/deleteByKey/"+data.id, function(ret){
         		  if(ret.data>0 && ret.msg=='OK'){
 			          obj.del();
 			          layer.close(index);
@@ -174,7 +166,7 @@
 				  shade: false,
 				  title: "新建",
 				  maxmin: false,
-				  content: '${request.contextPath}/admin/indexSlideAd/addIndexSlideAd',
+				  content: '${request.contextPath}/admin/adminMenu/addAdminMenu',
 				  success: function(layero){
 				    layer.setTop(layero);
 				  },
@@ -192,7 +184,7 @@
 			  shade: false,
 			  title: "编辑",
 			  maxmin: false,
-			  content: '${request.contextPath}/admin/indexSlideAd/editIndexSlideAd/' + data.id,
+			  content: '${request.contextPath}/admin/adminMenu/editAdminMenu/' + data.id,
 			  success: function(layero){
 			    layer.setTop(layero);
 			  },
@@ -204,17 +196,16 @@
       }
       
       $("#btn_reload").click(function(){
-          var _status = $("#query_status").val() ;
-          var _created = $("#query_create_date").val() ;
-          console.log(_created , '...' , _created ? new Date(_created) : undefined)
+          var _menu_name = $("#query_menu_name").val() ;
+          var _menu_type = $("#query_menu_type").val() ;
 	       table.reload('demo', {
 	 	          page: {
 	 	            curr: 1 //重新从第 1 页开始
 	 	          }
 	       		  ,coverWhere : true//覆盖之前的参数
 	 	          ,where: {
-	 	        	  status : _status ,
-	 	        	 created : _created ? new Date(_created) : undefined
+	 	        	  menuName : _menu_name ,
+	 	        	 menuType : _menu_type
 	 	          }
 	 	    });
     	  

@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/indexSlideAd")
 public class AdminIndexSlideAdController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminIndexSlideAdController.class);

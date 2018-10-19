@@ -7,7 +7,7 @@
 	        {
 	          "text": "首页轮播广告",
 	          "icon": "&#xe621;",
-	          "href": "indexSlideAd"
+	          "href": "indexSlideAd/indexSlideAd"
 	        }]
 	  }, {
       "text": "商城内容管理",
@@ -114,7 +114,7 @@
         },{
           "text": "系统菜单",
           "icon": "&#xe621;",
-          "href": "demo/btn.html"
+          "href": "adminMenu/adminMenu"
         },{
           "text": "系统日志",
           "icon": "&#xe621;",

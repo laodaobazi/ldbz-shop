@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzAdminMenuMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzAdminMenu" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="menu_parent" property="menuParent" jdbcType="BIGINT" />
+    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+    <result column="menu_type" property="menuType" jdbcType="INTEGER" />
+    <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="updator_name" property="updatorName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, menu_name, menu_parent, menu_url, menu_icon, menu_type , 
+    sort_order, created , creator , creator_name, updated , updator, updator_name
+  </sql>
+  
+  <select id="selectByEntity" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from ldbz_admin_menu
+    <where>
+      <if test="entity.menuName != null and entity.menuName != '' " >
+        and menu_name = #{entity.menuName,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.menuType != null and entity.menuType!= '' " >
+        and menu_type = #{entity.menuType,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by sort_order , updated desc
+    limit #{start} , #{limit}
+  </select>
+  
+  <select id="countByEntity" parameterType="cn.ldbz.pojo.LdbzAdminMenu" resultType="java.lang.Long" >
+    select count(*) from ldbz_admin_menu
+    <where>
+      <if test="menuName != null and menuName != '' " >
+        and menu_name = #{menuName,jdbcType=VARCHAR}
+      </if>
+      <if test="menuType != null and menuType!= '' " >
+        and menu_type = #{menuType,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ldbz_admin_menu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByKey" parameterType="java.lang.Long" >
+    delete from ldbz_admin_menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByKeys" parameterType="java.util.List" >
+    delete from ldbz_admin_menu
+    where id in
+    <foreach collection="list" item="id" open="(" close=")" separator="," >
+      #{id}
+    </foreach>
+  </delete>
+  
+  <delete id="deleteByEntity" parameterType="cn.ldbz.pojo.LdbzAdminMenu" >
+    delete from ldbz_admin_menu
+  </delete>
+  
+  <insert id="insertByEntity" parameterType="cn.ldbz.pojo.LdbzAdminMenu" >
+    insert into ldbz_admin_menu (
+	    id, menu_name, menu_parent, menu_url, menu_icon, menu_type , 
+	    sort_order, created , creator , creator_name, updated , updator, updator_name
+    )
+    values (#{id,jdbcType=BIGINT}, #{menuName,jdbcType=VARCHAR}, #{menuParent,jdbcType=VARCHAR}, 
+    	#{menuUrl,jdbcType=VARCHAR}, #{menuIcon,jdbcType=VARCHAR}, #{menuType,jdbcType=INTEGER}, 
+        #{sortOrder,jdbcType=TIMESTAMP}, #{created,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR} , 
+        #{creatorName,jdbcType=VARCHAR},#{updated,jdbcType=TIMESTAMP}, #{updator,jdbcType=VARCHAR} , 
+        #{updatorName,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertBySelective" parameterType="cn.ldbz.pojo.LdbzAdminMenu" >
+    insert into ldbz_admin_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuName != null" >
+        menu_name,
+      </if>
+      <if test="menuParent != null" >
+        menu_parent,
+      </if>
+      <if test="menuUrl != null" >
+        menu_url,
+      </if>
+      <if test="menuIcon != null" >
+        menu_icon,
+      </if>
+      <if test="menuType != null" >
+        menu_type,
+      </if>
+      <if test="sortOrder != null" >
+        sort_order,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="creator != null" >
+        creator
+      </if>
+      <if test="creatorName != null" >
+        creator_name
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+      <if test="updator != null" >
+        updator
+      </if>
+      <if test="updatorName != null" >
+        updator_name
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="menuName != null" >
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParent != null" >
+        #{menuParent,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null" >
+        #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null" >
+        #{menuType,jdbcType=INTEGER},
+      </if>
+      <if test="sortOrder != null" >
+        #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null" >
+        #{updatorName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateBySelective" parameterType="cn.ldbz.pojo.LdbzAdminMenu" >
+    update ldbz_admin_menu
+    <set>
+      <if test="id != null" >
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="menuName != null" >
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParent != null" >
+        menu_parent = #{menuParent,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        menu_url = #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null" >
+        menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null" >
+        menu_type = #{menuType,jdbcType=INTEGER},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        creator_name = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null" >
+        updator_name = #{updatorName,jdbcType=VARCHAR},
+      </if>
+    </set>
+  </update>
+  
+  <update id="updateByEntity" parameterType="cn.ldbz.pojo.LdbzAdminMenu" >
+    update ldbz_admin_menu
+    set id = #{id,jdbcType=BIGINT},
+      menu_name = #{menuName ,jdbcType=VARCHAR},
+      menu_parent = #{menuParent ,jdbcType=VARCHAR},
+      menu_url = #{menuUrl,jdbcType=VARCHAR},
+      menu_icon = #{menuIcon ,jdbcType=VARCHAR},
+      menu_type = #{menuType ,jdbcType=INTEGER},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR} ,
+      creator_name = #{creatorName,jdbcType=VARCHAR} ,
+      updated = #{updated,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR} ,
+      updator_name = #{updatorName,jdbcType=VARCHAR} 
+  </update>
+  
+  <update id="updateByKeySelective" parameterType="cn.ldbz.pojo.LdbzAdminMenu" >
+    update ldbz_admin_menu
+    <set >
+      <if test="menuName != null" >
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParent != null" >
+        menu_parent = #{menuParent ,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        menu_url = #{menuUrl ,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null" >
+        menu_icon = #{menuIcon ,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null" >
+        menu_type = #{menuType ,jdbcType=INTEGER},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        creator_name = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null" >
+        updator_name = #{updatorName,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByKey" parameterType="cn.ldbz.pojo.LdbzAdminMenu" >
+    update ldbz_admin_menu
+    set menu_name = #{menuName ,jdbcType=VARCHAR},
+      menu_parent = #{menuParent ,jdbcType=VARCHAR},
+      menu_url = #{menuUrl ,jdbcType=VARCHAR},
+      menu_icon = #{menuIcon ,jdbcType=VARCHAR},
+      menu_type = #{menuType ,jdbcType=INTEGER},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR}, 
+      creator_name = #{creatorName,jdbcType=VARCHAR},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR},
+      updator_name = #{updatorName,jdbcType=VARCHAR}
+    where 
+      id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="getMenuTree" resultMap="BaseResultMap" >
+    select id , menu_name , menu_parent , menu_type 
+    from ldbz_admin_menu
+    order by menu_parent , sort_order , updated desc
+  </select>
+  
+  
+</mapper>

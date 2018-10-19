@@ -111,7 +111,7 @@ layui.use(['form', 'layedit', 'laydate','upload','jquery'], function(){
 	}else{
 		data.field.status=0 ;
 	}
-    $.post("${request.contextPath}/admin/updateByKey" , data.field , function(ret){
+    $.post("${request.contextPath}/admin/indexSlideAd/updateByKey" , data.field , function(ret){
     	if(ret.status==200){
 			  var index = parent.layer.getFrameIndex(window.name);
 			  parent.layer.close(index);

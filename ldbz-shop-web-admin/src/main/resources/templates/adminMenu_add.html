@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+          
+<form class="layui-form" action="">
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">名称</label>
+    <div class="layui-input-block">
+      <input name="menuName" lay-verify="required" autocomplete="off" placeholder="菜单名称" class="layui-input" type="text">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">链接</label>
+    <div class="layui-input-block">
+      <input name="menuUrl" lay-verify="required" autocomplete="off" placeholder="跳转链接" autocomplete="off" class="layui-input" type="text">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">类型</label>
+    <div class="layui-input-block">
+    	<select name="menuType">
+	        <option value="1">普通菜单</option>
+	        <option value="2">分组菜单</option>
+	      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">图标</label>
+    <div class="layui-input-block">
+      <input name="menuIcon" lay-verify="required" autocomplete="off" placeholder="菜单图标" autocomplete="off" class="layui-input" type="text">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">父菜单</label>
+    <div class="layui-input-block">
+      <input id="menuParentText" lay-verify="required" readonly autocomplete="off" placeholder="所属菜单" autocomplete="off" class="layui-input" type="text" value="根节点" >
+      <input id="menuParentValue" name="menuParent" type="hidden" value=0 >
+      <ul id="treeDemo" class="ztree"></ul>
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+      <label class="layui-form-label">排序</label>
+      <div class="layui-input-block">
+        <input name="sortOrder" lay-verify="required|number" autocomplete="off" class="layui-input" type="number">
+      </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+
+<link rel="stylesheet" href="${request.contextPath}/zTree_v3-3.5.33/css/zTreeStyle/zTreeStyle.css">
+<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+<script type="text/javascript" src="${request.contextPath}/zTree_v3-3.5.33/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="${request.contextPath}/zTree_v3-3.5.33/js/jquery.ztree.all.min.js"></script>
+
+<script>
+layui.use(['form', 'layedit'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit  ;
+  
+  //监听提交
+  form.on('submit(demo1)', function(data){
+    $.post("${request.contextPath}/admin/adminMenu/insertByEntity" , data.field , function(ret){
+    	if(ret.status==200){
+			  var index = parent.layer.getFrameIndex(window.name);
+			  parent.layer.close(index);
+			  parent.layer.msg("添加成功");
+    	}else{
+    		layer.msg(ret.msg);
+    	}
+    });
+    return false;
+  });
+  
+  //初始化树
+  $.post("${request.contextPath}/admin/adminMenu/getMenuTree" , function(ret){
+		    var treeNode = ret.data ;
+		    treeNode.push({"id":"0" , "menuName":"根节点" , "menuParent":"root" , "menuType":2 , "open":true});
+			var setting = {
+				data : {
+					key : {
+						name : "menuName",
+					},
+					simpleData : {
+						enable : true,
+						idKey : "id",
+						pIdKey : "menuParent",
+						rootPId : 0
+					}
+				},
+				// 回调函数
+				callback : {
+					onClick : function(event, treeId, treeNode, clickFlag) {
+						if(treeNode.menuType==2){
+							$("#menuParentText").val(treeNode.menuName);
+							$("#menuParentValue").val(treeNode.id);
+						}else{
+							layer.msg("所属菜单必须为分组菜单。");
+						}
+					}
+				}
+			};
+			$.fn.zTree.init($("#treeDemo"), setting, ret.data);
+	  });
+  
+	});
+</script>
+</body>
+</html>
