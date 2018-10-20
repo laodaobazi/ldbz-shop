@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+          
+<form class="layui-form" action="return false;">
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">账号</label>
+    <div class="layui-input-block">
+      <input name="userName" lay-verify="required" autocomplete="off" placeholder="用户名" class="layui-input" type="text" value="${user.userName}">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">密码</label>
+    <div class="layui-input-block">
+      <input name="userPwd" lay-verify="required" autocomplete="off" placeholder="用户密码" autocomplete="off" class="layui-input" type="password" value="${user.userPwd}">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">姓名</label>
+    <div class="layui-input-block">
+      <input name="realName" lay-verify="required" autocomplete="off" placeholder="姓名" autocomplete="off" class="layui-input" type="text" value="${user.realName}">
+    </div>
+  </div>
+  <div class="layui-form-item">
+      <label class="layui-form-label">邮箱</label>
+      <div class="layui-input-block">
+        <input name="email" lay-verify="email" autocomplete="off" class="layui-input" type="text" value="${user.email}">
+      </div>
+  </div>
+  <div class="layui-form-item">
+      <label class="layui-form-label">电话</label>
+      <div class="layui-input-block">
+        <input name="telephone" autocomplete="off" class="layui-input" type="text" value="${user.telephone}">
+      </div>
+  </div>
+  <input type="hidden" name="sortOrder" value=1 >
+  <input type="hidden" name="id" value="${user.id}" >
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+
+<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+
+<script>
+layui.use(['form', 'layedit'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,$ = layui.jquery
+  ,layedit = layui.layedit  ;
+  
+  //监听提交
+  form.on('submit(demo1)', function(data){
+    $.post("${request.contextPath}/admin/adminUser/updateByKey" , data.field , function(ret){
+    	if(ret.status==200){
+			  var index = parent.layer.getFrameIndex(window.name);
+			  parent.layer.close(index);
+			  parent.layer.msg("修改成功");
+    	}else{
+    		layer.msg(ret.msg);
+    	}
+    });
+    return false;
+  });
+  
+});
+</script>
+</body>
+</html>

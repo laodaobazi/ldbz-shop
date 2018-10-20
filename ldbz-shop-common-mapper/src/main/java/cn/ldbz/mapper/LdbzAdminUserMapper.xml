@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzAdminUserMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzAdminUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="updator_name" property="updatorName" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, user_name , user_pwd , real_name , email , telephone , sort_order, created , creator , creator_name, updated , updator, updator_name
+  </sql>
+  
+  <select id="selectByEntity" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from ldbz_admin_user
+    <where>
+      <if test="entity.userName != null and entity.userName != '' " >
+        and user_name = #{entity.userName ,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.realName != null and entity.realName != '' " >
+        and real_name like #{entity.realName ,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by sort_order , updated desc
+    limit #{start} , #{limit}
+  </select>
+  
+  <select id="countByEntity" parameterType="cn.ldbz.pojo.LdbzAdminUser" resultType="java.lang.Long" >
+    select count(*) from ldbz_admin_user
+    <where>
+      <if test="userName != null and userName != '' " >
+        and user_name = #{userName ,jdbcType=VARCHAR}
+      </if>
+      <if test="realName != null and realName != '' " >
+        and real_name like #{realName ,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ldbz_admin_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByKey" parameterType="java.lang.Long" >
+    delete from ldbz_admin_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByKeys" parameterType="java.util.List" >
+    delete from ldbz_admin_user
+    where id in
+    <foreach collection="list" item="id" open="(" close=")" separator="," >
+      #{id}
+    </foreach>
+  </delete>
+  
+  <delete id="deleteByEntity" parameterType="cn.ldbz.pojo.LdbzAdminUser" >
+    delete from ldbz_admin_user
+  </delete>
+  
+  <insert id="insertByEntity" parameterType="cn.ldbz.pojo.LdbzAdminUser" >
+    insert into ldbz_admin_user (
+	    id, user_name , user_pwd , real_name , email , telephone , sort_order, created , creator , creator_name, updated , updator, updator_name
+    )
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
+    	#{realName,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{telephone,jdbcType=VARCHAR},
+        #{sortOrder,jdbcType=TIMESTAMP}, #{created,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR} , 
+        #{creatorName,jdbcType=VARCHAR},#{updated,jdbcType=TIMESTAMP}, #{updator,jdbcType=VARCHAR} , 
+        #{updatorName,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertBySelective" parameterType="cn.ldbz.pojo.LdbzAdminUser" >
+    insert into ldbz_admin_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPwd != null" >
+        user_pwd,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="sortOrder != null" >
+        sort_order,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="creator != null" >
+        creator
+      </if>
+      <if test="creatorName != null" >
+        creator_name
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+      <if test="updator != null" >
+        updator
+      </if>
+      <if test="updatorName != null" >
+        updator_name
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null" >
+        #{updatorName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateBySelective" parameterType="cn.ldbz.pojo.LdbzAdminUser" >
+    update ldbz_admin_user
+    <set>
+      <if test="id != null" >
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        creator_name = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null" >
+        updator_name = #{updatorName,jdbcType=VARCHAR},
+      </if>
+    </set>
+  </update>
+  
+  <update id="updateByEntity" parameterType="cn.ldbz.pojo.LdbzAdminUser" >
+    update ldbz_admin_user
+    set id = #{id,jdbcType=BIGINT},
+      user_name = #{userName ,jdbcType=VARCHAR},
+      user_pwd = #{userPwd ,jdbcType=VARCHAR},
+      real_name = #{realName ,jdbcType=VARCHAR},
+      email = #{email ,jdbcType=VARCHAR},
+      telephone = #{telephone ,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR} ,
+      creator_name = #{creatorName,jdbcType=VARCHAR} ,
+      updated = #{updated,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR} ,
+      updator_name = #{updatorName,jdbcType=VARCHAR} 
+  </update>
+  
+  <update id="updateByKeySelective" parameterType="cn.ldbz.pojo.LdbzAdminUser" >
+    update ldbz_admin_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="eamil != null" >
+        eamil = #{eamil,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        creator_name = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null" >
+        updator_name = #{updatorName,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByKey" parameterType="cn.ldbz.pojo.LdbzAdminUser" >
+    update ldbz_admin_user
+    set user_name = #{userName ,jdbcType=VARCHAR},
+      user_pwd = #{userPwd ,jdbcType=VARCHAR},
+      real_name = #{realName ,jdbcType=VARCHAR},
+      email = #{email ,jdbcType=VARCHAR},
+      telephone = #{telephone ,jdbcType=VARCHAR},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR}, 
+      creator_name = #{creatorName,jdbcType=VARCHAR},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR},
+      updator_name = #{updatorName,jdbcType=VARCHAR}
+    where 
+      id = #{id,jdbcType=BIGINT}
+  </update>
+  
+</mapper>

@@ -38,4 +38,9 @@ public final class ConvertUtils {
         }
         return (new String(sb));
     }
+    
+    public static String getKey(String key){
+		return "%"+key.replaceAll("%", "\\\\%").replaceAll("_", "\\\\_") ;
+	}
+    
 }
