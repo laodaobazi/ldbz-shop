@@ -10,7 +10,7 @@
 </head>
 <body>
           
-<form class="layui-form" action="">
+<form class="layui-form" action="return false;">
 
   <div class="layui-form-item">
     <label class="layui-form-label">名称</label>
@@ -30,6 +30,7 @@
     	<select name="menuType">
 	        <option value="1">普通菜单</option>
 	        <option value="2">分组菜单</option>
+	        <option value="3">系统资源</option>
 	      </select>
     </div>
   </div>
@@ -107,11 +108,11 @@ layui.use(['form', 'layedit'], function(){
 				// 回调函数
 				callback : {
 					onClick : function(event, treeId, treeNode, clickFlag) {
-						if(treeNode.menuType==2){
+						if(treeNode.menuType != 3){
 							$("#menuParentText").val(treeNode.menuName);
 							$("#menuParentValue").val(treeNode.id);
 						}else{
-							layer.msg("所属菜单必须为分组菜单。");
+							layer.msg("所属节点必须为菜单。");
 						}
 					}
 				}

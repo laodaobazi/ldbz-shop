@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+          
+<form class="layui-form" action="return false;">
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">名称</label>
+    <div class="layui-input-block">
+      <input name="roleName" lay-verify="required" autocomplete="off" placeholder="角色名称" class="layui-input" type="text" value="${role.RoleName}">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+      <label class="layui-form-label">排序</label>
+      <div class="layui-input-block">
+        <input name="sortOrder" lay-verify="required|number" autocomplete="off" class="layui-input" type="number" value="${role.sortOrder}">
+      </div>
+  </div>
+  
+  <input type="hidden" value="${role.id}" name="id">
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+
+<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+
+<script>
+layui.use(['form', 'layedit'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,$ = layui.jquery
+  ,layedit = layui.layedit  ;
+  
+  //监听提交
+  form.on('submit(demo1)', function(data){
+    $.post("${request.contextPath}/admin/adminRole/updateByKey" , data.field , function(ret){
+    	if(ret.status==200){
+			  var index = parent.layer.getFrameIndex(window.name);
+			  parent.layer.close(index);
+			  parent.layer.msg("修改成功");
+    	}else{
+    		layer.msg(ret.msg);
+    	}
+    });
+    return false;
+  });
+  
+});
+</script>
+</body>
+</html>

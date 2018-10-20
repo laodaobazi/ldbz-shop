@@ -32,14 +32,14 @@ public class AdminMenuController {
     
     @ApiOperation(value="列表页面跳转", notes="跳转到后台管理菜单的列表页面")
     @RequestMapping(value="/adminMenu" , method = RequestMethod.GET)
-    String indexSlideAd() {
+    String adminRole() {
     	logger.debug("go to adminMenu ");
     	return "adminMenu";
     }
     
     @ApiOperation(value="新增页面跳转", notes="跳转到后台管理菜单新增页面")
     @RequestMapping(value="/addAdminMenu" , method = RequestMethod.GET)
-    String addIndexSlideAd() {
+    String addAdminMenu() {
     	logger.debug("go to adminMenu_add ");
     	return "adminMenu_add";
     }
@@ -47,7 +47,7 @@ public class AdminMenuController {
     @ApiOperation(value="修改页面跳转", notes="跳转到后台管理菜单的修改页面")
     @ApiImplicitParam(name = "id", value = "菜单id", required = true, dataType = "long",paramType = "path")
     @RequestMapping(value="/editAdminMenu/{id}" , method = RequestMethod.GET)
-    String editIndexSlideAd(@PathVariable("id")long id , Model model) {
+    String editAdminMenu(@PathVariable("id")long id , Model model) {
     	logger.debug("go to adminMenu_edit id : {}" , id);
     	LdbzResult ret = adminMenuService.selectByKey(id);
     	model.addAttribute("menu" , ret.getData());

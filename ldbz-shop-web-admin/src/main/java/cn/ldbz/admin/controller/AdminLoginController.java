@@ -1,6 +1,5 @@
 package cn.ldbz.admin.controller;
 
-import java.util.Date;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 
 import cn.ldbz.admin.service.AdminLoginService;
-import cn.ldbz.admin.vo.ManageUserVO;
 import cn.ldbz.constant.Const;
 import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.utils.CookieUtils;
@@ -53,11 +51,6 @@ public class AdminLoginController {
     
     @RequestMapping("/info")
     public String showAdmin(Model model) {
-        ManageUserVO userVO = new ManageUserVO();
-        userVO.setCreated(new Date());
-        userVO.setName("老刀把子");
-        userVO.setJob("CEO");
-        model.addAttribute("user", userVO);
         return "info";
     }
 
