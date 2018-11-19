@@ -35,6 +35,8 @@
 	<script type="text/html" id="barDemo">
   		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="user">用户</a>
+  		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="menu">资源</a>
 	</script>
 
 	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
@@ -90,7 +92,7 @@
           }}
           ,{field: 'updator', title: '修改人', width: 80}
           ,{field: 'updatorName', title: '修改人', width: 80}
-          ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+          ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:300}
         ]]
       });
       
@@ -141,6 +143,10 @@
           });
         } else if(obj.event === 'edit'){
         	editRec(data);
+        } else if(obj.event === 'user'){
+        	userWin(data);
+        } else if(obj.event === 'menu'){
+        	menuWin(data);
         }
       });
     
@@ -179,6 +185,40 @@
 			});
 		layer.full(edit_full);
       }
+    
+      //用户
+		function userWin(data){
+			var user_full = layer.open({
+				  type: 2,
+				  shade: false,
+				  title: "用户",
+				  maxmin: false,
+				  content: '${request.contextPath}/admin/adminAuth/user/' + data.id ,
+				  success: function(layero){
+				    layer.setTop(layero);
+				  },
+				  end: function () {
+				  }
+				});
+			layer.full(user_full);
+		}
+    
+      //资源
+		function menuWin(data){
+			var menu_full = layer.open({
+				  type: 2,
+				  shade: false,
+				  title: "用户",
+				  maxmin: false,
+				  content: '${request.contextPath}/admin/adminAuth/menu/' + data.id ,
+				  success: function(layero){
+				    layer.setTop(layero);
+				  },
+				  end: function () {
+				  }
+				});
+			layer.full(menu_full);
+		}
       
       $("#btn_reload").click(function(){
           var _role_name = $("#query_role_name").val() ;

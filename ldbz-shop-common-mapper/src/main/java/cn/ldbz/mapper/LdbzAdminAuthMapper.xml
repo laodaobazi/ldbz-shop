@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzAdminAuthMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzAdminAuth" >
+    <result column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="menu_id" property="menuId" jdbcType="BIGINT" />
+    <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!--   根据角色获取所有人员   -->
+  <select id="selectUserByRole" resultMap="BaseResultMap" >
+    select u.real_name , u.user_name , ru.user_id , r.role_name , ru.role_id , ru.created
+	from ldbz_admin_role r 
+	join ldbz_admin_role_user ru on r.id = ru.role_id
+	join ldbz_admin_user u on u.id = ru.user_id
+	where r.id = #{roleId ,jdbcType=BIGINT}
+	<if test="realName != null and realName != '' ">
+	and ( u.real_name like #{realName} or u.user_name like #{realName} ) 
+	</if>
+    limit #{start} , #{limit}
+  </select>
+  
+  <select id="countUserByRole" resultType="java.lang.Long" >
+    select count(*)
+    from ldbz_admin_role r 
+	join ldbz_admin_role_user ru on r.id = ru.role_id
+	join ldbz_admin_user u on u.id = ru.user_id
+	where r.id = #{roleId ,jdbcType=BIGINT}
+	<if test="realName != null and realName != '' ">
+	and u.real_name like #{realName}
+	</if>
+  </select>
+
+  <!--   根据角色获取所有资源   -->
+  <select id="selectMenuByRole" resultMap="BaseResultMap" >
+	select m.menu_name , rm.menu_id , r.role_name , rm.role_id , rm.created
+	from ldbz_admin_menu m
+	join ldbz_admin_role_menu rm on m.id = rm.menu_id
+	join ldbz_admin_role r on r.id = rm.role_id
+	where r.id = #{roleId ,jdbcType=BIGINT}
+	<if test="menuName != null and menuName != '' ">
+	and ( m.menu_name like #{menuName} or m.menu_url like #{menuName} )
+	</if>
+    limit #{start} , #{limit}
+  </select>
+  
+  <select id="countMenuByRole" resultType="java.lang.Long" >
+    select count(*)
+	from ldbz_admin_menu m
+	join ldbz_admin_role_menu rm on m.id = rm.menu_id
+	join ldbz_admin_role r on r.id = rm.role_id
+	where r.id = #{roleId ,jdbcType=BIGINT}
+	<if test="menuName != null and menuName != '' ">
+	and m.menu_name like #{menuName}
+	</if>
+  </select>
+  
+  <delete id="deleteByUser" parameterType="java.lang.Long" >
+    delete from ldbz_admin_role_user
+    where user_id = #{userId ,jdbcType=BIGINT}
+    and role_id  = #{roleId ,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByMenu" parameterType="java.lang.Long" >
+    delete from ldbz_admin_role_menu
+    where menu_id = #{menuId ,jdbcType=BIGINT}
+    and role_id  = #{roleId ,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insertByUser" parameterType="cn.ldbz.pojo.LdbzAdminRole" >
+    insert into ldbz_admin_role_user (
+    	user_id , role_id , created , creator
+    )
+    values (#{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, 
+        #{created,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR} )
+  </insert>
+  
+  <insert id="insertByMenu" parameterType="cn.ldbz.pojo.LdbzAdminRole" >
+    insert into ldbz_admin_role_menu (
+    	menu_id , role_id , created , creator
+    )
+    values (#{menuId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, 
+        #{created,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="getUserByNameOrAccount" resultMap="BaseResultMap" >
+    select u.user_name , u.real_name , u.id user_id
+	from ldbz_admin_user u
+	where u.real_name like #{menuName}
+	or u.user_name like #{menuName}
+  </select>
+  
+  <select id="getResByNameOrUrl" resultMap="BaseResultMap" >
+    select m.menu_name , m.id menu_id
+	from ldbz_admin_menu m
+	where m.menu_name like #{menuName}
+	or m.menu_url like #{menuName}
+  </select>
+  
+</mapper>

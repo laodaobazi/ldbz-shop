@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>角色分配资源</title>
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+
+	<form class="layui-form layui-row" action="return false;">
+	
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	    <label class="layui-form-label">资源</label>
+	    <div class="layui-input-block">
+	      <input class="layui-input" id="query_res_name" placeholder="资源名称" type="text">
+	    </div>
+	  </div>
+	  
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	  	<button id="btn_reload" class="layui-btn layui-btn-radius" style="margin-left:65px;" type="button">查询</button>
+	  </div>
+	  
+	</form>
+	
+	<table id="demo" lay-filter="test"></table>
+	
+	<script type="text/html" id="toolbarDemo">
+	<div class="layui-row">
+    <div class="layui-col-xs4">
+	<input class="layui-input" id="query_res" placeholder="资源名称or请求路径" type="text">
+    </div>
+    <div class="layui-col-xs4">
+    <button class="layui-btn layui-btn-warm" lay-event="add">添加</button>
+    </div>
+  </div>
+	</script>
+	 
+	<script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+
+	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/bootstrap.autocomplete.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/static/js/ldbz_util.js"></script>
+	<script>
+    layui.use(['table','laydate'], function(){
+      var table = layui.table , laydate = layui.laydate;
+      
+      table.init('demo', {
+        height: 'full-10'
+        ,limit: 10
+      }); 
+    
+      //第一个实例
+      var tableIns = table.render({
+        elem: '#demo'
+        ,toolbar: '#toolbarDemo'
+        ,url: '/admin/adminAuth/selectMenuByRole' //数据接口
+        ,method: 'post'
+        ,limit: 10
+        ,contentType: 'application/x-www-form-urlencoded'
+        ,where: {
+        	roleId : ${roleId}
+        }
+        ,parseData: function(res){ //res 即为原始返回的数据
+    	    return {
+    	      "code": res.status,
+    	      "msg": res.msg,
+    	      "count": res.data.total,
+    	      "data": res.data.list
+    	    };
+    	 }
+        ,page: true //开启分页
+        ,cols: [[ //表头
+          {type: 'checkbox', fixed: 'left'}
+          ,{field: 'roleName', title: '角色', width: 180}
+          ,{field: 'roleId', hide:true}
+          ,{field: 'menuName', title: '资源名称', width: 180}
+          ,{field: 'menuId', hide:true}
+          ,{field: 'created', title: '创建时间', width:120 ,templet: function(d){
+              if(d.created){
+            	  return new Date(d.created).Format("yyyy-MM-dd hh:mm:ss");
+          	  }else{
+          		  return "";
+          	  } 
+          }}
+          ,{field: 'creator', title: '创建人', width:80}
+          ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+        ]]
+      });
+      
+      //头工具栏事件
+      table.on('toolbar(test)', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        var data = checkStatus.data;
+        switch(obj.event){
+          case 'add':
+        	  addRec();
+          break;
+        };
+      });
+      
+      //监听行工具事件
+      table.on('tool(test)', function(obj){
+        var data = obj.data;
+        if(obj.event === 'del'){
+          var confirm = layer.confirm('是否确定删除该行记录', function(index){
+        	  $.post("${request.contextPath}/admin/adminAuth/deleteByMenu" , {
+        		  "menuId" : data.menuId ,
+        		  "roleId" : ${roleId}
+        	  } , function(ret){
+        		  if(ret.data>0 && ret.msg=='OK'){
+        			  tableIns.reload('demo');
+        			  query_res_autocomplete();
+        			  layer.close(confirm);
+        		  }
+        	  });
+          });
+        }
+      });
+    
+      //新建
+		function addRec(){
+    	  var resId = $("#query_res").attr("resId");
+    	  var resName = $("#query_res").attr("resName");
+    	  if(resId || resName){
+	    	  $.post("${request.contextPath}/admin/adminAuth/insertByMenu" , {
+	    		  menuId : resId ,
+	    		  menuName : resName ,
+	    		  roleId : ${roleId}
+		      	} , function(ret){
+		      			if(ret.ok){
+			      		  tableIns.reload('demo');
+			      		  query_res_autocomplete();
+			    		  layer.msg("资源添加成功");
+			    		  $("#query_res").val('');
+			    		  $("#query_res").attr("resId" , "");
+			    		  $("#query_res").attr("resName" , "");
+		      			}else{
+			    		  layer.msg("资源添加失败");
+		      			}
+		      	}).error(function(e){
+		      		layer.msg(ret.msg);
+		      	});
+    	  }else{
+    		  layer.msg("资源不能为空");
+    	  }
+		}
+      
+      $("#btn_reload").click(function(){
+          var _res_name = $("#query_res_name").val() ;
+	       table.reload('demo', {
+	 	          page: {
+	 	            curr: 1 //重新从第 1 页开始
+	 	          }
+	       		  ,coverWhere : true//覆盖之前的参数
+	 	          ,where: {
+	 	        	 roleId : ${roleId} ,
+	 	        	  resName : _res_name
+	 	          }
+	 	    });
+	       query_res_autocomplete();
+      });
+      
+      //联想人员
+      query_res_autocomplete();
+      
+    });
+    
+    function query_res_autocomplete(){
+    	$("#query_res").autocomplete({
+			items : 20 ,
+	        source:function(query,process){
+	      	    var query_res = $("#query_res").val();
+	        	$.post("${request.contextPath}/admin/adminAuth/getResByNameOrUrl" , {
+	        		queryKey : query_res
+	        	} , function(ret){
+	        			return process(ret.data);
+	        	})
+	        },
+	        formatItem:function(item){
+	        		return item["menuName"] ;
+	        },
+	        setValue:function(item){
+	        		$("#query_res").attr("resName" , item["menuName"]);
+	        		$("#query_res").attr("resId" , item["menuId"]);
+	        		return {'data-value':item["menuName"],'real-value':item["menuId"]};
+	        }
+	    });
+    }
+    </script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 package cn.ldbz.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * String编码转换
  *
@@ -40,7 +42,10 @@ public final class ConvertUtils {
     }
     
     public static String getKey(String key){
-		return "%"+key.replaceAll("%", "\\\\%").replaceAll("_", "\\\\_") ;
+    	if(StringUtils.isNotEmpty(key)) {
+    		return "%"+key.replaceAll("%", "\\\\%").replaceAll("_", "\\\\_")+"%" ;
+    	}
+    	return key ;
 	}
     
 }

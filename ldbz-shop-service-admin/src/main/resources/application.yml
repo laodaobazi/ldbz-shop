@@ -26,3 +26,8 @@ spring:
 #  fastdfs:
 #    tracker_server: 127.0.0.129:22122
 
+
+          
+logging:
+  level:
+     cn.ldbz.mapper: debug

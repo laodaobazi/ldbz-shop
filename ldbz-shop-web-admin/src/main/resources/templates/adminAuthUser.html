@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>角色分配用户</title>
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+
+	<form class="layui-form layui-row" action="return false;">
+	
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	    <label class="layui-form-label">姓名</label>
+	    <div class="layui-input-block">
+	      <input class="layui-input" id="query_real_name" placeholder="人员姓名" type="text">
+	    </div>
+	  </div>
+	  
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	  	<button id="btn_reload" class="layui-btn layui-btn-radius" style="margin-left:65px;" type="button">查询</button>
+	  </div>
+	  
+	</form>
+	
+	<table id="demo" lay-filter="test"></table>
+	
+	<script type="text/html" id="toolbarDemo">
+	<div class="layui-row">
+    <div class="layui-col-xs4">
+	<input class="layui-input" id="query_user" placeholder="人员姓名或账号" type="text">
+    </div>
+    <div class="layui-col-xs4">
+    <button class="layui-btn layui-btn-warm" lay-event="add">添加</button>
+    </div>
+  </div>
+	</script>
+	 
+	<script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+
+	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/bootstrap.autocomplete.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/static/js/ldbz_util.js"></script>
+	<script>
+    layui.use(['table','laydate'], function(){
+      var table = layui.table , laydate = layui.laydate;
+      
+      table.init('demo', {
+        height: 'full-10'
+        ,limit: 10
+      }); 
+    
+      //第一个实例
+      var tableIns = table.render({
+        elem: '#demo'
+        ,toolbar: '#toolbarDemo'
+        ,url: '/admin/adminAuth/selectUserByRole' //数据接口
+        ,method: 'post'
+        ,limit: 10
+        ,contentType: 'application/x-www-form-urlencoded'
+        ,where: {
+        	roleId : ${roleId}
+        }
+        ,parseData: function(res){ //res 即为原始返回的数据
+    	    return {
+    	      "code": res.status,
+    	      "msg": res.msg,
+    	      "count": res.data.total,
+    	      "data": res.data.list
+    	    };
+    	 }
+        ,page: true //开启分页
+        ,cols: [[ //表头
+          {type: 'checkbox', fixed: 'left'}
+          ,{field: 'roleName', title: '角色', width: 180}
+          ,{field: 'roleId', hide:true}
+          ,{field: 'realName', title: '姓名', width: 180}
+          ,{field: 'userId', hide:true}
+          ,{field: 'created', title: '创建时间', width:120 ,templet: function(d){
+              if(d.created){
+            	  return new Date(d.created).Format("yyyy-MM-dd hh:mm:ss");
+          	  }else{
+          		  return "";
+          	  } 
+          }}
+          ,{field: 'creator', title: '创建人', width:80}
+          ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+        ]]
+      });
+      
+      //头工具栏事件
+      table.on('toolbar(test)', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        var data = checkStatus.data;
+        switch(obj.event){
+          case 'add':
+        	  addRec();
+          break;
+        };
+      });
+      
+      //监听行工具事件
+      table.on('tool(test)', function(obj){
+        var data = obj.data;
+        if(obj.event === 'del'){
+          var confirm = layer.confirm('是否确定删除该行记录', function(index){
+        	  $.post("${request.contextPath}/admin/adminAuth/deleteByUser" , {
+        		  "userId" : data.userId ,
+        		  "roleId" : ${roleId}
+        	  } , function(ret){
+        		  if(ret.data>0 && ret.msg=='OK'){
+        			  tableIns.reload('demo');
+        		      query_user_autocomplete();
+        			  layer.close(confirm);
+        		  }
+        	  });
+          });
+        }
+      });
+    
+      //新建
+		function addRec(){
+    	  var userId = $("#query_user").attr("userId");
+    	  var userName = $("#query_user").attr("userName");
+    	  var realName = $("#query_user").attr("realName");
+    	  if(userId || userName || realName){
+	    	  $.post("${request.contextPath}/admin/adminAuth/insertByUser" , {
+	    		  userId : userId ,
+	    		  userName : userName ,
+	    		  realName : realName ,
+	    		  roleId : ${roleId}
+		      	} , function(ret){
+		      			if(ret.ok){
+			      		  tableIns.reload('demo');
+			      	      query_user_autocomplete();
+			    		  layer.msg("用户添加成功");
+			    		  $("#query_user").val('');
+			    		  $("#query_user").attr("userId" , "");
+			    		  $("#query_user").attr("userName" , "");
+			    		  $("#query_user").attr("realName" , "");
+		      			}else{
+			    		  layer.msg("用户添加失败");
+		      			}
+		      	}).error(function(e){
+		      		layer.msg(ret.msg);
+		      	});
+    	  }else{
+    		  layer.msg("用户不能为空");
+    	  }
+		}
+      
+      $("#btn_reload").click(function(){
+          var _real_name = $("#query_real_name").val() ;
+	       table.reload('demo', {
+	 	          page: {
+	 	            curr: 1 //重新从第 1 页开始
+	 	          }
+	       		  ,coverWhere : true//覆盖之前的参数
+	 	          ,where: {
+	 	        	 roleId : ${roleId} ,
+	 	        	  realName : _real_name
+	 	          }
+	 	    });
+	       query_user_autocomplete();
+      });
+      
+      //联想人员
+      query_user_autocomplete();
+      
+    });
+    
+    function query_user_autocomplete(){
+    	$("#query_user").autocomplete({
+			items : 20 ,
+	        source:function(query,process){
+	      	    var _query_user = $("#query_user").val();
+	        	$.post("${request.contextPath}/admin/adminAuth/getUserByNameOrAccount" , {
+	        		queryKey : _query_user
+	        	} , function(ret){
+	        			return process(ret.data);
+	        	})
+	        },
+	        formatItem:function(item){
+	        		return item["realName"] + "("+item["userName"]+")";
+	        },
+	        setValue:function(item){
+	        		$("#query_user").attr("realName" , item["realName"]);
+	        		$("#query_user").attr("userName" , item["userName"]);
+	        		$("#query_user").attr("userId" , item["userId"]);
+	        		return {'data-value':item["realName"],'real-value':item["userName"]};
+	        }
+	    });
+    }
+    </script>
+</body>
+</html>

@@ -94,10 +94,6 @@
           "text": "角色管理",
           "icon": "&#xe621;",
           "href": "adminRole/adminRole"
-        },{
-          "text": "权限管理",
-          "icon": "&#xe621;",
-          "href": "adminRole/adminRole"
         }]
     },{
       "text": "系统管理",

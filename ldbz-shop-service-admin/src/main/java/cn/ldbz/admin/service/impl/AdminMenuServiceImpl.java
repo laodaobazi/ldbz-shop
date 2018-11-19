@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
 
@@ -53,6 +54,7 @@ public class AdminMenuServiceImpl implements AdminMenuService{
 		return LdbzResult.ok(mapper.selectByKey(id));
 	}
 	
+	@Transactional
 	public LdbzResult deleteByKey(String id) {
 		logger.debug("deleteByKey id : {} " , id);
 		if(StringUtils.contains(id, ",")) {
@@ -60,8 +62,10 @@ public class AdminMenuServiceImpl implements AdminMenuService{
 			for(String _id : StringUtils.split(id , ",")) {
 				ids.add(Long.valueOf(_id));
 			}
+			mapper.deleteRoleMenuByKeys(ids);
 			return LdbzResult.ok(mapper.deleteByKeys(ids));
 		}else {
+			mapper.deleteRoleMenuByKey(Long.valueOf(id));
 			return LdbzResult.ok(mapper.deleteByKey(Long.valueOf(id)));
 		}
 	}

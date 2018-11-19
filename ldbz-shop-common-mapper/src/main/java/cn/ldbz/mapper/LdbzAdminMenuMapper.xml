@@ -63,8 +63,21 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   
+  <delete id="deleteRoleMenuByKey" parameterType="java.lang.Long" >
+    delete from ldbz_admin_role_menu
+    where menu_id = #{id,jdbcType=BIGINT}
+  </delete>
+  
   <delete id="deleteByKeys" parameterType="java.util.List" >
     delete from ldbz_admin_menu
+    where id in
+    <foreach collection="list" item="id" open="(" close=")" separator="," >
+      #{id}
+    </foreach>
+  </delete>
+  
+  <delete id="deleteRoleMenuByKeys" parameterType="java.util.List" >
+    delete from ldbz_admin_role_menu
     where id in
     <foreach collection="list" item="id" open="(" close=")" separator="," >
       #{id}
