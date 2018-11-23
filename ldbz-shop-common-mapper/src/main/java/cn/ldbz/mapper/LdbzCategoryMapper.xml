@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzCategoryMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzCategory" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="updator_name" property="updatorName" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="category_level" property="categoryLevel" jdbcType="VARCHAR" />
+    <result column="fid" property="fid" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, sort_order, created , creator , creator_name, updated , updator, updator_name , category_name , category_level , fid , status
+  </sql>
+  
+  <select id="selectByEntity" resultMap="BaseResultMap"  parameterType="cn.ldbz.pojo.LdbzCategory">
+    select
+    <include refid="Base_Column_List" />
+    from ldbz_category
+    <where>
+      <if test="entity.categoryName != null and entity.categoryName != '' " >
+        and category_name like #{entity.categoryName ,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.status != null " >
+        and status = #{entity.status ,jdbcType=INTEGER}
+      </if>
+      <if test="entity.id != null and entity.id != '' " >
+        and id = #{entity.id ,jdbcType=BIGINT}
+      </if>
+    </where>
+    order by category_level, sort_order , updated desc
+    limit #{start} , #{limit}
+  </select>
+  
+  <select id="countByEntity" parameterType="cn.ldbz.pojo.LdbzCategory" resultType="java.lang.Long" >
+    select count(*) from ldbz_category
+    <where>
+      <if test="categoryName != null and categoryName != '' " >
+        and category_name like #{categoryName ,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null " >
+        and status = #{status ,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ldbz_category
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByKey" parameterType="java.lang.Long" >
+    delete from ldbz_category
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByKeys" parameterType="java.util.List" >
+    delete from ldbz_category
+    where id in
+    <foreach collection="list" item="id" open="(" close=")" separator="," >
+      #{id}
+    </foreach>
+  </delete>
+  
+  <delete id="deleteByEntity" parameterType="cn.ldbz.pojo.LdbzCategory" >
+    delete from ldbz_category
+  </delete>
+  
+  <insert id="insertByEntity" parameterType="cn.ldbz.pojo.LdbzCategory" >
+    insert into ldbz_category (
+	    id, sort_order, created , creator , creator_name, category_name , category_level , fid , status
+    )
+    values (#{id,jdbcType=BIGINT},#{sortOrder,jdbcType=TIMESTAMP}, #{created,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR} , 
+        #{creatorName,jdbcType=VARCHAR},#{categoryName,jdbcType=VARCHAR},
+        #{categoryLevel,jdbcType=INTEGER},#{fid,jdbcType=BIGINT},#{status,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <insert id="insertBySelective" parameterType="cn.ldbz.pojo.LdbzCategory" >
+    insert into ldbz_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id
+      </if>
+      <if test="sortOrder != null" >
+        ,sort_order
+      </if>
+      <if test="created != null" >
+        ,created
+      </if>
+      <if test="creator != null" >
+        ,creator
+      </if>
+      <if test="creatorName != null" >
+        ,creator_name
+      </if>
+      <if test="categoryName != null" >
+        ,category_name
+      </if>
+      <if test="categoryLevel != null" >
+        ,category_level
+      </if>
+      <if test="fid != null" >
+        ,fid
+      </if>
+      <if test="status != null" >
+        ,status
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT}
+      </if>
+      <if test="sortOrder != null" >
+        ,#{sortOrder,jdbcType=INTEGER}
+      </if>
+      <if test="created != null" >
+        ,#{created,jdbcType=TIMESTAMP}
+      </if>
+      <if test="creator != null" >
+        ,#{creator,jdbcType=VARCHAR}
+      </if>
+      <if test="creatorName != null" >
+        ,#{creatorName,jdbcType=VARCHAR}
+      </if>
+      <if test="categoryName != null" >
+        ,#{categoryName,jdbcType=VARCHAR}
+      </if>
+      <if test="categoryLevel != null" >
+        ,#{categoryLevel,jdbcType=INTEGER}
+      </if>
+      <if test="fid != null" >
+        ,#{fid,jdbcType=BIGINT}
+      </if>
+      <if test="status != null" >
+        ,#{status,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateBySelective" parameterType="cn.ldbz.pojo.LdbzCategory" >
+    update ldbz_category
+    <set>
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null" >
+        updator_name = #{updatorName,jdbcType=VARCHAR},
+      </if>
+    </set>
+  </update>
+  
+  <update id="updateByEntity" parameterType="cn.ldbz.pojo.LdbzCategory" >
+    update ldbz_category
+    set id = #{id,jdbcType=BIGINT},
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR} ,
+      updator_name = #{updatorName,jdbcType=VARCHAR} 
+  </update>
+  
+  <update id="updateByKeySelective" parameterType="cn.ldbz.pojo.LdbzCategory" >
+    update ldbz_category
+    <set >
+      <if test="sortOrder != null" >
+        sort_order = #{sortOrder,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=VARCHAR},
+      </if>
+      <if test="updatorName != null" >
+        updator_name = #{updatorName,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByKey" parameterType="cn.ldbz.pojo.LdbzCategory" >
+    update ldbz_category
+    set 
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR},
+      updator_name = #{updatorName,jdbcType=VARCHAR} ,
+      category_name = #{categoryName,jdbcType=VARCHAR} ,
+      category_level = #{categoryLevel,jdbcType=INTEGER} ,
+      fid = #{fid,jdbcType=BIGINT} ,
+      status = #{status,jdbcType=INTEGER}
+    where 
+      id = #{id,jdbcType=BIGINT}
+  </update>
+  
+</mapper>

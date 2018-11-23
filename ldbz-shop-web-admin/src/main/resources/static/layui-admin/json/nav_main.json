@@ -41,7 +41,7 @@
         {
           "text": "分类管理",
           "icon": "&#xe621;",
-          "href": "demo/btn.html"
+          "href": "category/indexCategory"
         },{
           "text": "商品列表",
           "icon": "&#xe621;",

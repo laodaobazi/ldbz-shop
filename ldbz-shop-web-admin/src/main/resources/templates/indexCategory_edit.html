@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>修改分类</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+          
+<form class="layui-form" action="return false;">
+
+  <input type="hidden" value="${category.id}" name="id">
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类名称</label>
+    <div class="layui-input-block">
+      <input name="categoryName" value="${category.categoryName}" lay-verify="required" autocomplete="off" placeholder="请输入分类名称" class="layui-input" type="text">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">层级</label>
+    <div class="layui-input-block">
+        <select name="categoryLevel">
+	        <option value="1" ${category.categoryLevel=='1'?"selected":""} >1级</option>
+	        <option value="2" ${category.categoryLevel=='2'?"selected":""} >2级</option>
+	        <option value="3" ${category.categoryLevel=='3'?"selected":""} >3级</option>
+	      </select>
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+      <label class="layui-form-label">所属分类</label>
+      <div class="layui-input-block">
+        <input id="query_category" fid="${category.fid}" lay-verify="required" autocomplete="off" class="layui-input" >
+        <input type="hidden" id="fid" name="fid"  value="${category.fid}">
+      </div>
+  </div>
+  
+  <div class="layui-form-item">
+      <label class="layui-form-label">排序</label>
+      <div class="layui-input-block">
+        <input name="sortOrder"  value="${category.sortOrder}" lay-verify="required|number" autocomplete="off" class="layui-input" type="number">
+      </div>
+  </div>
+  
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">是否启用</label>
+    <div class="layui-input-block">
+      <input value="${category.status}" checked="" name="status" lay-skin="switch" lay-text="ON|OFF" type="checkbox">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+ 
+<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+<script type="text/javascript" src="${request.contextPath}/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="${request.contextPath}/bootstrap.autocomplete.js"></script>
+<script>
+layui.use(['form', 'layedit'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit ;
+  
+  query_category_autocomplete();
+  
+  $.post("${request.contextPath}/admin/category/getCategoryList" , {
+		id : $("#query_category").attr("fid")
+	} , function(ret){
+		if(ret.data){
+			$("#query_category").val(ret.data[0].categoryName);
+		}
+	});
+  
+  //监听提交
+  form.on('submit(demo1)', function(data){
+	if(data.field.status=='on'){
+		data.field.status=1 ;
+	}else{
+		data.field.status=0 ;
+	}
+    $.post("${request.contextPath}/admin/category/updateByKey" , data.field , function(ret){
+    	if(ret.status==200){
+			  var index = parent.layer.getFrameIndex(window.name);
+			  parent.layer.close(index);
+			  parent.layer.msg("修改成功");
+    	}else{
+    		layer.msg(ret.msg);
+    	}
+    });
+    return false;
+  });
+  
+});
+
+function query_category_autocomplete(){
+	$("#query_category").autocomplete({
+		items : 20 ,
+        source:function(query,process){
+        	$.post("${request.contextPath}/admin/category/getCategoryList" , {
+        		categoryName : $("#query_category").val()
+        	} , function(ret){
+        		return process(ret.data);
+        	})
+        },
+        formatItem:function(item){
+        		return item["categoryName"] + "("+item["categoryLevel"]+")";
+        },
+        setValue:function(item){
+        		$("#fid").val(item["id"]);
+        		return {'data-value':item["categoryName"],'real-value':item["id"]};
+        }
+    });
+}
+</script>
+</body>
+</html>
