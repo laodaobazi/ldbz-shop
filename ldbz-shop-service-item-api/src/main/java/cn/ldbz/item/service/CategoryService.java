@@ -16,5 +16,9 @@ public interface CategoryService {
 	LdbzResult insertByEntity(LdbzCategory entity);
 
 	LdbzResult updateByKey(LdbzCategory entity);
+
+	LdbzResult getCategoryTree(long fid);
+
+	LdbzResult updateSort(String ids);
 	
 }

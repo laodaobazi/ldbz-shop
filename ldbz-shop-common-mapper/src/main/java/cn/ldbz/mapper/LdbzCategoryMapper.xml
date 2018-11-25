@@ -212,4 +212,21 @@
       id = #{id,jdbcType=BIGINT}
   </update>
   
+  <select id="getCategoryTree" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT  
+    <include refid="Base_Column_List" />
+	FROM ldbz_category
+	WHERE FIND_IN_SET(fid , getCategoryTree(#{fid,jdbcType=BIGINT})) > 0
+	OR id = #{fid,jdbcType=BIGINT}
+	order by sort_order
+  </select>
+  
+  <update id="updateSort" >
+    update ldbz_category
+    set 
+      sort_order = #{sortOrder,jdbcType=INTEGER}
+    where 
+      id = #{id,jdbcType=BIGINT}
+  </update>
+  
 </mapper>

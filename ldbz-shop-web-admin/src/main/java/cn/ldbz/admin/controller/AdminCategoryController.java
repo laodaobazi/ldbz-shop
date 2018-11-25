@@ -106,4 +106,20 @@ public class AdminCategoryController {
     	return categoryService.updateByKey(entity);
     }
     
+    @ApiOperation(value="根据父节点获取其子元素", notes="根据父节点ID获取其所有子元素")
+    @ApiImplicitParam(name = "fid", value = "父节点ID", required = true, dataType = "long", paramType = "path")
+    @ResponseBody
+    @RequestMapping(value="/getCategoryTree/{fid}" , method = RequestMethod.POST)
+    LdbzResult getCategoryTree(@PathVariable("fid")long fid) {
+    	return categoryService.getCategoryTree(fid);
+    }
+    
+    @ApiOperation(value="更新分类的排序", notes="更新分类的排序")
+    @ApiImplicitParam(name = "ids", value = "排序之后节点ID，逗号隔开", required = true, dataType = "String")
+    @ResponseBody
+    @RequestMapping(value="/updateSort" , method = RequestMethod.POST)
+    LdbzResult updateSort(String ids) {
+    	return categoryService.updateSort(ids);
+    }
+    
 }

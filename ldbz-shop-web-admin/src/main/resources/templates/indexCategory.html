@@ -46,13 +46,18 @@
 	<script type="text/html" id="barDemo">
   		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="tree">树</a>
 	</script>
+	
+	<link rel="stylesheet" href="${request.contextPath}/zTree_v3-3.5.33/css/zTreeStyle/zTreeStyle.css">
+	<script type="text/javascript" src="${request.contextPath}/zTree_v3-3.5.33/js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/zTree_v3-3.5.33/js/jquery.ztree.all.min.js"></script>
 
 	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
 	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/static/js/ldbz_util.js"></script>
 	<script>
     layui.use(['table','jquery','laydate'], function(){
-      var table = layui.table , $ = jQuery = layui.$ ;
+      var table = layui.table ;
       
       table.init('demo', {
         height: 'full-10'
@@ -71,11 +76,18 @@
 //         	id : 1
 //         }
         ,parseData: function(res){ //res 即为原始返回的数据
+        	var count = 0 , list = [];
+        	if(res && res.data && res.data.total){
+        		count =res.data.total ;
+        	}
+        	if(res && res.data && res.data.list){
+        		list =res.data.list ;
+        	}
     	    return {
     	      "code": res.status,
     	      "msg": res.msg,
-    	      "count": res.data.total,
-    	      "data": res.data.list
+    	      "count": count ,
+    	      "data": list
     	    };
     	 }
         ,page: true //开启分页
@@ -157,9 +169,96 @@
           });
         } else if(obj.event === 'edit'){
         	editRec(data);
+        } else if(obj.event === 'tree'){
+        	showTree(data);
         }
       });
     
+      //树状展现
+      function showTree(data){
+      	$.post("${request.contextPath}/admin/category/getCategoryTree/" + data.id , function(ret){
+			    var treeNode = ret.data ;
+				var setting = {
+					edit: {
+						enable: true,
+			            showRemoveBtn: function(){return false;},
+			            showRenameBtn: function(){return false;},
+						drag: {
+			                isCopy: false,
+			                isMove: true,
+			                prev: true,
+			                next: true,
+			                inner: false
+			            }
+					},
+					data : {
+						key : {
+							name : "categoryName",
+						},
+						simpleData : {
+							enable : true,
+							idKey : "id",
+							pIdKey : "fid",
+							rootPId : 0
+						}
+					},
+					callback: {
+						beforeDrag: beforeDrag,
+						beforeDrop: beforeDrop
+					}
+				};
+				
+				var dragId  ;
+				function beforeDrag(treeId, treeNodes) {
+					for (var i=0,l=treeNodes.length; i<l; i++) {
+						   dragId = treeNodes[i].fid;
+						if (treeNodes[i].drag === false) {
+							return false;
+						}
+					}
+					return true;
+				}
+				function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+						  if(targetNode.fid == dragId){
+						    return true;
+						  }else{
+					        return false;
+					      }
+				}
+				
+				var treeLayer = layer.open({
+				     type: 1,
+				     title: '树状节点查看',
+				     shadeClose: true,
+				     shade: false,
+				     maxmin: false, 
+				     area: ['320px', '400px'],
+				     content: '<ul id="treeDemo" class="ztree"></ul>' +
+				         '<button id="btn_save_order" class="layui-btn layui-btn-warm layui-btn-radius" style="position: absolute; top: 80%; left: 35%;">保存排序</button>' ,
+				     success: function(){
+						var zTree = $.fn.zTree.init($("#treeDemo"), setting, treeNode);
+						zTree.expandAll(true);
+						$("#btn_save_order").click(function(){
+							if(dragId){
+								var nodes = zTree.getNodesByParam("fid",dragId );
+								var ids = $(nodes).map(function(i , o){
+									return o.id ;
+								}).get();
+								if(ids && ids.length>0){
+									updateSort(ids , treeLayer);
+								}else{
+									layer.msg("未获取到节点");
+								}
+							}else{
+								layer.msg("节点排序未异动。");
+							}
+						});
+				     }
+				});
+				
+		  });
+      }
+      
       //新建
 		function addRec(){
 			var add_full = layer.open({
@@ -213,6 +312,18 @@
       });
       
     });
+    
+    //修改排序
+    function updateSort(ids , obj){
+    	$.post("${request.contextPath}/admin/category/updateSort" , {
+    		'ids' : ids.join(',')
+    	} , function(ret){
+			if(ret && ret.status==200){
+				layer.close(obj);
+				layer.msg("保存成功。");
+			}
+    	});
+    }
     </script>
 </body>
 </html>

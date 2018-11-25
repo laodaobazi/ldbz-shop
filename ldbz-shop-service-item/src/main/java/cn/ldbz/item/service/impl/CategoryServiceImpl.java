@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
 
@@ -82,6 +83,23 @@ public class CategoryServiceImpl implements CategoryService {
 	public LdbzResult updateByKey(LdbzCategory entity) {
 		logger.debug("updateByKey entity : {} " , entity);
 		return LdbzResult.ok(mapper.updateByKey(entity));
+	}
+
+	@Override
+	public LdbzResult getCategoryTree(long fid) {
+		logger.debug("getCategoryTree fid : {} " , fid);
+		return LdbzResult.ok(mapper.getCategoryTree(fid)) ;
+	}
+
+	@Override
+	@Transactional
+	public LdbzResult updateSort(String ids) {
+		logger.debug("updateSort ids : {} " , ids);
+		String[] arr = ids.split(",");
+		for(int i=0 ; i<arr.length ; i++) {
+			mapper.updateSort(Long.parseLong(arr[i]) , i+1);
+		}
+		return LdbzResult.ok() ;
 	}
 
 }
