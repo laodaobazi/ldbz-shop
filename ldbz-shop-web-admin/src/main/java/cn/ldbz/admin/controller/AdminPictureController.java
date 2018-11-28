@@ -116,7 +116,7 @@ public class AdminPictureController {
 					return LdbzResult.build(500, "filesize_not_allow", "false");
 				}
 				
-				String path = String.format("%s/%s/%s", "/uploadfiles", "ad" , 
+				String path = String.format("%s/%s/%s", "/uploadfiles", module , 
 						DateFormatUtils.format(new Date(), "yyyy/MM/dd"));
 				String filepath = String.format("%s%s" , UPLOAD_ROOT , path) ;
                 try {

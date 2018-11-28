@@ -2,18 +2,17 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>table模块快速使用</title>
+<title>商品-列表</title>
 <link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
 </head>
 <body>
 
-
 	<form class="layui-form layui-row" action="return false;">
 	
 	  <div class="layui-col-xs4" style="margin-top: 20px;">
-	    <label class="layui-form-label">创建时间</label>
+	    <label class="layui-form-label">商品名称</label>
 	    <div class="layui-input-block">
-	      <input class="layui-input" id="query_create_date" placeholder="创建时间" type="text">
+	      <input class="layui-input" id="query_title" placeholder="商品名称" type="text">
 	    </div>
 	  </div>
 	  
@@ -48,18 +47,15 @@
   		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
+	
 
 	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
 	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/static/js/ldbz_util.js"></script>
 	<script>
     layui.use(['table','jquery','laydate'], function(){
-      var table = layui.table , $ = jQuery = layui.$ , laydate = layui.laydate;
+      var table = layui.table
+      ,$ = layui.jquery ;
       
-      //日期
-      laydate.render({
-        elem: '#query_create_date'
-      });
-
       table.init('demo', {
         height: 'full-10'
         ,limit: 10
@@ -69,7 +65,7 @@
       var tableIns = table.render({
         elem: '#demo'
         ,toolbar: '#toolbarDemo'
-        ,url: '/admin/indexSlideAd/getIndexSlideAdPage' //数据接口
+        ,url: '/admin/item/getItemPage'
         ,method: 'post'
         ,limit: 10
         ,contentType: 'application/x-www-form-urlencoded'
@@ -77,25 +73,34 @@
 //         	id : 1
 //         }
         ,parseData: function(res){ //res 即为原始返回的数据
+        	var count = 0 , list = [];
+        	if(res && res.data && res.data.total){
+        		count =res.data.total ;
+        	}
+        	if(res && res.data && res.data.list){
+        		list =res.data.list ;
+        	}
     	    return {
     	      "code": res.status,
     	      "msg": res.msg,
-    	      "count": res.data.total,
-    	      "data": res.data.list
+    	      "count": count ,
+    	      "data": list
     	    };
     	 }
         ,page: true //开启分页
         ,cols: [[ //表头
           {type: 'checkbox', fixed: 'left'}
-          ,{field: 'src', title: '图片', width: 80}
-          ,{field: 'href', title: '网址', width: 80}
-          ,{field: 'alt', title: '提示', width: 80}
+          ,{field: 'title', title: '商品名称', width: 80}
+          ,{field: 'price', title: '价格', width: 80}
           ,{field: 'status', title: '状态', width: 80 , templet: function(d){
         	  return '<input type="checkbox" disabled lay-skin="switch" lay-text="ON|OFF" ' + ( d.status == 1 ? "checked" : "" ) + '>';
           }}
-          ,{field: 'sortOrder', title: '排序', width: 135}
+          ,{field: 'num', title: '数量', width: 65}
+          ,{field: 'weight', title: '重量', width: 65}
+          ,{field: 'colour', title: '颜色', width: 65}
+          ,{field: 'size', title: '尺寸', width: 65}
           ,{field: 'id', title: 'ID', hide:true}
-          ,{field: 'created', title: '创建时间', width:100 ,templet: function(d){
+          ,{field: 'created', title: '创建时间', width:140 ,templet: function(d){
               if(d.created){
             	  return new Date(d.created).Format("yyyy-MM-dd hh:mm:ss");
           	  }else{
@@ -104,7 +109,7 @@
           }}
           ,{field: 'creator', title: '创建人', width:80}
           ,{field: 'creatorName', title: '创建人', width:80} 
-          ,{field: 'updated', title: '修改时间', width: 100 ,templet: function(d){
+          ,{field: 'updated', title: '修改时间', width: 140 ,templet: function(d){
               if(d.updated){
             	  return new Date(d.updated).Format("yyyy-MM-dd hh:mm:ss");
           	  }else{
@@ -136,7 +141,7 @@
         	  if(data.length>0){
         		  layer.confirm('是否确定删除选中行记录', function(index){
 			          var ids = $(data).map(function(i , o){ return o.id ; }).get().join(",");
-                	  $.post("${request.contextPath}/admin/indexSlideAd/deleteByKey/" + ids , function(ret){
+                	  $.post("${request.contextPath}/admin/item/deleteByKey/" + ids , function(ret){
                 		  if(ret.data>0 && ret.msg=='OK'){
                 			  tableIns.reload('demo');
         			          layer.close(index);
@@ -155,7 +160,7 @@
         var data = obj.data;
         if(obj.event === 'del'){
           layer.confirm('是否确定删除该行记录', function(index){
-        	  $.post("${request.contextPath}/admin/indexSlideAd/deleteByKey/"+data.id, function(ret){
+        	  $.post("${request.contextPath}/admin/item/deleteByKey/"+data.id, function(ret){
         		  if(ret.data>0 && ret.msg=='OK'){
 			          obj.del();
 			          layer.close(index);
@@ -174,7 +179,7 @@
 				  shade: false,
 				  title: "新建",
 				  maxmin: false,
-				  content: '${request.contextPath}/admin/indexSlideAd/addIndexSlideAd',
+				  content: '${request.contextPath}/admin/item/addItem',
 				  success: function(layero){
 				    layer.setTop(layero);
 				  },
@@ -192,7 +197,7 @@
 			  shade: false,
 			  title: "编辑",
 			  maxmin: false,
-			  content: '${request.contextPath}/admin/indexSlideAd/editIndexSlideAd/' + data.id,
+			  content: '${request.contextPath}/admin/item/editItem/' + data.id,
 			  success: function(layero){
 			    layer.setTop(layero);
 			  },
@@ -205,7 +210,7 @@
       
       $("#btn_reload").click(function(){
           var _status = $("#query_status").val() ;
-          var _created = $("#query_create_date").val() ;
+          var item_name = $("#query_item_name").val() ;
 	       table.reload('demo', {
 	 	          page: {
 	 	            curr: 1 //重新从第 1 页开始
@@ -213,13 +218,14 @@
 	       		  ,coverWhere : true//覆盖之前的参数
 	 	          ,where: {
 	 	        	  status : _status ,
-	 	        	 created : _created ? new Date(_created) : undefined
+	 	        	 itemName : item_name
 	 	          }
 	 	    });
     	  
       });
       
     });
+    
     </script>
 </body>
 </html>

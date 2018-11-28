@@ -78,7 +78,7 @@ public class AdminCategoryController {
     }
     
     @ApiOperation(value="删除产品分类", notes="根据id物理删除一条产品分类")
-    @ApiImplicitParam(name = "id", value = "菜单id", required = true, dataType = "String",paramType = "path")
+    @ApiImplicitParam(name = "id", value = "分类id", required = true, dataType = "String",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/deleteByKey/{id}" , method = RequestMethod.POST)
     LdbzResult deleteByKey(@PathVariable("id")String id) {

@@ -98,9 +98,9 @@
           ,{field: 'status', title: '状态', width: 80 , templet: function(d){
         	  return '<input type="checkbox" disabled lay-skin="switch" lay-text="ON|OFF" ' + ( d.status == 1 ? "checked" : "" ) + '>';
           }}
-          ,{field: 'sortOrder', title: '排序', width: 135}
+          ,{field: 'sortOrder', title: '排序', width: 65}
           ,{field: 'id', title: 'ID', hide:true}
-          ,{field: 'created', title: '创建时间', width:100 ,templet: function(d){
+          ,{field: 'created', title: '创建时间', width:140 ,templet: function(d){
               if(d.created){
             	  return new Date(d.created).Format("yyyy-MM-dd hh:mm:ss");
           	  }else{
@@ -109,7 +109,7 @@
           }}
           ,{field: 'creator', title: '创建人', width:80}
           ,{field: 'creatorName', title: '创建人', width:80} 
-          ,{field: 'updated', title: '修改时间', width: 100 ,templet: function(d){
+          ,{field: 'updated', title: '修改时间', width: 140 ,templet: function(d){
               if(d.updated){
             	  return new Date(d.updated).Format("yyyy-MM-dd hh:mm:ss");
           	  }else{

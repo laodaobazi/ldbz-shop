@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>修改商品</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+          
+<form class="layui-form" action="return false;">
+
+	<div class="layui-row">
+	    <div class="layui-col-xs6">
+	    
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">商品名称</label>
+			    <div class="layui-input-block">
+			      <input name="title" lay-verify="required" autocomplete="off" placeholder="请输入商品名称" class="layui-input" type="text" value="${item.title}">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			      <label class="layui-form-label">价格（分）</label>
+			      <div class="layui-input-block">
+			        <input name="price" lay-verify="required|number" autocomplete="off" class="layui-input" type="number" value="${item.price}">
+			      </div>
+			  </div>
+			  <div class="layui-form-item">
+			      <label class="layui-form-label">库存</label>
+			      <div class="layui-input-block">
+			        <input name="num" lay-verify="required|number" autocomplete="off" class="layui-input" type="number" value="${item.num}">
+			      </div>
+			  </div>
+			  <div class="layui-form-item">
+			      <label class="layui-form-label">重量</label>
+			      <div class="layui-input-block">
+			        <input name="weight" lay-verify="number" autocomplete="off" class="layui-input" type="number" value="${item.weight}">
+			      </div>
+			  </div>
+			  <div class="layui-form-item">
+			      <label class="layui-form-label">尺寸/规格</label>
+			      <div class="layui-input-block">
+			        <input name="size" autocomplete="off" class="layui-input" type="text" value="${item.size}">
+			      </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">商品图片</label>
+				<div class="layui-upload">
+				  <button type="button" class="layui-btn" id="btn_upload_image">上传</button>
+				  <div class="layui-upload-list">
+				    <img class="layui-upload-img" id="item_image_preview" alt="" src="${item.image}">
+				    <p id="uploadTextImage"></p>
+				    <input type="hidden" name="image" id="image" value="${item.image}">
+				  </div>
+				</div>
+			  </div>
+	    
+	    </div>
+	    
+	    
+	    
+	    <div class="layui-col-xs6">
+
+			  <div class="layui-form-item">
+			      <label class="layui-form-label">所属分类</label>
+			      <div class="layui-input-block">
+			        <input id="query_category" lay-verify="required" autocomplete="off" class="layui-input"  >
+			        <input type="hidden" id="cid" name="cid"  value="${item.cid}">
+			      </div>
+			  </div>
+			  <div class="layui-form-item">
+			      <label class="layui-form-label">颜色</label>
+			      <div class="layui-input-block">
+			        <input name="colour" autocomplete="off" class="layui-input" type="text" value="${item.colour}">
+			      </div>
+			  </div>
+			  <div class="layui-form-item">
+			      <label class="layui-form-label">商品买点</label>
+			      <div class="layui-input-block">
+			        <input name="sellPoint" autocomplete="off" class="layui-input" type="text" value="${item.sellPoint}">
+			      </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">状态</label>
+			    <div class="layui-input-block">
+			      <input ${item.status==1?'checked':''} name="status" lay-skin="switch" lay-text="ON|OFF" type="checkbox" value="${item.status}">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			      <label class="layui-form-label">排序</label>
+			      <div class="layui-input-block">
+			        <input name="sortOrder" lay-verify="required|number" autocomplete="off" class="layui-input" type="number" value="${item.sortOrder}">
+			      </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">商品条形码</label>
+				<div class="layui-upload">
+				  <button type="button" class="layui-btn" id="btn_upload_barcode">上传</button>
+				  <div class="layui-upload-list">
+				    <img class="layui-upload-img" id="item_barcode_preview" alt="" src="${item.barcode}">
+				    <p id="uploadTextBarcode"></p>
+				    <input type="hidden" name="barcode" id="barcode" value="${item.barcode}">
+				  </div>
+				</div>   
+			  </div>
+			  
+			  <input type="hidden" name="id" value="${item.id}">
+	    
+	    </div>
+	  </div>
+
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+ 
+<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+<script type="text/javascript" src="${request.contextPath}/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="${request.contextPath}/bootstrap.autocomplete.js"></script>
+<script>
+layui.use(['form', 'layedit' , 'upload'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,upload = layui.upload
+  ,layedit = layui.layedit ;
+  
+  query_category_autocomplete();
+  
+  //监听提交
+  form.on('submit(demo1)', function(data){
+	if(data.field.status=='on'){
+		data.field.status=1 ;
+	}else{
+		data.field.status=0 ;
+	}
+    $.post("${request.contextPath}/admin/item/updateByKey" , data.field , function(ret){
+    	if(ret.status==200){
+			  var index = parent.layer.getFrameIndex(window.name);
+			  parent.layer.close(index);
+			  parent.layer.msg("修改成功");
+    	}else{
+    		layer.msg(ret.msg);
+    	}
+    });
+    return false;
+  });
+  
+  //商品二维码上传
+  initUpload(upload , "btn_upload_image" , "item_image_preview" , "item_image" , "image" , "uploadTextImage");
+  //商品图片上传
+  initUpload(upload , "btn_upload_barcode" , "item_barcode_preview" , "item_barcode" , "barcode" , "uploadTextBarcode");
+  
+  $.post("${request.contextPath}/admin/category/getCategoryList" , {
+		id : $("#cid").val()
+	} , function(ret){
+		if(ret.data){
+			$("#query_category").val(ret.data[0].categoryName);
+		}
+	});
+  
+});
+
+//初始化上传
+function initUpload(upload , btn , preview , module , input , reload_btn){
+	//普通图片上传
+	  var uploadInst = upload.render({
+	    elem: '#' + btn
+	    ,url: '${request.contextPath}/admin/upload'
+	    ,accept: 'file' //普通文件
+	    ,exts: 'jpg|png|gif'
+	    ,before: function(obj){
+	      //预读本地文件示例，不支持ie8
+	      obj.preview(function(index, file, result){
+	        $('#' + preview).attr('src', result); //图片链接（base64）
+	      });
+	    }
+	    ,data :{
+	    	module: module
+	    }
+	    ,done: function(res){
+	      if(res.status!=200){
+		      //如果上传失败
+	        return layer.msg('上传失败');
+	      }else{
+		      //上传成功
+		      $("#" + input).val(res.data);
+	      }
+	    }
+	    ,error: function(){
+	      //演示失败状态，并实现重传
+	      var demoText = $('#' + reload_btn);
+	      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+	      demoText.find('.demo-reload').on('click', function(){
+	        uploadInst.upload();
+	      });
+	    }
+	  });
+}
+
+function query_category_autocomplete(){
+	$("#query_category").autocomplete({
+		items : 20 ,
+        source:function(query,process){
+        	$.post("${request.contextPath}/admin/category/getCategoryList" , {
+        		categoryName : $("#query_category").val()
+        	} , function(ret){
+        		return process(ret.data);
+        	})
+        },
+        formatItem:function(item){
+        		return item["categoryName"] + "("+item["categoryLevel"]+")";
+        },
+        setValue:function(item){
+        		$("#cid").val(item["id"]);
+        		return {'data-value':item["categoryName"],'real-value':item["id"]};
+        }
+    });
+}
+</script>
+</body>
+</html>

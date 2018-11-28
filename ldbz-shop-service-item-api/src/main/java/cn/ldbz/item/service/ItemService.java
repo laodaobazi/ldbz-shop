@@ -1,26 +1,20 @@
 package cn.ldbz.item.service;
 
-import cn.ldbz.pojo.TbItem;
-import cn.ldbz.pojo.TbItemDesc;
+import cn.ldbz.pojo.LdbzItem;
+import cn.ldbz.pojo.LdbzResult;
 
-/**
- * 商品 Service
- *
- */
-
-//@Path("/ItemService")
-//@Produces({ContentType.APPLICATION_JSON_UTF_8,ContentType.TEXT_XML_UTF_8})
 public interface ItemService {
+	
+	LdbzResult getItemPage(LdbzItem entity , int pn , int limit) ;
+	
+	LdbzResult getItemList(LdbzItem entity);
 
-    //http://localhost:8514/item/ItemService/getItemById/{id}
-    //@POST()
-    //@Path("/getItemById/{id}")
-    TbItem getItemById(/**@PathParam("id")*/ Long itemId);
+	LdbzResult selectByKey(Long id);
+	
+	LdbzResult deleteByKey(String id);
+	
+	LdbzResult insertByEntity(LdbzItem entity);
 
-    //http://localhost:8514/item/ItemService/getItemDescById/{id}
-    //@POST()
-    //@Path("/getItemDescById/{id}")
-    TbItemDesc getItemDescById(/**@PathParam("id")*/ Long itemId);
-
+	LdbzResult updateByKey(LdbzItem entity);
 
 }

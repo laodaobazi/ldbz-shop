@@ -22,10 +22,6 @@
           "icon": "&#xe621;",
           "href": "demo/btn.html"
         },{
-          "text": "首页轮播图管理",
-          "icon": "&#xe621;",
-          "href": "demo/btn.html"
-        },{
           "text": "首页板块内容管理",
           "icon": "&#xe621;",
           "href": "demo/btn.html"
@@ -45,7 +41,7 @@
         },{
           "text": "商品列表",
           "icon": "&#xe621;",
-          "href": "demo/btn.html"
+          "href": "item/indexItem"
         }]
     },{
       "text": "订单管理",
