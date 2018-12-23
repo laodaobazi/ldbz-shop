@@ -2,11 +2,10 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>table模块快速使用</title>
+<title>首页轮播广告-列表</title>
 <link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
 </head>
 <body>
-
 
 	<form class="layui-form layui-row" action="return false;">
 	
@@ -87,7 +86,9 @@
         ,page: true //开启分页
         ,cols: [[ //表头
           {type: 'checkbox', fixed: 'left'}
-          ,{field: 'src', title: '图片', width: 80}
+          ,{field: 'src', title: '图片', width: 80 , templet: function(d){
+        	  return '<img src="${request.contextPath}' + d.src + '" />';
+          }}
           ,{field: 'href', title: '网址', width: 80}
           ,{field: 'alt', title: '提示', width: 80}
           ,{field: 'status', title: '状态', width: 80 , templet: function(d){

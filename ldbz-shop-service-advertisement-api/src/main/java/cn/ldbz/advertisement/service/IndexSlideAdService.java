@@ -19,4 +19,7 @@ public interface IndexSlideAdService {
 	int insertByEntity(LdbzIndexSlideAd entity);
 	
 	int updateByKey(LdbzIndexSlideAd entity);
+
+	List<LdbzIndexSlideAd> getIndexSlideAdByRedis();
+	
 }

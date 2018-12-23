@@ -9,16 +9,23 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.ctrip.framework.apollo.model.ConfigChange;
+import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 
 import cn.ldbz.constant.Const;
 import cn.ldbz.item.service.CategoryService;
 import cn.ldbz.mapper.LdbzCategoryMapper;
 import cn.ldbz.pojo.LdbzCategory;
 import cn.ldbz.pojo.LdbzResult;
+import cn.ldbz.redis.service.JedisClient;
+import cn.ldbz.utils.FastJsonConvert;
 
 @Component
 @Service(version = Const.LDBZ_SHOP_ITEM_VERSION)
@@ -28,6 +35,33 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 	LdbzCategoryMapper mapper ;
+
+    @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
+    private JedisClient jedisClient;
+
+    @Value("${redisKey.category.info.key}")
+    private String CATEGORY_INFO_KEY;
+
+    @Value("${redisKey.expire_time}")
+    private Integer REDIS_EXPIRE_TIME;
+    
+    /**
+     * 监听配置项是否有修改
+     */
+    @ApolloConfigChangeListener
+	public void onChange(ConfigChangeEvent changeEvent) {
+		for (String key : changeEvent.changedKeys()) {
+			ConfigChange change = changeEvent.getChange(key);
+			logger.debug(String.format("Found change - key: %s, oldValue: %s, newValue: %s, changeType: %s",
+					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType()));
+			switch(key) {
+			case "redisKey.category.info.key" : 
+				CATEGORY_INFO_KEY = change.getNewValue();
+			case "redisKey.expire_time" : 
+				REDIS_EXPIRE_TIME = Integer.valueOf(change.getNewValue());
+			}
+		}
+	}
 	
 	@Override
 	public LdbzResult getCategoryPage(LdbzCategory entity, int pn, int limit) {
@@ -45,6 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	@Override
 	public LdbzResult getCategoryList(LdbzCategory entity) {
+		logger.debug("getCategoryList : {} " , entity);
 		List<LdbzCategory> ret = mapper.selectByEntity(entity, 0, Integer.MAX_VALUE);
 		return LdbzResult.build(0, "", ret);
 	}
@@ -89,6 +124,32 @@ public class CategoryServiceImpl implements CategoryService {
 	public LdbzResult getCategoryTree(long fid) {
 		logger.debug("getCategoryTree fid : {} " , fid);
 		return LdbzResult.ok(mapper.getCategoryTree(fid)) ;
+	}
+
+	@Override
+	public LdbzResult getCategoryTreeRedis(long fid) {
+		try {
+	        String json = jedisClient.get(CATEGORY_INFO_KEY);
+	        if (StringUtils.isNotBlank(json)) {
+	        	logger.info("Redis 获取商品分类:");
+	            List<LdbzCategory> list = FastJsonConvert.convertJSONToArray(json, LdbzCategory.class);
+	            return LdbzResult.ok(list);
+	        } else {
+	            logger.error("Redis 查询不到商品分类");
+	        }
+	    } catch (Exception e) {
+	        logger.error("商品分类 获取缓存报错",e);
+	    }
+		
+		LdbzResult ret = LdbzResult.ok(mapper.getCategoryTree(fid)) ;
+		try {
+            logger.info("Redis 更新商品分类:");
+	        jedisClient.set(CATEGORY_INFO_KEY, FastJsonConvert.convertObjectToJSON(ret.getData()));
+	        jedisClient.expire(CATEGORY_INFO_KEY, REDIS_EXPIRE_TIME);
+	    } catch (Exception e) {
+	        logger.error("Redis 更新商品分类缓存报错",e);
+	    }
+		return ret ;
 	}
 
 	@Override

@@ -14,6 +14,9 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.ctrip.framework.apollo.model.ConfigChange;
+import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 
 import cn.ldbz.constant.Const;
 import cn.ldbz.item.service.ItemService;
@@ -47,12 +50,34 @@ public class ItemServiceImpl implements ItemService {
     @Value("${redisKey.expire_time}")
     private Integer REDIS_EXPIRE_TIME;
     
+    /**
+     * 监听配置项是否有修改
+     */
+    @ApolloConfigChangeListener
+	public void onChange(ConfigChangeEvent changeEvent) {
+		for (String key : changeEvent.changedKeys()) {
+			ConfigChange change = changeEvent.getChange(key);
+			logger.debug(String.format("Found change - key: %s, oldValue: %s, newValue: %s, changeType: %s",
+					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType()));
+			switch(key) {
+			case "redisKey.prefix.item_info_profix" : 
+				ITEM_INFO_PROFIX = change.getNewValue();
+			case "redisKey.suffix.item_info_base_suffix" : 
+				ITEM_INFO_BASE_SUFFIX = change.getNewValue();
+			case "redisKey.suffix.item_info_desc_suffix" : 
+				ITEM_INFO_DESC_SUFFIX = change.getNewValue();
+			case "redisKey.expire_time" : 
+				REDIS_EXPIRE_TIME = Integer.valueOf(change.getNewValue());
+			}
+		}
+	}
+    
 	@Override
 	public LdbzResult getItemPage(LdbzItem entity, int pn, int limit) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		long total = mapper.countByEntity(entity);
 		map.put("total", total) ;
-		logger.debug("getCategoryPage count : {} " , total);
+		logger.debug("getItemPage count : {} " , total);
 		if(total>0 && pn>0) {
 			int start = (pn-1)*limit ;
 			List<LdbzItem> ret = mapper.selectByEntity(entity, start, limit);
@@ -63,6 +88,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public LdbzResult getItemList(LdbzItem entity) {
+		logger.debug("getItemList : {} " , entity);
 		List<LdbzItem> ret = mapper.selectByEntity(entity, 0, Integer.MAX_VALUE);
 		return LdbzResult.build(0, "", ret);
 	}
@@ -133,6 +159,15 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public LdbzResult updateByKey(LdbzItem entity) {
+		long itemId = entity.getId() ;
+		String key = ITEM_INFO_PROFIX + itemId + ITEM_INFO_BASE_SUFFIX;
+	    try {
+	            logger.info("Redis 更新 商品信息 商品ID:" + itemId);
+		        jedisClient.set(key, FastJsonConvert.convertObjectToJSON(entity));
+		        jedisClient.expire(key, REDIS_EXPIRE_TIME);
+	    } catch (Exception e) {
+	        logger.error("商品信息 更新缓存报错",e);
+	    }
 		logger.debug("updateByKey entity : {} " , entity);
 		return LdbzResult.ok(mapper.updateByKey(entity));
 	}

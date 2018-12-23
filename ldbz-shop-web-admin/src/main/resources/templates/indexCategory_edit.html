@@ -22,21 +22,9 @@
   </div>
   
   <div class="layui-form-item">
-    <label class="layui-form-label">层级</label>
-    <div class="layui-input-block">
-        <select name="categoryLevel">
-	        <option value="1" ${category.categoryLevel=='1'?"selected":""} >1级</option>
-	        <option value="2" ${category.categoryLevel=='2'?"selected":""} >2级</option>
-	        <option value="3" ${category.categoryLevel=='3'?"selected":""} >3级</option>
-	      </select>
-    </div>
-  </div>
-  
-  <div class="layui-form-item">
       <label class="layui-form-label">所属分类</label>
       <div class="layui-input-block">
         <input id="query_category" fid="${category.fid}" lay-verify="required" autocomplete="off" class="layui-input" >
-        <input type="hidden" id="fid" name="fid"  value="${category.fid}">
       </div>
   </div>
   
@@ -51,7 +39,7 @@
   <div class="layui-form-item">
     <label class="layui-form-label">是否启用</label>
     <div class="layui-input-block">
-      <input value="${category.status}" checked="" name="status" lay-skin="switch" lay-text="ON|OFF" type="checkbox">
+      <input ${category.status==1?'checked':''}  name="status" lay-skin="switch" lay-text="ON|OFF" type="checkbox">
     </div>
   </div>
   
@@ -79,6 +67,7 @@ layui.use(['form', 'layedit'], function(){
 	} , function(ret){
 		if(ret.data){
 			$("#query_category").val(ret.data[0].categoryName);
+			$("#query_category").attr("real-value" , ret.data[0].id + "-" + ret.data[0].categoryLevel);
 		}
 	});
   
@@ -89,6 +78,14 @@ layui.use(['form', 'layedit'], function(){
 	}else{
 		data.field.status=0 ;
 	}
+	
+	var category = $("#query_category").attr("real-value") ;
+	if(category.indexOf("-")!=-1){
+		var arr = category.split("-");
+		data.field['fid'] = arr[0];//父ID
+		data.field['categoryLevel'] = arr[1]*1+1;//层级
+	}
+	
     $.post("${request.contextPath}/admin/category/updateByKey" , data.field , function(ret){
     	if(ret.status==200){
 			  var index = parent.layer.getFrameIndex(window.name);
@@ -114,10 +111,9 @@ function query_category_autocomplete(){
         	})
         },
         formatItem:function(item){
-        		return item["categoryName"] + "("+item["categoryLevel"]+")";
+        		return item["categoryName"] + "("+item["categoryLevel"]+"级)";
         },
         setValue:function(item){
-        		$("#fid").val(item["id"]);
         		return {'data-value':item["categoryName"],'real-value':item["id"]};
         }
     });

@@ -7,6 +7,8 @@ public final class Const {
      */
     private Const() {
     }
+    
+    public static  final int CATEGORY_TREE_ROOT = 1 ;
 
     /** 判断代码：是 */
     public static final String TRUE = "1";

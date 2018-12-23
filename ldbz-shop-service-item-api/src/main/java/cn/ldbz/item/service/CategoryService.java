@@ -18,6 +18,8 @@ public interface CategoryService {
 	LdbzResult updateByKey(LdbzCategory entity);
 
 	LdbzResult getCategoryTree(long fid);
+	
+	LdbzResult getCategoryTreeRedis(long fid);
 
 	LdbzResult updateSort(String ids);
 	

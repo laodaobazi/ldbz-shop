@@ -1,6 +1,32 @@
 {
   "data": [
 	  {
+      "text": "管理员管理",
+      "icon": "&#xe620;",
+      "subset": [
+        {
+          "text": "管理员列表",
+          "icon": "&#xe621;",
+          "href": "adminUser/adminUser"
+        },{
+          "text": "角色管理",
+          "icon": "&#xe621;",
+          "href": "adminRole/adminRole"
+        }]
+    },{
+      "text": "商品管理",
+      "icon": "&#xe620;",
+      "subset": [
+        {
+          "text": "分类管理",
+          "icon": "&#xe621;",
+          "href": "category/indexCategory"
+        },{
+          "text": "商品列表",
+          "icon": "&#xe621;",
+          "href": "item/indexItem"
+        }]
+    },{
 	      "text": "广告管理",
 	      "icon": "&#xe620;",
 	      "subset": [
@@ -29,19 +55,6 @@
           "text": "其他板块内容管理",
           "icon": "&#xe621;",
           "href": "demo/btn.html"
-        }]
-    },{
-      "text": "商品管理",
-      "icon": "&#xe620;",
-      "subset": [
-        {
-          "text": "分类管理",
-          "icon": "&#xe621;",
-          "href": "category/indexCategory"
-        },{
-          "text": "商品列表",
-          "icon": "&#xe621;",
-          "href": "item/indexItem"
         }]
     },{
       "text": "订单管理",
@@ -77,19 +90,6 @@
           "text": "删除的会员",
           "icon": "&#xe621;",
           "href": "demo/btn.html"
-        }]
-    },{
-      "text": "管理员管理",
-      "icon": "&#xe620;",
-      "subset": [
-        {
-          "text": "管理员列表",
-          "icon": "&#xe621;",
-          "href": "adminUser/adminUser"
-        },{
-          "text": "角色管理",
-          "icon": "&#xe621;",
-          "href": "adminRole/adminRole"
         }]
     },{
       "text": "系统管理",

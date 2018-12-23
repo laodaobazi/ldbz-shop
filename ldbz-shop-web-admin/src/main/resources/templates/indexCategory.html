@@ -93,12 +93,12 @@
         ,page: true //开启分页
         ,cols: [[ //表头
           {type: 'checkbox', fixed: 'left'}
-          ,{field: 'categoryName', title: '分类', width: 80}
-          ,{field: 'categoryLevel', title: '级别', width: 80}
+          ,{field: 'categoryName', title: '分类', width: 120}
+          ,{field: 'categoryLevel', title: '级别', width: 50}
           ,{field: 'status', title: '状态', width: 80 , templet: function(d){
         	  return '<input type="checkbox" disabled lay-skin="switch" lay-text="ON|OFF" ' + ( d.status == 1 ? "checked" : "" ) + '>';
           }}
-          ,{field: 'sortOrder', title: '排序', width: 65}
+          ,{field: 'sortOrder', title: '排序', width: 50}
           ,{field: 'id', title: 'ID', hide:true}
           ,{field: 'created', title: '创建时间', width:140 ,templet: function(d){
               if(d.created){

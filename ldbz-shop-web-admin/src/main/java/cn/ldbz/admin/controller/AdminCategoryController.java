@@ -60,6 +60,7 @@ public class AdminCategoryController {
     @ResponseBody
     @RequestMapping(value="/getCategoryList" , method = RequestMethod.POST)
     public LdbzResult getCategoryList(LdbzCategory entity) {
+    	entity.setCategoryName(ConvertUtils.getKey(entity.getCategoryName()));
     	logger.debug("go to getCategoryList  : {}" , entity);
     	return categoryService.getCategoryList(entity);
     }

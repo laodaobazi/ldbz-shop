@@ -49,11 +49,13 @@
 			    <label class="layui-form-label">商品图片</label>
 				<div class="layui-upload">
 				  <button type="button" class="layui-btn" id="btn_upload_image">上传</button>
-				  <div class="layui-upload-list">
-				    <img class="layui-upload-img" id="item_image_preview" alt="" src="${item.image}">
-				    <p id="uploadTextImage"></p>
-				    <input type="hidden" name="image" id="image" value="${item.image}">
-				  </div>
+				  
+					  <div class="layui-upload-list">
+					    <img class="layui-upload-img" id="item_image_preview" alt="" src="${request.contextPath}/${item.image}">
+					    <p id="uploadTextImage"></p>
+					    <input type="hidden" name="image" id="image" value="${item.image}">
+					  </div>
+				  
 				</div>
 			  </div>
 	    
@@ -85,7 +87,7 @@
 			  <div class="layui-form-item">
 			    <label class="layui-form-label">状态</label>
 			    <div class="layui-input-block">
-			      <input ${item.status==1?'checked':''} name="status" lay-skin="switch" lay-text="ON|OFF" type="checkbox" value="${item.status}">
+			      <input ${item.status==1?'checked':''} name="status" lay-skin="switch" lay-text="ON|OFF" type="checkbox">
 			    </div>
 			  </div>
 			  <div class="layui-form-item">
@@ -98,11 +100,13 @@
 			    <label class="layui-form-label">商品条形码</label>
 				<div class="layui-upload">
 				  <button type="button" class="layui-btn" id="btn_upload_barcode">上传</button>
-				  <div class="layui-upload-list">
-				    <img class="layui-upload-img" id="item_barcode_preview" alt="" src="${item.barcode}">
-				    <p id="uploadTextBarcode"></p>
-				    <input type="hidden" name="barcode" id="barcode" value="${item.barcode}">
-				  </div>
+				  
+					  <div class="layui-upload-list">
+					    <img class="layui-upload-img" id="item_barcode_preview" alt="" src="${request.contextPath}/${item.barcode}">
+					    <p id="uploadTextBarcode"></p>
+					    <input type="hidden" name="barcode" id="barcode" value="${item.barcode}">
+					  </div>
+				  
 				</div>   
 			  </div>
 			  
