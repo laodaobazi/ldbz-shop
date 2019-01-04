@@ -32,14 +32,14 @@ public class AdminIndexSlideAdController {
     
     @ApiOperation(value="列表页面跳转", notes="跳转到首页滑动广告列表页面")
     @RequestMapping(value="/indexSlideAd" , method = RequestMethod.GET)
-    String indexSlideAd() {
+    public String indexSlideAd() {
     	logger.debug("go to indexSlideAd ");
     	return "indexSlideAd";
     }
     
     @ApiOperation(value="新增页面跳转", notes="跳转到首页滑动广告新增页面")
     @RequestMapping(value="/addIndexSlideAd" , method = RequestMethod.GET)
-    String addIndexSlideAd() {
+    public String addIndexSlideAd() {
     	logger.debug("go to indexSlideAd_add ");
     	return "indexSlideAd_add";
     }
@@ -47,7 +47,7 @@ public class AdminIndexSlideAdController {
     @ApiOperation(value="修改页面跳转", notes="跳转到首页滑动广告修改页面")
     @ApiImplicitParam(name = "id", value = "广告id", required = true, dataType = "long",paramType = "path")
     @RequestMapping(value="/editIndexSlideAd/{id}" , method = RequestMethod.GET)
-    String editIndexSlideAd(@PathVariable("id")long id , Model model) {
+    public String editIndexSlideAd(@PathVariable("id")long id , Model model) {
     	logger.debug("go to indexSlideAd_edit id : {}" , id);
     	LdbzResult ret = adminIndexSlideAdService.selectByKey(id);
     	model.addAttribute("ad" , ret.getData());
@@ -62,7 +62,7 @@ public class AdminIndexSlideAdController {
 	})
     @ResponseBody
     @RequestMapping(value="/getIndexSlideAdPage" , method = RequestMethod.POST)
-    LdbzResult getIndexSlideAdPage(LdbzIndexSlideAd entity , int page , int limit) {
+    public LdbzResult getIndexSlideAdPage(LdbzIndexSlideAd entity , int page , int limit) {
     	return adminIndexSlideAdService.getIndexSlideAdPage(entity, page, limit);
     }
     
@@ -70,7 +70,7 @@ public class AdminIndexSlideAdController {
     @ApiImplicitParam(name = "id", value = "广告id", required = true, dataType = "long",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/selectByKey/{id}" , method = RequestMethod.POST)
-    LdbzResult selectByKey(@PathVariable("id")long id) {
+    public LdbzResult selectByKey(@PathVariable("id")long id) {
     	return adminIndexSlideAdService.selectByKey(id);
     }
     
@@ -78,7 +78,7 @@ public class AdminIndexSlideAdController {
     @ApiImplicitParam(name = "id", value = "广告id", required = true, dataType = "String",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/deleteByKey/{id}" , method = RequestMethod.POST)
-    LdbzResult deleteByKey(@PathVariable("id")String id) {
+    public LdbzResult deleteByKey(@PathVariable("id")String id) {
     	return adminIndexSlideAdService.deleteByKey(id);
     }
     
@@ -86,7 +86,7 @@ public class AdminIndexSlideAdController {
     @ApiImplicitParam(name = "entity", value = "LdbzIndexSlideAd实体", required = true, dataType = "LdbzIndexSlideAd")
     @ResponseBody
     @RequestMapping(value="/insertByEntity" , method = RequestMethod.POST)
-    LdbzResult insertByEntity(LdbzIndexSlideAd entity) {
+    public LdbzResult insertByEntity(LdbzIndexSlideAd entity) {
     	Date date = new Date() ;
     	entity.setCreated(date);
     	entity.setUpdated(date);
@@ -97,7 +97,7 @@ public class AdminIndexSlideAdController {
     @ApiImplicitParam(name = "entity", value = "LdbzIndexSlideAd实体", required = true, dataType = "LdbzIndexSlideAd")
     @ResponseBody
     @RequestMapping(value="/updateByKey" , method = RequestMethod.POST)
-    LdbzResult updateByKey(LdbzIndexSlideAd entity) {
+    public LdbzResult updateByKey(LdbzIndexSlideAd entity) {
     	Date date = new Date() ;
     	entity.setUpdated(date);
     	return adminIndexSlideAdService.updateByKey(entity);

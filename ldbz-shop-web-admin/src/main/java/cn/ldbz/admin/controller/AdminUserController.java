@@ -33,14 +33,14 @@ public class AdminUserController {
     
     @ApiOperation(value="列表页面跳转", notes="跳转到后台管理用户的列表页面")
     @RequestMapping(value="/adminUser" , method = RequestMethod.GET)
-    String adminRole() {
+    public String adminRole() {
     	logger.debug("go to adminUser ");
     	return "adminUser";
     }
     
     @ApiOperation(value="新增页面跳转", notes="跳转到后台管理用户新增页面")
     @RequestMapping(value="/addAdminUser" , method = RequestMethod.GET)
-    String addAdminUser() {
+    public String addAdminUser() {
     	logger.debug("go to adminUser_add ");
     	return "adminUser_add";
     }
@@ -48,7 +48,7 @@ public class AdminUserController {
     @ApiOperation(value="修改页面跳转", notes="跳转到后台管理用户的修改页面")
     @ApiImplicitParam(name = "id", value = "菜单id", required = true, dataType = "long",paramType = "path")
     @RequestMapping(value="/editAdminUser/{id}" , method = RequestMethod.GET)
-    String editAdminUser(@PathVariable("id")long id , Model model) {
+    public String editAdminUser(@PathVariable("id")long id , Model model) {
     	logger.debug("go to adminUser_edit id : {}" , id);
     	LdbzResult ret = adminUserService.selectByKey(id);
     	model.addAttribute("user" , ret.getData());
@@ -63,7 +63,7 @@ public class AdminUserController {
 	})
     @ResponseBody
     @RequestMapping(value="/getAdminUserPage" , method = RequestMethod.POST)
-    LdbzResult getAdminUserPage(LdbzAdminUser entity , int page , int limit) {
+    public LdbzResult getAdminUserPage(LdbzAdminUser entity , int page , int limit) {
     	String _rn = ConvertUtils.getKey(entity.getRealName());
     	entity.setRealName(_rn);
     	return adminUserService.getAdminUserPage(entity, page, limit);
@@ -73,7 +73,7 @@ public class AdminUserController {
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "long",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/selectByKey/{id}" , method = RequestMethod.POST)
-    LdbzResult selectByKey(@PathVariable("id")long id) {
+    public LdbzResult selectByKey(@PathVariable("id")long id) {
     	return adminUserService.selectByKey(id);
     }
     
@@ -81,7 +81,7 @@ public class AdminUserController {
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/deleteByKey/{id}" , method = RequestMethod.POST)
-    LdbzResult deleteByKey(@PathVariable("id")String id) {
+    public LdbzResult deleteByKey(@PathVariable("id")String id) {
     	return adminUserService.deleteByKey(id);
     }
     
@@ -89,7 +89,7 @@ public class AdminUserController {
     @ApiImplicitParam(name = "entity", value = "LdbzAdminUser实体", required = true, dataType = "LdbzAdminUser")
     @ResponseBody
     @RequestMapping(value="/insertByEntity" , method = RequestMethod.POST)
-    LdbzResult insertByEntity(LdbzAdminUser entity) {
+    public LdbzResult insertByEntity(LdbzAdminUser entity) {
     	Date date = new Date() ;
     	entity.setCreated(date);
     	entity.setUpdated(date);
@@ -100,7 +100,7 @@ public class AdminUserController {
     @ApiImplicitParam(name = "entity", value = "LdbzAdminUser实体", required = true, dataType = "LdbzAdminUser")
     @ResponseBody
     @RequestMapping(value="/updateByKey" , method = RequestMethod.POST)
-    LdbzResult updateByKey(LdbzAdminUser entity) {
+    public LdbzResult updateByKey(LdbzAdminUser entity) {
     	Date date = new Date() ;
     	entity.setUpdated(date);
     	return adminUserService.updateByKey(entity);

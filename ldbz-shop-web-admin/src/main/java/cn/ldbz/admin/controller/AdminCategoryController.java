@@ -33,14 +33,14 @@ public class AdminCategoryController {
     
     @ApiOperation(value="产品分类页面跳转", notes="跳转到产品分类页面")
     @RequestMapping(value="/indexCategory" , method = RequestMethod.GET)
-    String adminAuthUser() {
+    public String adminAuthUser() {
     	logger.debug("go to indexCategory");
     	return "indexCategory";
     }
     
     @ApiOperation(value="新增页面跳转", notes="跳转到产品分类新增页面")
     @RequestMapping(value="/addCategory" , method = RequestMethod.GET)
-    String addCategory() {
+    public String addCategory() {
     	logger.debug("go to indexCategory_add ");
     	return "indexCategory_add";
     }
@@ -48,7 +48,7 @@ public class AdminCategoryController {
     @ApiOperation(value="修改页面跳转", notes="跳转到产品分类修改页面")
     @ApiImplicitParam(name = "id", value = "分类id", required = true, dataType = "long",paramType = "path")
     @RequestMapping(value="/editCategory/{id}" , method = RequestMethod.GET)
-    String editCategory(@PathVariable("id")long id , Model model) {
+    public String editCategory(@PathVariable("id")long id , Model model) {
     	logger.debug("go to indexCategory_edit id : {}" , id);
     	LdbzResult ret = categoryService.selectByKey(id);
     	model.addAttribute("category" , ret.getData());
@@ -73,7 +73,7 @@ public class AdminCategoryController {
 	})
     @ResponseBody
     @RequestMapping(value="/getCategoryPage" , method = RequestMethod.POST)
-    LdbzResult getCategoryPage(LdbzCategory entity , int page , int limit) {
+    public LdbzResult getCategoryPage(LdbzCategory entity , int page , int limit) {
     	entity.setCategoryName(ConvertUtils.getKey(entity.getCategoryName()));
     	return categoryService.getCategoryPage(entity, page, limit);
     }
@@ -82,7 +82,7 @@ public class AdminCategoryController {
     @ApiImplicitParam(name = "id", value = "分类id", required = true, dataType = "String",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/deleteByKey/{id}" , method = RequestMethod.POST)
-    LdbzResult deleteByKey(@PathVariable("id")String id) {
+    public LdbzResult deleteByKey(@PathVariable("id")String id) {
     	return categoryService.deleteByKey(id);
     }
     
@@ -90,7 +90,7 @@ public class AdminCategoryController {
     @ApiImplicitParam(name = "entity", value = "LdbzCategory实体", required = true, dataType = "LdbzCategory")
     @ResponseBody
     @RequestMapping(value="/insertByEntity" , method = RequestMethod.POST)
-    LdbzResult insertByEntity(LdbzCategory entity) {
+    public LdbzResult insertByEntity(LdbzCategory entity) {
     	Date date = new Date() ;
     	entity.setCreated(date);
     	entity.setUpdated(date);
@@ -101,7 +101,7 @@ public class AdminCategoryController {
     @ApiImplicitParam(name = "entity", value = "LdbzCategory实体", required = true, dataType = "LdbzCategory")
     @ResponseBody
     @RequestMapping(value="/updateByKey" , method = RequestMethod.POST)
-    LdbzResult updateByKey(LdbzCategory entity) {
+    public LdbzResult updateByKey(LdbzCategory entity) {
     	Date date = new Date() ;
     	entity.setUpdated(date);
     	return categoryService.updateByKey(entity);
@@ -111,7 +111,7 @@ public class AdminCategoryController {
     @ApiImplicitParam(name = "fid", value = "父节点ID", required = true, dataType = "long", paramType = "path")
     @ResponseBody
     @RequestMapping(value="/getCategoryTree/{fid}" , method = RequestMethod.POST)
-    LdbzResult getCategoryTree(@PathVariable("fid")long fid) {
+    public LdbzResult getCategoryTree(@PathVariable("fid")long fid) {
     	return categoryService.getCategoryTree(fid);
     }
     
@@ -119,7 +119,7 @@ public class AdminCategoryController {
     @ApiImplicitParam(name = "ids", value = "排序之后节点ID，逗号隔开", required = true, dataType = "String")
     @ResponseBody
     @RequestMapping(value="/updateSort" , method = RequestMethod.POST)
-    LdbzResult updateSort(String ids) {
+    public LdbzResult updateSort(String ids) {
     	return categoryService.updateSort(ids);
     }
     

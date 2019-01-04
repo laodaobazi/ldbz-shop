@@ -34,7 +34,7 @@ public class AdminAuthController {
     
     @ApiOperation(value="用户页面跳转", notes="跳转到该角色下所有用户的页面")
     @RequestMapping(value="/user/{roleId}" , method = RequestMethod.GET)
-    String adminAuthUser(@PathVariable("roleId") Long roleId , Model m) {
+    public String adminAuthUser(@PathVariable("roleId") Long roleId , Model m) {
     	logger.debug("go to adminAuthUser {} " , roleId);
     	m.addAttribute("roleId", roleId);
     	return "adminAuthUser";
@@ -42,7 +42,7 @@ public class AdminAuthController {
     
     @ApiOperation(value="资源页面跳转", notes="跳转到该角色下所有资源的页面")
     @RequestMapping(value="/menu/{roleId}" , method = RequestMethod.GET)
-    String adminAuthMenu(@PathVariable("roleId") Long roleId , Model m) {
+    public String adminAuthMenu(@PathVariable("roleId") Long roleId , Model m) {
     	logger.debug("go to adminAuthMenu {} " , roleId);
     	m.addAttribute("roleId", roleId);
     	return "adminAuthMenu";
@@ -57,7 +57,7 @@ public class AdminAuthController {
     })
     @ResponseBody
     @RequestMapping(value="/selectUserByRole" , method = RequestMethod.POST)
-    LdbzResult selectUserByRole(Long roleId , int page , int limit , 
+    public LdbzResult selectUserByRole(Long roleId , int page , int limit , 
     		@RequestParam(value="realName", defaultValue="")String realName) {
     	return adminAuthService.selectUserByRole(roleId, page, limit , ConvertUtils.getKey(realName));
     }
@@ -71,7 +71,7 @@ public class AdminAuthController {
     })
     @ResponseBody
     @RequestMapping(value="/selectMenuByRole" , method = RequestMethod.POST)
-    LdbzResult selectMenuByRole(Long roleId , int page , int limit , 
+    public LdbzResult selectMenuByRole(Long roleId , int page , int limit , 
     		@RequestParam(value="menuName", defaultValue="")String menuName) {
     	return adminAuthService.selectMenuByRole(roleId, page, limit , ConvertUtils.getKey(menuName));
     }
@@ -83,7 +83,7 @@ public class AdminAuthController {
 	})
     @ResponseBody
     @RequestMapping(value="/deleteByUser" , method = RequestMethod.POST)
-    LdbzResult deleteByUser(Long userId , Long roleId) {
+    public LdbzResult deleteByUser(Long userId , Long roleId) {
     	return adminAuthService.deleteByUser(userId , roleId);
     }
     
@@ -94,7 +94,7 @@ public class AdminAuthController {
     })
     @ResponseBody
     @RequestMapping(value="/deleteByMenu" , method = RequestMethod.POST)
-    LdbzResult deleteByMenu(Long menuId , Long roleId) {
+    public LdbzResult deleteByMenu(Long menuId , Long roleId) {
     	return adminAuthService.deleteByMenu(menuId , roleId);
     }
     
@@ -102,7 +102,7 @@ public class AdminAuthController {
     @ApiImplicitParam(name = "entity", value = "LdbzAdminAuth实体", required = true, dataType = "LdbzAdminAuth")
     @ResponseBody
     @RequestMapping(value="/insertByUser" , method = RequestMethod.POST)
-    LdbzResult insertByUser(LdbzAdminAuth entity) {
+    public LdbzResult insertByUser(LdbzAdminAuth entity) {
     	Date date = new Date() ;
     	entity.setCreated(date);
     	return adminAuthService.insertByUser(entity);
@@ -112,7 +112,7 @@ public class AdminAuthController {
     @ApiImplicitParam(name = "entity", value = "LdbzAdminAuth实体", required = true, dataType = "LdbzAdminAuth")
     @ResponseBody
     @RequestMapping(value="/insertByMenu" , method = RequestMethod.POST)
-    LdbzResult insertByMenu(LdbzAdminAuth entity) {
+    public LdbzResult insertByMenu(LdbzAdminAuth entity) {
     	Date date = new Date() ;
     	entity.setCreated(date);
     	return adminAuthService.insertByMenu(entity);
@@ -122,7 +122,7 @@ public class AdminAuthController {
     @ApiImplicitParam(name = "queryKey", value = "用户的账号或者名字", required = true, dataType = "string")
     @ResponseBody
     @RequestMapping(value="/getUserByNameOrAccount" , method = RequestMethod.POST)
-    LdbzResult getUserByNameOrAccount(String queryKey) {
+    public LdbzResult getUserByNameOrAccount(String queryKey) {
     	return adminAuthService.getUserByNameOrAccount(ConvertUtils.getKey(queryKey));
     }
     
@@ -130,7 +130,7 @@ public class AdminAuthController {
     @ApiImplicitParam(name = "queryKey", value = "资源的名称或请求路径", required = true, dataType = "string")
     @ResponseBody
     @RequestMapping(value="/getResByNameOrUrl" , method = RequestMethod.POST)
-    LdbzResult getResByNameOrUrl(String queryKey) {
+    public LdbzResult getResByNameOrUrl(String queryKey) {
     	return adminAuthService.getResByNameOrUrl(ConvertUtils.getKey(queryKey));
     }
     

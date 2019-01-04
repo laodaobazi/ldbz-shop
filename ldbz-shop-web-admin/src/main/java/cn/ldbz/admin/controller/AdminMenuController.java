@@ -32,14 +32,14 @@ public class AdminMenuController {
     
     @ApiOperation(value="列表页面跳转", notes="跳转到后台管理菜单的列表页面")
     @RequestMapping(value="/adminMenu" , method = RequestMethod.GET)
-    String adminRole() {
+    public String adminRole() {
     	logger.debug("go to adminMenu ");
     	return "adminMenu";
     }
     
     @ApiOperation(value="新增页面跳转", notes="跳转到后台管理菜单新增页面")
     @RequestMapping(value="/addAdminMenu" , method = RequestMethod.GET)
-    String addAdminMenu() {
+    public String addAdminMenu() {
     	logger.debug("go to adminMenu_add ");
     	return "adminMenu_add";
     }
@@ -47,7 +47,7 @@ public class AdminMenuController {
     @ApiOperation(value="修改页面跳转", notes="跳转到后台管理菜单的修改页面")
     @ApiImplicitParam(name = "id", value = "菜单id", required = true, dataType = "long",paramType = "path")
     @RequestMapping(value="/editAdminMenu/{id}" , method = RequestMethod.GET)
-    String editAdminMenu(@PathVariable("id")long id , Model model) {
+    public String editAdminMenu(@PathVariable("id")long id , Model model) {
     	logger.debug("go to adminMenu_edit id : {}" , id);
     	LdbzResult ret = adminMenuService.selectByKey(id);
     	model.addAttribute("menu" , ret.getData());
@@ -62,14 +62,14 @@ public class AdminMenuController {
 	})
     @ResponseBody
     @RequestMapping(value="/getAdminMenuPage" , method = RequestMethod.POST)
-    LdbzResult getAdminMenuPage(LdbzAdminMenu entity , int page , int limit) {
+    public LdbzResult getAdminMenuPage(LdbzAdminMenu entity , int page , int limit) {
     	return adminMenuService.getAdminMenuPage(entity, page, limit);
     }
     
     @ApiOperation(value="获取树形菜单", notes="获取树形菜单")
     @ResponseBody
     @RequestMapping(value="/getMenuTree" , method = RequestMethod.POST)
-    LdbzResult getMenuTree() {
+    public LdbzResult getMenuTree() {
     	return adminMenuService.getMenuTree();
     }
     
@@ -77,7 +77,7 @@ public class AdminMenuController {
     @ApiImplicitParam(name = "id", value = "菜单id", required = true, dataType = "long",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/selectByKey/{id}" , method = RequestMethod.POST)
-    LdbzResult selectByKey(@PathVariable("id")long id) {
+    public LdbzResult selectByKey(@PathVariable("id")long id) {
     	return adminMenuService.selectByKey(id);
     }
     
@@ -85,7 +85,7 @@ public class AdminMenuController {
     @ApiImplicitParam(name = "id", value = "菜单id", required = true, dataType = "String",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/deleteByKey/{id}" , method = RequestMethod.POST)
-    LdbzResult deleteByKey(@PathVariable("id")String id) {
+    public LdbzResult deleteByKey(@PathVariable("id")String id) {
     	return adminMenuService.deleteByKey(id);
     }
     
@@ -93,7 +93,7 @@ public class AdminMenuController {
     @ApiImplicitParam(name = "entity", value = "LdbzAdminMenu实体", required = true, dataType = "LdbzAdminMenu")
     @ResponseBody
     @RequestMapping(value="/insertByEntity" , method = RequestMethod.POST)
-    LdbzResult insertByEntity(LdbzAdminMenu entity) {
+    public LdbzResult insertByEntity(LdbzAdminMenu entity) {
     	Date date = new Date() ;
     	entity.setCreated(date);
     	entity.setUpdated(date);
@@ -104,7 +104,7 @@ public class AdminMenuController {
     @ApiImplicitParam(name = "entity", value = "LdbzAdminMenu实体", required = true, dataType = "LdbzAdminMenu")
     @ResponseBody
     @RequestMapping(value="/updateByKey" , method = RequestMethod.POST)
-    LdbzResult updateByKey(LdbzAdminMenu entity) {
+    public LdbzResult updateByKey(LdbzAdminMenu entity) {
     	Date date = new Date() ;
     	entity.setUpdated(date);
     	return adminMenuService.updateByKey(entity);

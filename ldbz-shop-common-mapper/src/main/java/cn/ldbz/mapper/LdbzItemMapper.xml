@@ -13,6 +13,7 @@
     <result column="updator_name" property="updatorName" jdbcType="VARCHAR" />
     
     <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="BIGINT" />
     <result column="sell_point" property="sellPoint" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="BIGINT" />
     <result column="num" property="num" jdbcType="INTEGER" />
@@ -27,7 +28,7 @@
 
   <sql id="Base_Column_List" >
     id , sort_order, created , creator , creator_name, updated , updator, updator_name , 
-    title , sell_point , price , num , barcode , image , cid , status , weight , colour , size
+    title , code , sell_point , price , num , barcode , image , cid , status , weight , colour , size
   </sql>
   
   <select id="selectByEntity" resultMap="BaseResultMap"  parameterType="cn.ldbz.pojo.LdbzItem">
@@ -88,12 +89,12 @@
   <insert id="insertByEntity" parameterType="cn.ldbz.pojo.LdbzItem" >
     insert into ldbz_item (
 	    id , sort_order, created , creator , creator_name, 
-    	title , sell_point , price , num , barcode , image , cid , status , weight , colour , size
+    	code , title , sell_point , price , num , barcode , image , cid , status , weight , colour , size
     )
     values (#{id,jdbcType=BIGINT},#{sortOrder,jdbcType=TIMESTAMP}, #{created,jdbcType=TIMESTAMP}, 
-    	#{creator,jdbcType=VARCHAR} , #{creatorName,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
-    	#{sellPoint,jdbcType=VARCHAR},#{price,jdbcType=BIGINT},#{num,jdbcType=INTEGER},
-        #{barcode,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR},#{cid,jdbcType=BIGINT},
+    	#{creator,jdbcType=VARCHAR} , #{creatorName,jdbcType=VARCHAR},#{code,jdbcType=BIGINT},
+    	#{title,jdbcType=VARCHAR},#{sellPoint,jdbcType=VARCHAR},#{price,jdbcType=BIGINT},
+        #{num,jdbcType=INTEGER},#{barcode,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR},#{cid,jdbcType=BIGINT},
         #{status,jdbcType=INTEGER},#{weight,jdbcType=INTEGER}, #{colour,jdbcType=VARCHAR} , #{size,jdbcType=VARCHAR}
       )
   </insert>

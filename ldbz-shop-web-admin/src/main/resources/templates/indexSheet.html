@@ -38,11 +38,13 @@
 	<script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">修改</button>
+    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="assign">分配</button>
   </div>
 	</script>
 	 
 	<script type="text/html" id="barDemo">
   		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="assign">分配</a>
 	</script>
 	
 
@@ -120,13 +122,20 @@
         var checkStatus = table.checkStatus(obj.config.id);
         var data = checkStatus.data;
         switch(obj.event){
-        case 'edit':
-      	  if(data.length==1){
-      		  editRec(data[0]);
-      	  }else{
-	          	layer.msg("请选择一条需要修改的记录。");
-      	  }
-        break;
+        	case 'edit':
+	      	  if(data.length==1){
+	      		  editRec(data[0]);
+	      	  }else{
+		          	layer.msg("请选择一条需要修改的记录。");
+	      	  }
+	        break;
+	        case 'assign':
+	      	  if(data.length==1){
+	      		assignRec(data[0]);
+	      	  }else{
+		          	layer.msg("请选择一条需要分配的板块。");
+	      	  }
+	        break;
         };
       });
       
@@ -135,6 +144,8 @@
         var data = obj.data;
         if(obj.event === 'edit'){
         	editRec(data);
+        }else if(obj.event === 'assign'){
+        	assignRec(data);
         }
       });
       
@@ -151,6 +162,21 @@
 			  },
 			  end: function () {
 				  tableIns.reload('demo');
+			  }
+			});
+		layer.full(edit_full);
+      }
+      
+      //分配
+	  function assignRec(data){
+		  var edit_full = layer.open({
+			  type: 2,
+			  shade: false,
+			  title: "分配商品",
+			  maxmin: false,
+			  content: '${request.contextPath}/admin/sheet/assignSheet/' + data.id,
+			  success: function(layero){
+			    layer.setTop(layero);
 			  }
 			});
 		layer.full(edit_full);

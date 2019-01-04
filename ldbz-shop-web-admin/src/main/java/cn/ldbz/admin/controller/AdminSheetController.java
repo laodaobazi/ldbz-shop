@@ -33,7 +33,7 @@ public class AdminSheetController {
     
     @ApiOperation(value="产品板块跳转", notes="跳转到产品板块页面")
     @RequestMapping(value="/indexSheet" , method = RequestMethod.GET)
-    String indexSheet() {
+    public String indexSheet() {
     	logger.debug("go to indexSheet");
     	return "indexSheet";
     }
@@ -41,11 +41,20 @@ public class AdminSheetController {
     @ApiOperation(value="修改板块页面跳转", notes="跳转到板块修改页面")
     @ApiImplicitParam(name = "id", value = "产品id", required = true, dataType = "long",paramType = "path")
     @RequestMapping(value="/editSheet/{id}" , method = RequestMethod.GET)
-    String editSheet(@PathVariable("id")long id , Model model) {
+    public String editSheet(@PathVariable("id")long id , Model model) {
     	logger.debug("go to indexSheet_edit id : {}" , id);
     	LdbzResult ret = sheetService.selectByKey(id);
     	model.addAttribute("sheet" , ret.getData());
     	return "indexSheet_edit";
+    }
+    
+    @ApiOperation(value="板块分配商品", notes="跳转到板块分配商品的页面")
+    @ApiImplicitParam(name = "id", value = "产品id", required = true, dataType = "long",paramType = "path")
+    @RequestMapping(value="/assignSheet/{id}" , method = RequestMethod.GET)
+    public String assignSheet(@PathVariable("id")String id , Model model) {
+    	logger.debug("go to indexSheet_assign id : {}" , id);
+    	model.addAttribute("id" , id);
+    	return "indexSheet_assign";
     }
     
     @ApiOperation(value="获取商品板块信息", notes="根据条件获取商品板块信息")
@@ -65,7 +74,7 @@ public class AdminSheetController {
 	})
     @ResponseBody
     @RequestMapping(value="/getSheetPage" , method = RequestMethod.POST)
-    LdbzResult getSheetPage(LdbzSheet entity , int page , int limit) {
+    public LdbzResult getSheetPage(LdbzSheet entity , int page , int limit) {
     	entity.setSheetName(ConvertUtils.getKey(entity.getSheetName()));
     	return sheetService.getSheetPage(entity, page, limit);
     }
@@ -74,7 +83,7 @@ public class AdminSheetController {
     @ApiImplicitParam(name = "entity", value = "LdbzSheet实体", required = true, dataType = "LdbzSheet")
     @ResponseBody
     @RequestMapping(value="/updateByKey" , method = RequestMethod.POST)
-    LdbzResult updateByKey(LdbzSheet entity) {
+    public LdbzResult updateByKey(LdbzSheet entity) {
     	Date date = new Date() ;
     	entity.setUpdated(date);
     	return sheetService.updateByKey(entity);

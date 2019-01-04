@@ -33,14 +33,14 @@ public class AdminItemController {
     
     @ApiOperation(value="产品页面跳转", notes="跳转到产品页面")
     @RequestMapping(value="/indexItem" , method = RequestMethod.GET)
-    String adminAuthUser() {
+    public String adminAuthUser() {
     	logger.debug("go to indexItem");
     	return "indexItem";
     }
     
     @ApiOperation(value="新增页面跳转", notes="跳转到产品新增页面")
     @RequestMapping(value="/addItem" , method = RequestMethod.GET)
-    String addItem() {
+    public String addItem() {
     	logger.debug("go to indexItem_add ");
     	return "indexItem_add";
     }
@@ -48,7 +48,7 @@ public class AdminItemController {
     @ApiOperation(value="修改页面跳转", notes="跳转到产品修改页面")
     @ApiImplicitParam(name = "id", value = "产品id", required = true, dataType = "long",paramType = "path")
     @RequestMapping(value="/editItem/{id}" , method = RequestMethod.GET)
-    String editItem(@PathVariable("id")long id , Model model) {
+    public String editItem(@PathVariable("id")long id , Model model) {
     	logger.debug("go to indexItem_edit id : {}" , id);
     	LdbzResult ret = itemService.selectByKey(id);
     	model.addAttribute("item" , ret.getData());
@@ -72,7 +72,7 @@ public class AdminItemController {
 	})
     @ResponseBody
     @RequestMapping(value="/getItemPage" , method = RequestMethod.POST)
-    LdbzResult getItemPage(LdbzItem entity , int page , int limit) {
+    public LdbzResult getItemPage(LdbzItem entity , int page , int limit) {
     	entity.setTitle(ConvertUtils.getKey(entity.getTitle()));
     	return itemService.getItemPage(entity, page, limit);
     }
@@ -81,7 +81,7 @@ public class AdminItemController {
     @ApiImplicitParam(name = "id", value = "商品id", required = true, dataType = "String",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/deleteByKey/{id}" , method = RequestMethod.POST)
-    LdbzResult deleteByKey(@PathVariable("id")String id) {
+    public LdbzResult deleteByKey(@PathVariable("id")String id) {
     	return itemService.deleteByKey(id);
     }
     
@@ -89,7 +89,7 @@ public class AdminItemController {
     @ApiImplicitParam(name = "entity", value = "LdbzItem实体", required = true, dataType = "LdbzItem")
     @ResponseBody
     @RequestMapping(value="/insertByEntity" , method = RequestMethod.POST)
-    LdbzResult insertByEntity(LdbzItem entity) {
+    public LdbzResult insertByEntity(LdbzItem entity) {
     	Date date = new Date() ;
     	entity.setCreated(date);
     	entity.setUpdated(date);
@@ -100,7 +100,7 @@ public class AdminItemController {
     @ApiImplicitParam(name = "entity", value = "LdbzItem实体", required = true, dataType = "LdbzItem")
     @ResponseBody
     @RequestMapping(value="/updateByKey" , method = RequestMethod.POST)
-    LdbzResult updateByKey(LdbzItem entity) {
+    public LdbzResult updateByKey(LdbzItem entity) {
     	Date date = new Date() ;
     	entity.setUpdated(date);
     	return itemService.updateByKey(entity);

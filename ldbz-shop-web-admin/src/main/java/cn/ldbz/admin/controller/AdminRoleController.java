@@ -32,14 +32,14 @@ public class AdminRoleController {
     
     @ApiOperation(value="列表页面跳转", notes="跳转到后台角色的列表页面")
     @RequestMapping(value="/adminRole" , method = RequestMethod.GET)
-    String adminRole() {
+    public String adminRole() {
     	logger.debug("go to adminRole ");
     	return "adminRole";
     }
     
     @ApiOperation(value="新增页面跳转", notes="跳转到后台角色新增页面")
     @RequestMapping(value="/addAdminRole" , method = RequestMethod.GET)
-    String addAdminRole() {
+    public String addAdminRole() {
     	logger.debug("go to addAdminRole_add ");
     	return "adminRole_add";
     }
@@ -47,7 +47,7 @@ public class AdminRoleController {
     @ApiOperation(value="修改页面跳转", notes="跳转到后台角色的修改页面")
     @ApiImplicitParam(name = "id", value = "角色id", required = true, dataType = "long",paramType = "path")
     @RequestMapping(value="/editAdminRole/{id}" , method = RequestMethod.GET)
-    String editAdminRole(@PathVariable("id")long id , Model model) {
+    public String editAdminRole(@PathVariable("id")long id , Model model) {
     	logger.debug("go to adminRole_edit id : {}" , id);
     	LdbzResult ret = adminRoleService.selectByKey(id);
     	model.addAttribute("role" , ret.getData());
@@ -62,7 +62,7 @@ public class AdminRoleController {
 	})
     @ResponseBody
     @RequestMapping(value="/getAdminRolePage" , method = RequestMethod.POST)
-    LdbzResult getAdminRolePage(LdbzAdminRole entity , int page , int limit) {
+    public LdbzResult getAdminRolePage(LdbzAdminRole entity , int page , int limit) {
     	return adminRoleService.getAdminRolePage(entity, page, limit);
     }
     
@@ -70,7 +70,7 @@ public class AdminRoleController {
     @ApiImplicitParam(name = "id", value = "角色id", required = true, dataType = "long",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/selectByKey/{id}" , method = RequestMethod.POST)
-    LdbzResult selectByKey(@PathVariable("id")long id) {
+    public LdbzResult selectByKey(@PathVariable("id")long id) {
     	return adminRoleService.selectByKey(id);
     }
     
@@ -78,7 +78,7 @@ public class AdminRoleController {
     @ApiImplicitParam(name = "id", value = "角色id", required = true, dataType = "String",paramType = "path")
     @ResponseBody
     @RequestMapping(value="/deleteByKey/{id}" , method = RequestMethod.POST)
-    LdbzResult deleteByKey(@PathVariable("id")String id) {
+    public LdbzResult deleteByKey(@PathVariable("id")String id) {
     	return adminRoleService.deleteByKey(id);
     }
     
@@ -86,7 +86,7 @@ public class AdminRoleController {
     @ApiImplicitParam(name = "entity", value = "LdbzAdminRole实体", required = true, dataType = "LdbzAdminRole")
     @ResponseBody
     @RequestMapping(value="/insertByEntity" , method = RequestMethod.POST)
-    LdbzResult insertByEntity(LdbzAdminRole entity) {
+    public LdbzResult insertByEntity(LdbzAdminRole entity) {
     	Date date = new Date() ;
     	entity.setCreated(date);
     	entity.setUpdated(date);
@@ -97,7 +97,7 @@ public class AdminRoleController {
     @ApiImplicitParam(name = "entity", value = "LdbzAdminRole实体", required = true, dataType = "LdbzAdminRole")
     @ResponseBody
     @RequestMapping(value="/updateByKey" , method = RequestMethod.POST)
-    LdbzResult updateByKey(LdbzAdminRole entity) {
+    public LdbzResult updateByKey(LdbzAdminRole entity) {
     	Date date = new Date() ;
     	entity.setUpdated(date);
     	return adminRoleService.updateByKey(entity);
