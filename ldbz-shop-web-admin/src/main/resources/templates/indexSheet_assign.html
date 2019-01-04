@@ -74,7 +74,8 @@
         ,page: true //开启分页
         ,cols: [[ //表头
           {type: 'checkbox', fixed: 'left'}
-          ,{field: 'ITEM_NAME', title: '商品名称', width: 260}
+          ,{field: 'ITEM_NAME', title: '商品名称', width: 300}
+          ,{field: 'ITEM_CODE', title: '商品编号', width: 100}
           ,{field: 'ID', title: 'ID', hide:true}
           ,{field: 'SORT_ORDER', title: '排序', width: 80}
         ]]
@@ -133,7 +134,7 @@
   	        		return item["title"] + "(" + item["code"] + ")";
   	        },
   	        setValue:function(item){
-  	        		return {'data-value':item["title"],'real-value':item["id"] + "||||" + item["title"]};
+  	        		return {'data-value':item["title"],'real-value':item["id"] + "||||" + item["code"] + "||||" + item["title"]};
   	        }
   	    });
       }
@@ -141,7 +142,8 @@
       $("#btn_assign").click(function(){
     	  var real_value =  $("#query_title").attr("real-value").split("||||") ;
     	  var item_id = real_value[0] ;
-    	  var item_name = real_value[1] ;
+    	  var item_code = real_value[1] ;
+    	  var item_name = real_value[2] ;
     	  if(item_id && item_name){
     		    var _prompt = layer.prompt({title:'设置排序'},function(val,index){
 		    	    $.post("${request.contextPath}/admin/sheet/addAssign" , {
@@ -149,6 +151,7 @@
 		    	    	sortOrder : val ,
 		    	    	sheetId : ${sheet.id} ,
 		    	    	itemName : item_name ,
+		    	    	itemCode : item_code ,
 		    	    	sheetName : '${sheet.sheetName}'
 		        	} , function(ret){
 		        		if(ret.status==200){

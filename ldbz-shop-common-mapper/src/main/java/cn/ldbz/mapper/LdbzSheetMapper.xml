@@ -77,7 +77,7 @@
   
   
   <select id="getSheetAssignList" resultType="map" >
-	  select ID , ITEM_NAME , SORT_ORDER
+	  select ID , ITEM_NAME , ITEM_CODE , SORT_ORDER
 	  from ldbz_item_sheet_assign a
 	  where a.sheet_id = #{sheetId,jdbcType=BIGINT}
   </select>
@@ -97,11 +97,11 @@
   
   <insert id="addAssign" parameterType="cn.ldbz.pojo.LdbzSheetAssign" >
     insert into ldbz_item_sheet_assign (
-	    sheet_id, sheet_name , item_id , item_name, creator , creator_name , created , sort_order
+	    sheet_id, sheet_name , item_id , item_name , item_code , creator , creator_name , created , sort_order
     )
     values (
     	#{sheetId,jdbcType=BIGINT},#{sheetName,jdbcType=VARCHAR}, 
-    	#{itemId,jdbcType=BIGINT},#{itemName,jdbcType=VARCHAR} , 
+    	#{itemId,jdbcType=BIGINT},#{itemName,jdbcType=VARCHAR} , #{itemCode,jdbcType=BIGINT} , 
     	#{creator,jdbcType=VARCHAR},#{creatorName,jdbcType=BIGINT},
     	#{created,jdbcType=TIMESTAMP},#{sortOrder,jdbcType=INTEGER}
       )

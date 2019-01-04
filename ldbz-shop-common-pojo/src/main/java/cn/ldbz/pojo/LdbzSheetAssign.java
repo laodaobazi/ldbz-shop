@@ -29,6 +29,8 @@ public class LdbzSheetAssign implements Serializable {
     private Long itemId;
     
     private String itemName;
+
+    private String itemCode;
     
     private Long sheetId;
     
