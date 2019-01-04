@@ -25,6 +25,10 @@
           "text": "商品列表",
           "icon": "&#xe621;",
           "href": "item/indexItem"
+        },{
+          "text": "商品板块",
+          "icon": "&#xe621;",
+          "href": "sheet/indexSheet"
         }]
     },{
 	      "text": "广告管理",

@@ -39,6 +39,7 @@ public class IndexController {
     @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
+    //首页广告图片的URL路径
     @Value("${redisKey.indexSlide.url.key}")
     private String INDEX_SLIDE_URL;
     

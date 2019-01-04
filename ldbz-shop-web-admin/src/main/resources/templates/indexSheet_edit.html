@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>商品板块维护</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+          
+<form class="layui-form" action="return false;">
+
+  <input type="hidden" value="${sheet.id}" name="id">
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">板块名称</label>
+    <div class="layui-input-block">
+      <input name="sheetName" value="${sheet.sheetName}" lay-verify="required" autocomplete="off" placeholder="请输入板块名称" class="layui-input" type="text">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+      <label class="layui-form-label">数量</label>
+      <div class="layui-input-block">
+        <input name="itemCount"  value="${sheet.itemCount}" lay-verify="required|number" autocomplete="off" class="layui-input" type="number">
+      </div>
+  </div>
+
+  <div class="layui-form-item">
+      <label class="layui-form-label">排序</label>
+      <div class="layui-input-block">
+        <input name="sortOrder"  value="${sheet.sortOrder}" lay-verify="required|number" autocomplete="off" class="layui-input" type="number">
+      </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">是否启用</label>
+    <div class="layui-input-block">
+      <input ${sheet.status==1?'checked':''}  name="status" lay-skin="switch" lay-text="ON|OFF" type="checkbox">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+ 
+<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+<script>
+layui.use(['form', 'layedit'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,$ = layui.jquery
+  ,layedit = layui.layedit ;
+  
+  //监听提交
+  form.on('submit(demo1)', function(data){
+	if(data.field.status=='on'){
+		data.field.status=1 ;
+	}else{
+		data.field.status=0 ;
+	}
+	
+    $.post("${request.contextPath}/admin/sheet/updateByKey" , data.field , function(ret){
+    	if(ret.status==200){
+			  var index = parent.layer.getFrameIndex(window.name);
+			  parent.layer.close(index);
+			  parent.layer.msg("修改成功");
+    	}else{
+    		layer.msg(ret.msg);
+    	}
+    });
+    return false;
+  });
+  
+});
+</script>
+</body>
+</html>

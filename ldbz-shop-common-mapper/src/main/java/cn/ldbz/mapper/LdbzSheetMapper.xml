@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzSheetMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzSheet" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sort_order" property="sortOrder" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="updator_name" property="updatorName" jdbcType="VARCHAR" />
+    
+    <result column="sheet_name" property="sheetName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="item_count" property="itemCount" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id , sort_order, created , creator , creator_name, updated , updator, updator_name , 
+    sheet_name , status , item_count
+  </sql>
+  
+  <select id="selectByEntity" resultMap="BaseResultMap"  parameterType="cn.ldbz.pojo.LdbzSheet">
+    select
+    <include refid="Base_Column_List" />
+    from ldbz_item_sheet
+    <where>
+      <if test="entity.sheetName != null and entity.sheetName != '' " >
+        and sheet_name like #{entity.sheetName ,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.status != null " >
+        and status = #{entity.status ,jdbcType=INTEGER}
+      </if>
+      <if test="entity.id != null and entity.id != '' " >
+        and id = #{entity.id ,jdbcType=BIGINT}
+      </if>
+    </where>
+    order by created desc , sort_order , updated desc
+    limit #{start} , #{limit}
+  </select>
+  
+  <select id="countByEntity" parameterType="cn.ldbz.pojo.LdbzSheet" resultType="java.lang.Long" >
+    select count(*) from ldbz_item_sheet
+    <where>
+      <if test="sheetName != null and sheetName != '' " >
+        and sheet_name like #{sheetName ,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null " >
+        and status = #{status ,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ldbz_item_sheet
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <update id="updateByKey" parameterType="cn.ldbz.pojo.LdbzSheet" >
+    update ldbz_item_sheet
+    set 
+      sort_order = #{sortOrder,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR},
+      updator_name = #{updatorName,jdbcType=VARCHAR} ,
+      sheet_name = #{sheetName,jdbcType=VARCHAR} ,
+      status = #{status,jdbcType=INTEGER},
+      item_count = #{itemCount,jdbcType=INTEGER}
+    where 
+      id = #{id,jdbcType=BIGINT}
+  </update>
+  
+</mapper>
