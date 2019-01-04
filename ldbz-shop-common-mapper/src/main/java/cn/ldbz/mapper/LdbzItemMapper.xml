@@ -39,6 +39,9 @@
       <if test="entity.title != null and entity.title != '' " >
         and title like #{entity.title ,jdbcType=VARCHAR}
       </if>
+      <if test="entity.code != null and entity.code != '' " >
+        and code like #{entity.code ,jdbcType=VARCHAR}
+      </if>
       <if test="entity.status != null " >
         and status = #{entity.status ,jdbcType=INTEGER}
       </if>

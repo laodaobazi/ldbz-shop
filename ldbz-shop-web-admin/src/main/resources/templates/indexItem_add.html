@@ -66,7 +66,7 @@
 			  <div class="layui-form-item">
 			      <label class="layui-form-label">所属分类</label>
 			      <div class="layui-input-block">
-			        <input id="query_category" lay-verify="required" autocomplete="off" class="layui-input" >
+			        <input id="query_category" lay-verify="required" autocomplete="off" class="layui-input"  hidden_value="cid">
 			        <input type="hidden" id="cid" name="cid">
 			      </div>
 			  </div>
@@ -207,7 +207,6 @@ function query_category_autocomplete(){
         		return item["categoryName"] + "("+item["categoryLevel"]+")";
         },
         setValue:function(item){
-        		$("#cid").val(item["id"]);
         		return {'data-value':item["categoryName"],'real-value':item["id"]};
         }
     });

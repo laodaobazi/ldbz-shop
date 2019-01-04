@@ -9,19 +9,164 @@
 <link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
 </head>
 <body>
-<input type="hidden" value="${id}" name="id">
-          
- 
-<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
-<script>
-layui.use(['form', 'layedit'], function(){
-  var form = layui.form
-  ,layer = layui.layer
-  ,$ = layui.jquery
-  ,layedit = layui.layedit ;
-  
+
+	<form class="layui-form layui-row" action="return false;">
 	
-});
-</script>
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	    <label class="layui-form-label">商品编号</label>
+	    <div class="layui-input-block">
+	      <input class="layui-input" id="query_title" placeholder="商品编号" type="text">
+	    </div>
+	  </div>
+	  
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	  	<button id="btn_assign" class="layui-btn layui-btn-radius" style="margin-left:65px;" type="button">添加</button>
+	  </div>
+	  
+	</form>
+	
+	<table id="demo" lay-filter="test"></table>
+	
+	<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
+  </div>
+	</script>
+	 
+	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/bootstrap.autocomplete.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/static/js/ldbz_util.js"></script>
+	<script>
+    layui.use(['table','jquery','laydate'], function(){
+      var table = layui.table ;
+      
+      table.init('demo', {
+        height: 'full-10'
+        ,limit: 100
+      });
+    
+      query_item_autocomplete();
+      
+      //第一个实例
+      var tableIns = table.render({
+        elem: '#demo'
+        ,toolbar: '#toolbarDemo'
+        ,url: '/admin/sheet/getSheetAssignList/${sheet.id}'
+        ,method: 'post'
+        ,limit: 100
+        ,contentType: 'application/x-www-form-urlencoded'
+        ,parseData: function(res){ //res 即为原始返回的数据
+        	var count = 0 , list = [];
+        	if(res && res.data && res.data.total){
+        		count =res.data.length ;
+        	}
+        	if(res && res.data){
+        		list =res.data ;
+        	}
+    	    return {
+    	      "code": res.status,
+    	      "msg": res.msg,
+    	      "count": count ,
+    	      "data": list
+    	    };
+    	 }
+        ,page: true //开启分页
+        ,cols: [[ //表头
+          {type: 'checkbox', fixed: 'left'}
+          ,{field: 'ITEM_NAME', title: '商品名称', width: 260}
+          ,{field: 'ID', title: 'ID', hide:true}
+          ,{field: 'SORT_ORDER', title: '排序', width: 80}
+        ]]
+      });
+      
+      //头工具栏事件
+      table.on('toolbar(test)', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        var data = checkStatus.data;
+        switch(obj.event){
+        	case 'del':
+        	  if(data.length>0){
+        		  layer.confirm('是否确定删除选中行记录', function(index){
+			          var ids = $(data).map(function(i , o){ return o.ID ; }).get().join(",");
+                	  $.post("${request.contextPath}/admin/sheet/deleteAssign/" + ids , function(ret){
+                		  if(ret.data>0 && ret.msg=='OK'){
+                			  tableIns.reload('demo');
+        			          layer.close(index);
+                		  }
+                	  });
+                  });
+        	  }else{
+	          	layer.msg("请选择要删除的记录。");
+        	  }
+	        break;
+        };
+      });
+      
+      
+      $("#btn_reload").click(function(){
+          var _status = $("#query_status").val() ;
+          var sheet_name = $("#query_title").val() ;
+	       table.reload('demo', {
+	 	          page: {
+	 	            curr: 1 //重新从第 1 页开始
+	 	          }
+	       		  ,coverWhere : true//覆盖之前的参数
+	 	          ,where: {
+	 	        	  status : _status ,
+	 	        	 sheetName : sheet_name
+	 	          }
+	 	    });
+      });
+      
+      function query_item_autocomplete(){
+      	$("#query_title").autocomplete({
+  			items : 20 ,
+  	        source:function(query,process){
+  	        	$.post("${request.contextPath}/admin/item/getItemList" , {
+  	        		code : $("#query_title").val()
+  	        	} , function(ret){
+  	        			return process(ret.data);
+  	        	})
+  	        },
+  	        formatItem:function(item){
+  	        		return item["title"] + "(" + item["code"] + ")";
+  	        },
+  	        setValue:function(item){
+  	        		return {'data-value':item["title"],'real-value':item["id"] + "||||" + item["title"]};
+  	        }
+  	    });
+      }
+      
+      $("#btn_assign").click(function(){
+    	  var real_value =  $("#query_title").attr("real-value").split("||||") ;
+    	  var item_id = real_value[0] ;
+    	  var item_name = real_value[1] ;
+    	  if(item_id && item_name){
+    		    var _prompt = layer.prompt({title:'设置排序'},function(val,index){
+		    	    $.post("${request.contextPath}/admin/sheet/addAssign" , {
+		    	    	itemId : item_id ,
+		    	    	sortOrder : val ,
+		    	    	sheetId : ${sheet.id} ,
+		    	    	itemName : item_name ,
+		    	    	sheetName : '${sheet.sheetName}'
+		        	} , function(ret){
+		        		if(ret.status==200){
+		        			tableIns.reload('demo');
+		        			$("#query_title").val("");
+		        			$("#query_title").attr("real-value" , "");
+		        		}else{
+		        			layer.msg("操作失败。");
+		        		}
+		        		layer.close(_prompt);
+		        	})
+    		    });
+    	  }else{
+    		  layer.msg("请先选择商品。");
+    	  }
+      });
+      
+    });
+    </script>
 </body>
 </html>

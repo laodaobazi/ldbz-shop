@@ -74,4 +74,38 @@
       id = #{id,jdbcType=BIGINT}
   </update>
   
+  
+  
+  <select id="getSheetAssignList" resultType="map" >
+	  select ID , ITEM_NAME , SORT_ORDER
+	  from ldbz_item_sheet_assign a
+	  where a.sheet_id = #{sheetId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteAssign" parameterType="java.lang.Long" >
+    delete from ldbz_item_sheet_assign
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteAssigns" parameterType="java.util.List" >
+    delete from ldbz_item_sheet_assign
+    where id in
+    <foreach collection="list" item="id" open="(" close=")" separator="," >
+      #{id}
+    </foreach>
+  </delete>
+  
+  <insert id="addAssign" parameterType="cn.ldbz.pojo.LdbzSheetAssign" >
+    insert into ldbz_item_sheet_assign (
+	    sheet_id, sheet_name , item_id , item_name, creator , creator_name , created , sort_order
+    )
+    values (
+    	#{sheetId,jdbcType=BIGINT},#{sheetName,jdbcType=VARCHAR}, 
+    	#{itemId,jdbcType=BIGINT},#{itemName,jdbcType=VARCHAR} , 
+    	#{creator,jdbcType=VARCHAR},#{creatorName,jdbcType=BIGINT},
+    	#{created,jdbcType=TIMESTAMP},#{sortOrder,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  
 </mapper>

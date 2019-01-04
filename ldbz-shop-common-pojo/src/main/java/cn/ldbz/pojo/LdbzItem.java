@@ -28,7 +28,7 @@ public class LdbzItem  implements Serializable {
     
     private String title ;
 
-    private long code ;
+    private String code ;
     
     private String sellPoint ;
     

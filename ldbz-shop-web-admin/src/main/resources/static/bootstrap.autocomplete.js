@@ -36,7 +36,7 @@ $("#goBtn").click(function(){ //获取文本框的实际值
 	this.setValue = this.options.setValue || this.setValue
     this.listen()
     this.$element.change(function(){
-    	$(this).parent().find("input[name='"+$(this).attr("name")+"_code']").remove();
+    	$(this).parent().find("input[name='"+$(this).attr("hidden_value")+"']").remove();
     });
   }
 
@@ -55,8 +55,8 @@ $("#goBtn").click(function(){ //获取文本框的实际值
       var val = this.$menu.find('.active').attr('data-value')
 	  var realVal = this.$menu.find('.active').attr('real-value')
       this.$element.val(this.updater(val)).attr("real-value",realVal).change()
-      this.$element.parent().find("input[name='"+this.$element.attr("name")+"_code']").remove();
-      this.$element.parent().append("<input type='hidden' name='"+this.$element.attr("name")+"_code' value='"+realVal+"'>");
+      this.$element.parent().find("input[name='"+this.$element.attr("hidden_value")+"']").remove();
+      this.$element.parent().append("<input type='hidden' name='"+this.$element.attr("hidden_value")+"' value='"+realVal+"'>");
       
       var onselected = this.$element.attr("onselected");
 	  if(onselected && onselected.lastIndexOf('()')!=-1){

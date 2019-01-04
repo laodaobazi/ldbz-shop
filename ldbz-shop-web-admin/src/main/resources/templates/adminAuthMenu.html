@@ -122,8 +122,9 @@
     
       //新建
 		function addRec(){
-    	  var resId = $("#query_res").attr("resId");
-    	  var resName = $("#query_res").attr("resName");
+    	  var real_value = $("#query_res").attr("real-value");
+    	  var resId = real_value[0];
+    	  var resName = real_value[1];
     	  if(resId || resName){
 	    	  $.post("${request.contextPath}/admin/adminAuth/insertByMenu" , {
 	    		  menuId : resId ,
@@ -135,8 +136,7 @@
 			      		  query_res_autocomplete();
 			    		  layer.msg("资源添加成功");
 			    		  $("#query_res").val('');
-			    		  $("#query_res").attr("resId" , "");
-			    		  $("#query_res").attr("resName" , "");
+			    		  $("#query_res").attr("real-value" , "");
 		      			}else{
 			    		  layer.msg("资源添加失败");
 		      			}
@@ -183,9 +183,7 @@
 	        		return item["menuName"] ;
 	        },
 	        setValue:function(item){
-	        		$("#query_res").attr("resName" , item["menuName"]);
-	        		$("#query_res").attr("resId" , item["menuId"]);
-	        		return {'data-value':item["menuName"],'real-value':item["menuId"]};
+	        		return {'data-value':item["menuName"],'real-value':item["menuId"] + "|||" + item["menuName"]};
 	        }
 	    });
     }

@@ -17,6 +17,7 @@ import cn.ldbz.constant.Const;
 import cn.ldbz.item.service.SheetService;
 import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.pojo.LdbzSheet;
+import cn.ldbz.pojo.LdbzSheetAssign;
 import cn.ldbz.utils.ConvertUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -46,15 +47,6 @@ public class AdminSheetController {
     	LdbzResult ret = sheetService.selectByKey(id);
     	model.addAttribute("sheet" , ret.getData());
     	return "indexSheet_edit";
-    }
-    
-    @ApiOperation(value="板块分配商品", notes="跳转到板块分配商品的页面")
-    @ApiImplicitParam(name = "id", value = "产品id", required = true, dataType = "long",paramType = "path")
-    @RequestMapping(value="/assignSheet/{id}" , method = RequestMethod.GET)
-    public String assignSheet(@PathVariable("id")String id , Model model) {
-    	logger.debug("go to indexSheet_assign id : {}" , id);
-    	model.addAttribute("id" , id);
-    	return "indexSheet_assign";
     }
     
     @ApiOperation(value="获取商品板块信息", notes="根据条件获取商品板块信息")
@@ -87,6 +79,43 @@ public class AdminSheetController {
     	Date date = new Date() ;
     	entity.setUpdated(date);
     	return sheetService.updateByKey(entity);
+    }
+    
+    @ApiOperation(value="板块分配商品", notes="跳转到板块分配商品的页面")
+    @ApiImplicitParam(name = "id", value = "产品id", required = true, dataType = "long",paramType = "path")
+    @RequestMapping(value="/assignSheet/{id}" , method = RequestMethod.GET)
+    public String assignSheet(@PathVariable("id")String id , Model model) {
+    	logger.debug("go to indexSheet_assign id : {}" , id);
+    	LdbzResult ret = sheetService.selectByKey(Long.valueOf(id));
+    	model.addAttribute("sheet" , ret.getData());
+    	return "indexSheet_assign";
+    }
+    
+    @ApiOperation(value="获取板块分配商品的信息", notes="获取板块分配商品的信息")
+    @ApiImplicitParam(name = "id", value = "板块id", required = true, dataType = "long",paramType = "path")
+    @ResponseBody
+    @RequestMapping(value="/getSheetAssignList/{id}" , method = RequestMethod.POST)
+    public LdbzResult getSheetAssignList(@PathVariable("id")long sheetId) {
+    	logger.debug("go to getSheetAssignList  : {}" , sheetId);
+    	return sheetService.getSheetAssignList(sheetId);
+    }
+    
+    @ApiOperation(value="删除分配的商品", notes="根据id物理删除分配后的商品")
+    @ApiImplicitParam(name = "id", value = "分配id", required = true, dataType = "String",paramType = "path")
+    @ResponseBody
+    @RequestMapping(value="/deleteAssign/{id}" , method = RequestMethod.POST)
+    public LdbzResult deleteAssign(@PathVariable("id")String id) {
+    	return sheetService.deleteAssign(id);
+    }
+    
+    @ApiOperation(value="板块分配商品", notes="为板块分配商品")
+    @ApiImplicitParam(name = "entity", value = "LdbzSheetAssign实体", required = true, dataType = "LdbzSheetAssign")
+    @ResponseBody
+    @RequestMapping(value="/addAssign" , method = RequestMethod.POST)
+    public LdbzResult addAssign(LdbzSheetAssign entity) {
+    	Date date = new Date() ;
+    	entity.setCreated(date);
+    	return sheetService.addAssign(entity);
     }
     
 }

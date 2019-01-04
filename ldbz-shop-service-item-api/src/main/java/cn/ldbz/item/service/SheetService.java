@@ -2,6 +2,7 @@ package cn.ldbz.item.service;
 
 import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.pojo.LdbzSheet;
+import cn.ldbz.pojo.LdbzSheetAssign;
 
 public interface SheetService {
 	
@@ -13,4 +14,10 @@ public interface SheetService {
 	
 	LdbzResult updateByKey(LdbzSheet entity);
 
+	LdbzResult getSheetAssignList(long sheetId);
+	
+	LdbzResult deleteAssign(String ids);
+
+	LdbzResult addAssign(LdbzSheetAssign entity);
+	
 }

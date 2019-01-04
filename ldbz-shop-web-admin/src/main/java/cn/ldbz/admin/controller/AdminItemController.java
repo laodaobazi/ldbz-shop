@@ -61,6 +61,8 @@ public class AdminItemController {
     @RequestMapping(value="/getItemList" , method = RequestMethod.POST)
     public LdbzResult getItemList(LdbzItem entity) {
     	logger.debug("go to getItemList  : {}" , entity);
+    	entity.setTitle(ConvertUtils.getKey(entity.getTitle()));
+    	entity.setCode(ConvertUtils.getKey(entity.getCode()));
     	return itemService.getItemList(entity);
     }
     
@@ -92,7 +94,7 @@ public class AdminItemController {
     public LdbzResult insertByEntity(LdbzItem entity) {
     	Date date = new Date() ;
     	entity.setCreated(date);
-    	entity.setUpdated(date);
+    	entity.setCode(String.valueOf(System.currentTimeMillis()));
     	return itemService.insertByEntity(entity);
     }
     

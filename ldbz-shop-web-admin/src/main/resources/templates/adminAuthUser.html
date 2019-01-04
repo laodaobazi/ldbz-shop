@@ -122,9 +122,10 @@
     
       //新建
 		function addRec(){
-    	  var userId = $("#query_user").attr("userId");
-    	  var userName = $("#query_user").attr("userName");
-    	  var realName = $("#query_user").attr("realName");
+	      var real_value = $("#query_user").attr("real-value").split("|||");
+    	  var userId = real_value[0];
+    	  var userName = real_value[1];
+    	  var realName = real_value[2];
     	  if(userId || userName || realName){
 	    	  $.post("${request.contextPath}/admin/adminAuth/insertByUser" , {
 	    		  userId : userId ,
@@ -137,9 +138,7 @@
 			      	      query_user_autocomplete();
 			    		  layer.msg("用户添加成功");
 			    		  $("#query_user").val('');
-			    		  $("#query_user").attr("userId" , "");
-			    		  $("#query_user").attr("userName" , "");
-			    		  $("#query_user").attr("realName" , "");
+			    		  $("#query_user").attr("real-value" , "");
 		      			}else{
 			    		  layer.msg("用户添加失败");
 		      			}
@@ -186,10 +185,7 @@
 	        		return item["realName"] + "("+item["userName"]+")";
 	        },
 	        setValue:function(item){
-	        		$("#query_user").attr("realName" , item["realName"]);
-	        		$("#query_user").attr("userName" , item["userName"]);
-	        		$("#query_user").attr("userId" , item["userId"]);
-	        		return {'data-value':item["realName"],'real-value':item["userName"]};
+	        		return {'data-value':item["realName"],'real-value':item["userId"] + "|||" + item["userName"] + "|||" + item["realName"]};
 	        }
 	    });
     }

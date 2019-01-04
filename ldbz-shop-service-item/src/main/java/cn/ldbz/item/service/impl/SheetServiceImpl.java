@@ -1,9 +1,11 @@
 package cn.ldbz.item.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,9 @@ import com.alibaba.dubbo.config.annotation.Service;
 import cn.ldbz.constant.Const;
 import cn.ldbz.item.service.SheetService;
 import cn.ldbz.mapper.LdbzSheetMapper;
-import cn.ldbz.pojo.LdbzSheet;
 import cn.ldbz.pojo.LdbzResult;
+import cn.ldbz.pojo.LdbzSheet;
+import cn.ldbz.pojo.LdbzSheetAssign;
 
 @Component
 @Service(version = Const.LDBZ_SHOP_SHEET_VERSION)
@@ -58,6 +61,34 @@ public class SheetServiceImpl implements SheetService {
 	public LdbzResult updateByKey(LdbzSheet entity) {
 		logger.debug("updateByKey entity : {} " , entity);
 		return LdbzResult.ok(mapper.updateByKey(entity));
+	}
+
+	@Override
+	public LdbzResult getSheetAssignList(long sheetId) {
+		return LdbzResult.build(0, "", mapper.getSheetAssignList(sheetId));
+	}
+
+	@Override
+	public LdbzResult deleteAssign(String id) {
+		logger.debug("deleteAssign id : {} " , id);
+		if(StringUtils.contains(id, ",")) {
+			List<Long> ids = new ArrayList<Long>();
+			for(String _id : StringUtils.split(id , ",")) {
+				ids.add(Long.valueOf(_id));
+			}
+			return LdbzResult.ok(mapper.deleteAssigns(ids));
+		}else {
+			return LdbzResult.ok(mapper.deleteAssign(Long.valueOf(id)));
+		}
+	}
+
+	public LdbzResult addAssign(LdbzSheetAssign entity) {
+		logger.debug("addAssign entity : {} " , entity);
+		if(mapper.addAssign(entity)>=1) {
+			return LdbzResult.ok();
+		}else {
+			return LdbzResult.build(500, "添加失败");
+		}
 	}
 
 }
