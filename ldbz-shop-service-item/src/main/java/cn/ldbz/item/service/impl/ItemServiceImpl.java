@@ -72,6 +72,12 @@ public class ItemServiceImpl implements ItemService {
 		}
 	}
     
+    @Override
+    public LdbzResult countItem(LdbzItem entity) {
+    	long total = mapper.countByEntity(entity);
+		return LdbzResult.ok(total);
+    }
+    
 	@Override
 	public LdbzResult getItemPage(LdbzItem entity, int pn, int limit) {
 		Map<String,Object> map = new HashMap<String,Object>();

@@ -5,6 +5,8 @@ import cn.ldbz.pojo.LdbzResult;
 
 public interface CategoryService {
 	
+	LdbzResult countCategory(LdbzCategory entity);
+	
 	LdbzResult getCategoryPage(LdbzCategory entity , int pn , int limit) ;
 	
 	LdbzResult getCategoryList(LdbzCategory entity);

@@ -30,6 +30,12 @@ public class AdminRoleServiceImpl implements AdminRoleService{
 	LdbzAdminRoleMapper mapper ;
 
 	@Override
+	public LdbzResult countAdminRole(LdbzAdminRole entity) {
+		long total = mapper.countByEntity(entity);
+		return LdbzResult.ok(total);
+	}
+	
+	@Override
 	public LdbzResult getAdminRolePage(LdbzAdminRole entity , int pn , int limit) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		long total = mapper.countByEntity(entity);

@@ -27,6 +27,12 @@ public class AdminUserServiceImpl implements AdminUserService{
 
 	@Autowired
 	LdbzAdminUserMapper mapper ;
+	
+	@Override
+	public LdbzResult countAdminUser(LdbzAdminUser entity) {
+		long total = mapper.countByEntity(entity);
+		return LdbzResult.ok(total);
+	}
 
 	@Override
 	public LdbzResult getAdminUserPage(LdbzAdminUser entity , int pn , int limit) {

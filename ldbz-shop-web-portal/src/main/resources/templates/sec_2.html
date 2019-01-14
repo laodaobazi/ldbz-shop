@@ -4,9 +4,20 @@
 					<div class="col-md-12">
 						<div class="product-tab">
 							<ul class="tab-list">
-								<li class="active">最新发布</li>
+								<% 
+								for(sheet in sheets){
+									if(sheet.sheetKey == 'New_Arrivals' ||
+										sheet.sheetKey == 'Featured' ||
+										sheet.sheetKey == 'Top_Selling'){
+								%>
+										<li ${sheetLP.index==0?'class="active"':''}>${sheet.sheetName}</li>
+								<% 
+									}
+								}
+								%>
+								<!-- <li class="active">最新发布</li>
 								<li>特色商品</li>
-								<li>热销商品</li>
+								<li>热销商品</li> -->
 							</ul>
 						</div><!-- /.product-tab -->
 					</div><!-- /.col-md-12 -->
@@ -14,6 +25,8 @@
 				<div class="box-product">
 					<div class="row">
 						<div class="col-lg-3 col-sm-6">
+						
+						
 							<div class="product-box">
 								<div class="imagebox">
 									<span class="item-new">新</span>
@@ -62,7 +75,9 @@
 										</div>
 									</div><!-- /.box-bottom -->
 								</div><!-- /.imagebox -->
-							</div>	
+							</div>
+							
+							
 							<div class="product-box">	
 								<div class="imagebox">
 									 <ul class="box-image owl-carousel-1">
@@ -115,6 +130,8 @@
 									</div><!-- /.box-bottom -->
 								</div><!-- /.imagebox -->
 							</div>
+							
+							
 						</div><!-- /.col-lg-3 col-sm-6 -->
 						<div class="col-lg-3 col-sm-6">	
 							<div class="product-box">

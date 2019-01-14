@@ -64,6 +64,12 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
+	public LdbzResult countCategory(LdbzCategory entity) {
+    	long total = mapper.countByEntity(entity);
+		return LdbzResult.ok(total);
+	}
+	
+	@Override
 	public LdbzResult getCategoryPage(LdbzCategory entity, int pn, int limit) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		long total = mapper.countByEntity(entity);

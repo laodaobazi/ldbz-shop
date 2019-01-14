@@ -4,6 +4,8 @@ import cn.ldbz.pojo.LdbzIndexSlideAd;
 import cn.ldbz.pojo.LdbzResult;
 
 public interface AdminIndexSlideAdService {
+	
+	LdbzResult countIndexSlideAd(LdbzIndexSlideAd entity);
 
 	LdbzResult getIndexSlideAdPage(LdbzIndexSlideAd entity , int pn , int limit) ;
 	

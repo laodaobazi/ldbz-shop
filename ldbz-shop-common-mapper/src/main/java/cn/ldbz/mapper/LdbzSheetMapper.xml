@@ -15,11 +15,12 @@
     <result column="sheet_name" property="sheetName" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="item_count" property="itemCount" jdbcType="INTEGER" />
+    <result column="sheet_key" property="sheetKey" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
     id , sort_order, created , creator , creator_name, updated , updator, updator_name , 
-    sheet_name , status , item_count
+    sheet_name , status , item_count , sheet_key
   </sql>
   
   <select id="selectByEntity" resultMap="BaseResultMap"  parameterType="cn.ldbz.pojo.LdbzSheet">
@@ -80,6 +81,7 @@
 	  select ID , ITEM_NAME , ITEM_CODE , SORT_ORDER
 	  from ldbz_item_sheet_assign a
 	  where a.sheet_id = #{sheetId,jdbcType=BIGINT}
+	  order by SORT_ORDER
   </select>
   
   <delete id="deleteAssign" parameterType="java.lang.Long" >

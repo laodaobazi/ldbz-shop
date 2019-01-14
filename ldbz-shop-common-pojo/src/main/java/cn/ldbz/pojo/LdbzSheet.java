@@ -32,4 +32,5 @@ public class LdbzSheet implements Serializable {
     
     private Integer itemCount ;
     
+    private String sheetKey ;
 }

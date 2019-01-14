@@ -4,6 +4,8 @@ import cn.ldbz.pojo.LdbzAdminUser;
 import cn.ldbz.pojo.LdbzResult;
 
 public interface AdminUserService {
+	
+	LdbzResult countAdminUser(LdbzAdminUser entity);
 
 	LdbzResult getAdminUserPage(LdbzAdminUser entity , int pn , int limit) ;
 	

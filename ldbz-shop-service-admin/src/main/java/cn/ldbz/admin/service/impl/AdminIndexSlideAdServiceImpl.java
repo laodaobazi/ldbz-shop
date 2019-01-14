@@ -26,6 +26,12 @@ public class AdminIndexSlideAdServiceImpl implements AdminIndexSlideAdService{
 	private IndexSlideAdService indexSlideAdService ;
 	
 	@Override
+	public LdbzResult countIndexSlideAd(LdbzIndexSlideAd entity) {
+		long total = indexSlideAdService.countByEntity(entity);
+		return LdbzResult.ok(total);
+	}
+	
+	@Override
 	public LdbzResult getIndexSlideAdPage(LdbzIndexSlideAd entity , int pn , int limit) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		long total = indexSlideAdService.countByEntity(entity);

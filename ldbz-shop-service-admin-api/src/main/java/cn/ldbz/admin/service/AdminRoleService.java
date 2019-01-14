@@ -4,6 +4,8 @@ import cn.ldbz.pojo.LdbzAdminRole;
 import cn.ldbz.pojo.LdbzResult;
 
 public interface AdminRoleService {
+	
+	LdbzResult countAdminRole(LdbzAdminRole entity);
 
 	LdbzResult getAdminRolePage(LdbzAdminRole entity , int pn , int limit) ;
 	

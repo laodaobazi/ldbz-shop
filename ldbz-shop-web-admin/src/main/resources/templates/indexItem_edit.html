@@ -51,7 +51,7 @@
 				  <button type="button" class="layui-btn" id="btn_upload_image">上传</button>
 				  
 					  <div class="layui-upload-list">
-					    <img class="layui-upload-img" id="item_image_preview" alt="" src="${request.contextPath}/${item.image}">
+					    <img class="layui-upload-img" id="item_image_preview" alt="" src="${request.contextPath}${item.image}">
 					    <p id="uploadTextImage"></p>
 					    <input type="hidden" name="image" id="image" value="${item.image}">
 					  </div>
@@ -102,7 +102,7 @@
 				  <button type="button" class="layui-btn" id="btn_upload_barcode">上传</button>
 				  
 					  <div class="layui-upload-list">
-					    <img class="layui-upload-img" id="item_barcode_preview" alt="" src="${request.contextPath}/${item.barcode}">
+					    <img class="layui-upload-img" id="item_barcode_preview" alt="" src="${request.contextPath}${item.barcode}">
 					    <p id="uploadTextBarcode"></p>
 					    <input type="hidden" name="barcode" id="barcode" value="${item.barcode}">
 					  </div>
