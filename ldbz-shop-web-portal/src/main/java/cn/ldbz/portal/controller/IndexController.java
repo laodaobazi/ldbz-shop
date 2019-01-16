@@ -1,5 +1,7 @@
 package cn.ldbz.portal.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +50,10 @@ public class IndexController {
     //首页广告图片的URL路径
     @Value("${redisKey.indexSlide.url.key}")
     private String INDEX_SLIDE_URL;
+
+    //首页商品图片的URL路径
+    @Value("${redisKey.indexSlide.url.key}")
+    private String INDEX_ITEM_URL;
     
     /**
      * 监听配置项是否有修改
@@ -59,8 +65,9 @@ public class IndexController {
 			logger.debug(String.format("Found change - key: %s, oldValue: %s, newValue: %s, changeType: %s",
 					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType()));
 			switch(key) {
-			case "redisKey.indexSlide.url.key" : 
-				INDEX_SLIDE_URL = change.getNewValue();
+				case "redisKey.indexSlide.url.key" : 
+					INDEX_SLIDE_URL = change.getNewValue();
+					INDEX_ITEM_URL = change.getNewValue();
 			}
 		}
 	}
@@ -86,16 +93,17 @@ public class IndexController {
     	LdbzResult ret3 = sheetService.getSheetList(sheetEntity);
     	if(ret3!=null && ret3.getData()!=null) {
     		List<LdbzSheet> sheets = (List<LdbzSheet>)ret3.getData() ;
+    		model.addAttribute("sheets", sheets);
+    		
+    		Map<String,Object> sheet_items = new HashMap<String,Object>();
     		if(sheets!=null && sheets.size()>0){
-    			model.addAttribute("sheets", sheets);
     			for(LdbzSheet sheet : sheets) {
     				//根据板块获取分配的商品
     				List<Map> items = sheetService.getSheetAssignListByRedis(sheet.getId());
-    				if(items!=null && items.size()>0) {
-    	    			model.addAttribute("sheet"+sheet.getId() , items);
-    				}
+    				sheet_items.put(sheet.getSheetKey(), items);
     			}
     		}
+    		model.addAttribute("sheet_items", sheet_items);
     	}
     	
     	return "index";

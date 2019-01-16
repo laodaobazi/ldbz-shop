@@ -9,6 +9,8 @@ import cn.ldbz.pojo.LdbzSheetAssign;
 public interface LdbzSheetMapper extends LdbzBaseMapper<LdbzSheet>{
 
 	List<Map<String,Object>> getSheetAssignList(long sheetId);
+
+	List<Map<String,Object>> getSheetAssignListByRedis(long sheetId);
 	
 	int deleteAssign(long assignId);
 	

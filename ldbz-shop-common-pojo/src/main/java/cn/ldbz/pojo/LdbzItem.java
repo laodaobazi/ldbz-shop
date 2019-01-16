@@ -32,7 +32,7 @@ public class LdbzItem  implements Serializable {
     
     private String sellPoint ;
     
-    private Long price ;
+    private Float price ;
     
     private int num ;
     

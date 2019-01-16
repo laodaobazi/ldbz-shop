@@ -15,7 +15,7 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="code" property="code" jdbcType="BIGINT" />
     <result column="sell_point" property="sellPoint" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="FLOAT" />
     <result column="num" property="num" jdbcType="INTEGER" />
     <result column="barcode" property="barcode" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />

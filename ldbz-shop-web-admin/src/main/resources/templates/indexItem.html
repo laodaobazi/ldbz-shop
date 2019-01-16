@@ -211,7 +211,7 @@
       
       $("#btn_reload").click(function(){
           var _status = $("#query_status").val() ;
-          var item_name = $("#query_item_name").val() ;
+          var title = $("#query_title").val() ;
 	       table.reload('demo', {
 	 	          page: {
 	 	            curr: 1 //重新从第 1 页开始
@@ -219,7 +219,7 @@
 	       		  ,coverWhere : true//覆盖之前的参数
 	 	          ,where: {
 	 	        	  status : _status ,
-	 	        	 itemName : item_name
+	 	        	 title : title
 	 	          }
 	 	    });
     	  

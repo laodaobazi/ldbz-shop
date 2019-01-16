@@ -136,8 +136,8 @@ public class SheetServiceImpl implements SheetService {
 	@SuppressWarnings("rawtypes")
 	public List<Map> getSheetAssignListByRedis(long sheetId) {
 		try {
-	        String jsonItem = jedisClient.get(SHEET_ASSIGNS_KEY);
-	        if (StringUtils.isNotBlank(jsonItem)) {
+	        String jsonItem = jedisClient.get(SHEET_ASSIGNS_KEY+sheetId);
+	        if (StringUtils.isNotEmpty(jsonItem) && jsonItem.length()>2) {
 	            logger.info("Redis 查询 板块ID:" + sheetId);
 	            List<Map> items = FastJsonConvert.convertJSONToArray(jsonItem, Map.class);
 	            return items;
@@ -148,12 +148,12 @@ public class SheetServiceImpl implements SheetService {
 	        logger.error("板块信息 获取缓存报错",e);
 	    }
 		
-		List<Map> items = (List)mapper.getSheetAssignList(sheetId) ;
+		List<Map> items = (List)mapper.getSheetAssignListByRedis(sheetId) ;
 		
 		try {
-	        jedisClient.set(SHEET_ASSIGNS_KEY, FastJsonConvert.convertObjectToJSON(items));
-	        jedisClient.expire(SHEET_ASSIGNS_KEY, REDIS_EXPIRE_TIME);
-	        logger.info("Redis 缓存板块信息 key:" + SHEET_ASSIGNS_KEY);
+	        jedisClient.set(SHEET_ASSIGNS_KEY+sheetId, FastJsonConvert.convertObjectToJSON(items));
+	        jedisClient.expire(SHEET_ASSIGNS_KEY+sheetId, REDIS_EXPIRE_TIME);
+	        logger.info("Redis 缓存板块信息 key:" + SHEET_ASSIGNS_KEY+sheetId);
 	    } catch (Exception e) {
 	        logger.error("缓存错误板块ID:" + sheetId, e);
 	    }

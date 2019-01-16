@@ -84,6 +84,15 @@
 	  order by SORT_ORDER
   </select>
   
+  <select id="getSheetAssignListByRedis" resultType="map" >
+	  select t.`CODE` , t.TITLE , t.PRICE , t.IMAGE , c.CATEGORY_NAME
+		from ldbz_item_sheet_assign a
+		join ldbz_item t on t.id = a.item_id
+		join ldbz_category c on c.id = t.cid
+		where a.sheet_id = #{sheetId,jdbcType=BIGINT}
+	  order by a.SORT_ORDER
+  </select>
+  
   <delete id="deleteAssign" parameterType="java.lang.Long" >
     delete from ldbz_item_sheet_assign
     where id = #{id,jdbcType=BIGINT}
