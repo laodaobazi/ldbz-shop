@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 
+import cn.ldbz.admin.service.AdminCategoryService;
 import cn.ldbz.admin.service.AdminIndexSlideAdService;
+import cn.ldbz.admin.service.AdminItemService;
 import cn.ldbz.admin.service.AdminLoginService;
 import cn.ldbz.admin.service.AdminRoleService;
+import cn.ldbz.admin.service.AdminSheetService;
 import cn.ldbz.admin.service.AdminUserService;
 import cn.ldbz.constant.Const;
-import cn.ldbz.item.service.CategoryService;
-import cn.ldbz.item.service.ItemService;
-import cn.ldbz.item.service.SheetService;
 import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.utils.CookieUtils;
 import cn.ldbz.utils.FastJsonConvert;
@@ -44,14 +44,14 @@ public class AdminLoginController {
     @Reference(version = Const.LDBZ_SHOP_ADMIN_VERSION, timeout=30000)
     private AdminRoleService adminRoleService;
 
-    @Reference(version = Const.LDBZ_SHOP_ITEM_VERSION, timeout=30000)
-    private ItemService itemService;
+    @Reference(version = Const.LDBZ_SHOP_ADMIN_VERSION, timeout=30000)
+    private AdminItemService adminItemService;
 
-    @Reference(version = Const.LDBZ_SHOP_SHEET_VERSION, timeout=30000)
-    private SheetService sheetService;
+    @Reference(version = Const.LDBZ_SHOP_ADMIN_VERSION, timeout=30000)
+    private AdminSheetService adminSheetService;
 
-    @Reference(version = Const.LDBZ_SHOP_ITEM_VERSION, timeout=30000)
-    private CategoryService categoryService;
+    @Reference(version = Const.LDBZ_SHOP_ADMIN_VERSION, timeout=30000)
+    private AdminCategoryService adminCategoryService;
 
     @Reference(version = Const.LDBZ_SHOP_ADMIN_VERSION, timeout=30000)
     private AdminIndexSlideAdService adminIndexSlideAdService;
@@ -86,13 +86,13 @@ public class AdminLoginController {
     	LdbzResult ret2 = adminRoleService.countAdminRole(null);
     	model.addAttribute("admin_roles" , ret2.getData());
     	
-    	LdbzResult ret5 = categoryService.countCategory(null);
+    	LdbzResult ret5 = adminCategoryService.countCategory(null);
     	model.addAttribute("categorys" , ret5.getData());
     	
-    	LdbzResult ret4 = sheetService.countSheet(null);
+    	LdbzResult ret4 = adminSheetService.countSheet();
     	model.addAttribute("sheets" , ret4.getData());
     	
-    	LdbzResult ret3 = itemService.countItem(null);
+    	LdbzResult ret3 = adminItemService.countItem();
     	model.addAttribute("items" , ret3.getData());
     	
     	LdbzResult ret6 = adminIndexSlideAdService.countIndexSlideAd(null);

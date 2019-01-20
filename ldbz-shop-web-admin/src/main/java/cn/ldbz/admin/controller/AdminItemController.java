@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 
+import cn.ldbz.admin.service.AdminItemService;
 import cn.ldbz.constant.Const;
-import cn.ldbz.item.service.ItemService;
 import cn.ldbz.pojo.LdbzItem;
 import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.utils.ConvertUtils;
@@ -28,8 +28,8 @@ public class AdminItemController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminItemController.class);
 
-    @Reference(version = Const.LDBZ_SHOP_ITEM_VERSION, timeout=30000)
-    private ItemService itemService;
+    @Reference(version = Const.LDBZ_SHOP_ADMIN_VERSION, timeout=30000)
+    private AdminItemService adminItemService;
     
     @ApiOperation(value="产品页面跳转", notes="跳转到产品页面")
     @RequestMapping(value="/indexItem" , method = RequestMethod.GET)
@@ -50,7 +50,7 @@ public class AdminItemController {
     @RequestMapping(value="/editItem/{id}" , method = RequestMethod.GET)
     public String editItem(@PathVariable("id")long id , Model model) {
     	logger.debug("go to indexItem_edit id : {}" , id);
-    	LdbzResult ret = itemService.selectByKey(id);
+    	LdbzResult ret = adminItemService.selectByKey(id);
     	model.addAttribute("item" , ret.getData());
     	return "indexItem_edit";
     }
@@ -63,7 +63,7 @@ public class AdminItemController {
     	logger.debug("go to getItemList  : {}" , entity);
     	entity.setTitle(ConvertUtils.getKey(entity.getTitle()));
     	entity.setCode(ConvertUtils.getKey(entity.getCode()));
-    	return itemService.getItemList(entity);
+    	return adminItemService.getItemList(entity);
     }
     
     @ApiOperation(value="分页获取产品", notes="根据实体LdbzItem分页获取商品")
@@ -76,7 +76,7 @@ public class AdminItemController {
     @RequestMapping(value="/getItemPage" , method = RequestMethod.POST)
     public LdbzResult getItemPage(LdbzItem entity , int page , int limit) {
     	entity.setTitle(ConvertUtils.getKey(entity.getTitle()));
-    	return itemService.getItemPage(entity, page, limit);
+    	return adminItemService.getItemPage(entity, page, limit);
     }
     
     @ApiOperation(value="删除商品", notes="根据id物理删除一条商品")
@@ -84,7 +84,7 @@ public class AdminItemController {
     @ResponseBody
     @RequestMapping(value="/deleteByKey/{id}" , method = RequestMethod.POST)
     public LdbzResult deleteByKey(@PathVariable("id")String id) {
-    	return itemService.deleteByKey(id);
+    	return adminItemService.deleteByKey(id);
     }
     
     @ApiOperation(value="新增商品", notes="创建一条新的商品")
@@ -95,7 +95,7 @@ public class AdminItemController {
     	Date date = new Date() ;
     	entity.setCreated(date);
     	entity.setCode(String.valueOf(System.currentTimeMillis()));
-    	return itemService.insertByEntity(entity);
+    	return adminItemService.insertByEntity(entity);
     }
     
     @ApiOperation(value="修改商品", notes="根据Id修改一条商品")
@@ -105,7 +105,7 @@ public class AdminItemController {
     public LdbzResult updateByKey(LdbzItem entity) {
     	Date date = new Date() ;
     	entity.setUpdated(date);
-    	return itemService.updateByKey(entity);
+    	return adminItemService.updateByKey(entity);
     }
     
 }

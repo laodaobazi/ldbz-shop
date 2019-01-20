@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 
+import cn.ldbz.admin.service.AdminSheetService;
 import cn.ldbz.constant.Const;
-import cn.ldbz.item.service.SheetService;
 import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.pojo.LdbzSheet;
 import cn.ldbz.pojo.LdbzSheetAssign;
@@ -29,8 +29,8 @@ public class AdminSheetController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminSheetController.class);
 
-    @Reference(version = Const.LDBZ_SHOP_SHEET_VERSION, timeout=30000)
-    private SheetService sheetService;
+	@Reference(version = Const.LDBZ_SHOP_ADMIN_VERSION, timeout=30000)
+    private AdminSheetService adminSheetService;
     
     @ApiOperation(value="产品板块跳转", notes="跳转到产品板块页面")
     @RequestMapping(value="/indexSheet" , method = RequestMethod.GET)
@@ -44,7 +44,7 @@ public class AdminSheetController {
     @RequestMapping(value="/editSheet/{id}" , method = RequestMethod.GET)
     public String editSheet(@PathVariable("id")long id , Model model) {
     	logger.debug("go to indexSheet_edit id : {}" , id);
-    	LdbzResult ret = sheetService.selectByKey(id);
+    	LdbzResult ret = adminSheetService.selectByKey(id);
     	model.addAttribute("sheet" , ret.getData());
     	return "indexSheet_edit";
     }
@@ -55,7 +55,7 @@ public class AdminSheetController {
     @RequestMapping(value="/getSheetList" , method = RequestMethod.POST)
     public LdbzResult getSheetList(LdbzSheet entity) {
     	logger.debug("go to getSheetList  : {}" , entity);
-    	return sheetService.getSheetList(entity);
+    	return adminSheetService.getSheetList(entity);
     }
     
     @ApiOperation(value="分页获取产品板块", notes="根据实体LdbzSheet分页获取商品板块")
@@ -68,7 +68,7 @@ public class AdminSheetController {
     @RequestMapping(value="/getSheetPage" , method = RequestMethod.POST)
     public LdbzResult getSheetPage(LdbzSheet entity , int page , int limit) {
     	entity.setSheetName(ConvertUtils.getKey(entity.getSheetName()));
-    	return sheetService.getSheetPage(entity, page, limit);
+    	return adminSheetService.getSheetPage(entity, page, limit);
     }
     
     @ApiOperation(value="修改商品板块", notes="根据Id修改一条商品板块")
@@ -78,7 +78,7 @@ public class AdminSheetController {
     public LdbzResult updateByKey(LdbzSheet entity) {
     	Date date = new Date() ;
     	entity.setUpdated(date);
-    	return sheetService.updateByKey(entity);
+    	return adminSheetService.updateByKey(entity);
     }
     
     @ApiOperation(value="板块分配商品", notes="跳转到板块分配商品的页面")
@@ -86,7 +86,7 @@ public class AdminSheetController {
     @RequestMapping(value="/assignSheet/{id}" , method = RequestMethod.GET)
     public String assignSheet(@PathVariable("id")String id , Model model) {
     	logger.debug("go to indexSheet_assign id : {}" , id);
-    	LdbzResult ret = sheetService.selectByKey(Long.valueOf(id));
+    	LdbzResult ret = adminSheetService.selectByKey(Long.valueOf(id));
     	model.addAttribute("sheet" , ret.getData());
     	return "indexSheet_assign";
     }
@@ -97,7 +97,7 @@ public class AdminSheetController {
     @RequestMapping(value="/getSheetAssignList/{id}" , method = RequestMethod.POST)
     public LdbzResult getSheetAssignList(@PathVariable("id")long sheetId) {
     	logger.debug("go to getSheetAssignList  : {}" , sheetId);
-    	return sheetService.getSheetAssignList(sheetId);
+    	return adminSheetService.getSheetAssignList(sheetId);
     }
     
     @ApiOperation(value="删除分配的商品", notes="根据id物理删除分配后的商品")
@@ -105,7 +105,7 @@ public class AdminSheetController {
     @ResponseBody
     @RequestMapping(value="/deleteAssign/{id}" , method = RequestMethod.POST)
     public LdbzResult deleteAssign(@PathVariable("id")String id) {
-    	return sheetService.deleteAssign(id);
+    	return adminSheetService.deleteAssign(id);
     }
     
     @ApiOperation(value="板块分配商品", notes="为板块分配商品")
@@ -115,7 +115,7 @@ public class AdminSheetController {
     public LdbzResult addAssign(LdbzSheetAssign entity) {
     	Date date = new Date() ;
     	entity.setCreated(date);
-    	return sheetService.addAssign(entity);
+    	return adminSheetService.addAssign(entity);
     }
     
 }

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 
+import cn.ldbz.admin.service.AdminCategoryService;
 import cn.ldbz.constant.Const;
-import cn.ldbz.item.service.CategoryService;
 import cn.ldbz.pojo.LdbzCategory;
 import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.utils.ConvertUtils;
@@ -28,12 +28,12 @@ public class AdminCategoryController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminCategoryController.class);
 
-    @Reference(version = Const.LDBZ_SHOP_ITEM_VERSION, timeout=30000)
-    private CategoryService categoryService;
+    @Reference(version = Const.LDBZ_SHOP_ADMIN_VERSION, timeout=30000)
+    private AdminCategoryService adminCategoryService;
     
     @ApiOperation(value="产品分类页面跳转", notes="跳转到产品分类页面")
     @RequestMapping(value="/indexCategory" , method = RequestMethod.GET)
-    public String adminAuthUser() {
+    public String indexCategory() {
     	logger.debug("go to indexCategory");
     	return "indexCategory";
     }
@@ -50,7 +50,7 @@ public class AdminCategoryController {
     @RequestMapping(value="/editCategory/{id}" , method = RequestMethod.GET)
     public String editCategory(@PathVariable("id")long id , Model model) {
     	logger.debug("go to indexCategory_edit id : {}" , id);
-    	LdbzResult ret = categoryService.selectByKey(id);
+    	LdbzResult ret = adminCategoryService.selectByKey(id);
     	model.addAttribute("category" , ret.getData());
     	return "indexCategory_edit";
     }
@@ -62,7 +62,7 @@ public class AdminCategoryController {
     public LdbzResult getCategoryList(LdbzCategory entity) {
     	entity.setCategoryName(ConvertUtils.getKey(entity.getCategoryName()));
     	logger.debug("go to getCategoryList  : {}" , entity);
-    	return categoryService.getCategoryList(entity);
+    	return adminCategoryService.getCategoryList(entity);
     }
     
     @ApiOperation(value="分页获取产品分类", notes="根据实体LdbzCategory分页获取产品分类")
@@ -75,7 +75,7 @@ public class AdminCategoryController {
     @RequestMapping(value="/getCategoryPage" , method = RequestMethod.POST)
     public LdbzResult getCategoryPage(LdbzCategory entity , int page , int limit) {
     	entity.setCategoryName(ConvertUtils.getKey(entity.getCategoryName()));
-    	return categoryService.getCategoryPage(entity, page, limit);
+    	return adminCategoryService.getCategoryPage(entity, page, limit);
     }
     
     @ApiOperation(value="删除产品分类", notes="根据id物理删除一条产品分类")
@@ -83,7 +83,7 @@ public class AdminCategoryController {
     @ResponseBody
     @RequestMapping(value="/deleteByKey/{id}" , method = RequestMethod.POST)
     public LdbzResult deleteByKey(@PathVariable("id")String id) {
-    	return categoryService.deleteByKey(id);
+    	return adminCategoryService.deleteByKey(id);
     }
     
     @ApiOperation(value="新增产品分类", notes="创建一条新的产品分类")
@@ -94,7 +94,7 @@ public class AdminCategoryController {
     	Date date = new Date() ;
     	entity.setCreated(date);
     	entity.setUpdated(date);
-    	return categoryService.insertByEntity(entity);
+    	return adminCategoryService.insertByEntity(entity);
     }
     
     @ApiOperation(value="修改产品分类", notes="根据Id修改一条产品分类")
@@ -104,7 +104,7 @@ public class AdminCategoryController {
     public LdbzResult updateByKey(LdbzCategory entity) {
     	Date date = new Date() ;
     	entity.setUpdated(date);
-    	return categoryService.updateByKey(entity);
+    	return adminCategoryService.updateByKey(entity);
     }
     
     @ApiOperation(value="根据父节点获取其子元素", notes="根据父节点ID获取其所有子元素")
@@ -112,7 +112,7 @@ public class AdminCategoryController {
     @ResponseBody
     @RequestMapping(value="/getCategoryTree/{fid}" , method = RequestMethod.POST)
     public LdbzResult getCategoryTree(@PathVariable("fid")long fid) {
-    	return categoryService.getCategoryTree(fid);
+    	return adminCategoryService.getCategoryTree(fid);
     }
     
     @ApiOperation(value="更新分类的排序", notes="更新分类的排序")
@@ -120,7 +120,7 @@ public class AdminCategoryController {
     @ResponseBody
     @RequestMapping(value="/updateSort" , method = RequestMethod.POST)
     public LdbzResult updateSort(String ids) {
-    	return categoryService.updateSort(ids);
+    	return adminCategoryService.updateSort(ids);
     }
     
 }
