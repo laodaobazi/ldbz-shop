@@ -1,20 +1,29 @@
 <section class="flat-highlights">
 	<div class="container">
 		<div class="row">
+			<%
+			for(sheet in sheets){
+					if(sheet.sheetKey == 'Bestsellers'){
+			%>
 			<div class="col-md-4">
 				<div class="flat-row-title">
 					<h3>畅销</h3>
 				</div>
 				<ul class="product-list style1">
+				<%
+					for(entry in sheet_items){
+						if(entry.key==sheet.sheetKey){
+							for(item in entry.value){
+				%>
 					<li>
 						<div class="img-product">
 							<a href="#" title="">
-								<img src="images/product/highlights/10.jpg" alt="">
+								<img src="${indexSlideUrl}${item.IMAGE}" alt="">
 							</a>
 						</div>
 						<div class="info-product">
 							<div class="name">
-								<a href="#" title="">Razer RZ02-01071500-R3M1</a>
+								<a href="#" title="">${item.TITLE}</a>
 							</div>
 							<div class="queue">
 								<i class="fa fa-star" aria-hidden="true"></i>
@@ -24,76 +33,48 @@
 								<i class="fa fa-star" aria-hidden="true"></i>
 							</div>
 							<div class="price">
-								<span class="sale">$50.00</span>
+								<span class="sale">￥${item.PRICE,numberFormat}</span>
 								<span class="regular">$2,999.00</span>
 							</div>
 						</div>
 						<div class="clearfix"></div>
 					</li>
-					<li>
-						<div class="img-product">
-							<a href="#" title="">
-								<img src="images/product/highlights/9.jpg" alt="">
-							</a>
-						</div>
-						<div class="info-product">
-							<div class="name">
-								<a href="#" title="">Apple iPad Mini G2356</a>
-							</div>
-							<div class="queue">
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-							</div>
-							<div class="price">
-								<span class="sale">$24.00</span>
-								<span class="regular">$2,999.00</span>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</li>
-					<li>
-						<div class="img-product">
-							<a href="#" title="">
-								<img src="images/product/highlights/8.jpg" alt="">
-							</a>
-						</div>
-						<div class="info-product">
-							<div class="name">
-								<a href="#" title="">Beats Pill + Portable Speaker</a>
-							</div>
-							<div class="queue">
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-							</div>
-							<div class="price">
-								<span class="sale">$90.00</span>
-								<span class="regular">$2,999.00</span>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</li>
+					<%
+								}
+							}
+						}
+					%>
 				</ul><!-- /.product-list style1 -->
 			</div><!-- /.col-md-4 -->
+			<%
+				}
+			}
+			%>
+			
+			
+			<%
+			for(sheet in sheets){
+					if(sheet.sheetKey == 'Featured_2'){
+			%>
 			<div class="col-md-4">
 				<div class="flat-row-title">
 					<h3>特色</h3>
 				</div>
 				<ul class="product-list style1">
+				<%
+						for(entry in sheet_items){
+							if(entry.key==sheet.sheetKey){
+								for(item in entry.value){
+				%>
 					<li>
 						<div class="img-product">
 							<a href="#" title="">
-								<img src="images/product/highlights/3.jpg" alt="">
+								<img src="${indexSlideUrl}${item.IMAGE}" alt="">
 							</a>
 						</div>
 						<div class="info-product">
 							<div class="name">
-								<a href="#" title="">Razer RZ02-01071500-R3M1</a>
+								<a href="#" title="">${item.TITLE}</a>
 							</div>
 							<div class="queue">
 								<i class="fa fa-star" aria-hidden="true"></i>
@@ -103,76 +84,49 @@
 								<i class="fa fa-star" aria-hidden="true"></i>
 							</div>
 							<div class="price">
-								<span class="sale">$50.00</span>
+								<span class="sale">￥${item.PRICE,numberFormat}</span>
 								<span class="regular">$2,999.00</span>
 							</div>
 						</div>
 						<div class="clearfix"></div>
 					</li>
-					<li>
-						<div class="img-product">
-							<a href="#" title="">
-								<img src="images/product/highlights/2.jpg" alt="">
-							</a>
-						</div>
-						<div class="info-product">
-							<div class="name">
-								<a href="#" title="">Apple iPad Mini G2356</a>
-							</div>
-							<div class="queue">
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-							</div>
-							<div class="price">
-								<span class="sale">$24.00</span>
-								<span class="regular">$2,999.00</span>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</li>
-					<li>
-						<div class="img-product">
-							<a href="#" title="">
-								<img src="images/product/highlights/1.jpg" alt="">
-							</a>
-						</div>
-						<div class="info-product">
-							<div class="name">
-								<a href="#" title="">Beats Pill + Portable Speaker</a>
-							</div>
-							<div class="queue">
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-							</div>
-							<div class="price">
-								<span class="sale">$90.00</span>
-								<span class="regular">$2,999.00</span>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</li>
+					<%
+								}
+							}
+						}
+					%>
 				</ul>
 			</div><!-- /.col-md-4 -->
+			<%
+				}
+			}
+			%>
+			
+			
+			
+			<%
+			for(sheet in sheets){
+					if(sheet.sheetKey == 'Hot_Sale'){
+			%>
 			<div class="col-md-4">
 				<div class="flat-row-title">
 					<h3>热卖</h3>
 				</div>
 				<ul class="product-list style1">
+				<%
+							for(entry in sheet_items){
+								if(entry.key==sheet.sheetKey){
+									for(item in entry.value){
+				%>
 					<li>
 						<div class="img-product">
 							<a href="#" title="">
-								<img src="images/product/highlights/19.jpg" alt="">
+								<img src="${indexSlideUrl}${item.IMAGE}" alt="">
 							</a>
 						</div>
 						<div class="info-product">
 							<div class="name">
-								<a href="#" title="">Razer RZ02-01071500-R3M1</a>
+								<a href="#" title="">${item.TITLE}</a>
 							</div>
 							<div class="queue">
 								<i class="fa fa-star" aria-hidden="true"></i>
@@ -182,62 +136,24 @@
 								<i class="fa fa-star" aria-hidden="true"></i>
 							</div>
 							<div class="price">
-								<span class="sale">$50.00</span>
+								<span class="sale">￥${item.PRICE,numberFormat}</span>
 								<span class="regular">$2,999.00</span>
 							</div>
 						</div>
 						<div class="clearfix"></div>
 					</li>
-					<li>
-						<div class="img-product">
-							<a href="#" title="">
-								<img src="images/product/highlights/11.jpg" alt="">
-							</a>
-						</div>
-						<div class="info-product">
-							<div class="name">
-								<a href="#" title="">Apple iPad Mini G2356</a>
-							</div>
-							<div class="queue">
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-							</div>
-							<div class="price">
-								<span class="sale">$24.00</span>
-								<span class="regular">$2,999.00</span>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</li>
-					<li>
-						<div class="img-product">
-							<a href="#" title="">
-								<img src="images/product/highlights/20.jpg" alt="">
-							</a>
-						</div>
-						<div class="info-product">
-							<div class="name">
-								<a href="#" title="">Beats Pill + Portable Speaker</a>
-							</div>
-							<div class="queue">
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-							</div>
-							<div class="price">
-								<span class="sale">$90.00</span>
-								<span class="regular">$2,999.00</span>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</li>
+					<%
+								}
+							}
+						}
+					%>
+					
 				</ul>
 			</div><!-- /.col-md-4 -->
+			<%
+				}
+			}
+			%>
 		</div><!-- /.row -->
 	</div><!-- /.container -->
 </section><!-- /.flat-highlights -->
