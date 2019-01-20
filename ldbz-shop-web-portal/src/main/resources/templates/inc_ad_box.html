@@ -4,31 +4,63 @@
 			<div class="col-md-8">
 				<div class="banner-box one-half">
 					<div class="inner-box">
-						<a href="#" title="">
-							<img src="images/banner_boxes/home-01.jpg" alt="">
+						<%
+						for(recommend in indexRecommends){
+							if(recommend.adKey == 'AD_RECOMMEND_1'){
+						%>
+						<a href="${recommend.href}" title="">
+							<img src="${nginxImage}${recommend.src}" alt="${recommend.alt}" >
 						</a>
+						<%
+						}
+							}
+						%>
 					</div><!-- /.inner-box -->
 					<div class="inner-box">
-						<a href="#" title="">
-							<img src="images/banner_boxes/home-05.jpg" alt="">
+						<%
+						for(recommend in indexRecommends){
+							if(recommend.adKey == 'AD_RECOMMEND_2'){
+						%>
+						<a href="${recommend.href}" title="">
+							<img src="${nginxImage}${recommend.src}" alt="${recommend.alt}" >
 						</a>
+						<%
+						}
+							}
+						%>
 					</div><!-- /.inner-box -->
 					<div class="clearfix"></div>
 				</div><!-- /.box -->
 				<div class="banner-box">
 					<div class="inner-box">
-						<a href="#" title="">
-							<img src="images/banner_boxes/home-04.jpg" alt="">
+						<%
+						for(recommend in indexRecommends){
+							if(recommend.adKey == 'AD_RECOMMEND_3'){
+						%>
+						<a href="${recommend.href}" title="">
+							<img src="${nginxImage}${recommend.src}" alt="${recommend.alt}" >
 						</a>
+						<%
+						}
+							}
+						%>
 					</div>
 				</div><!-- /.box -->
 			</div><!-- /.col-md-8 -->
 			<div class="col-md-4">
 				<div class="banner-box">
 					<div class="inner-box">
-						<a href="#" title="">
-							<img src="images/banner_boxes/home-03.jpg" alt="">
+						<%
+						for(recommend in indexRecommends){
+							if(recommend.adKey == 'AD_RECOMMEND_4'){
+						%>
+						<a href="${recommend.href}" title="">
+							<img src="${nginxImage}${recommend.src}" alt="${recommend.alt}" >
 						</a>
+						<%
+						}
+							}
+						%>
 					</div><!-- /.inner-box -->
 				</div><!-- /.box -->
 			</div><!-- /.col-md-4 -->

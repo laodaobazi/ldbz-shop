@@ -27,7 +27,7 @@
 								<div class="imagebox style1">
 									<div class="box-image">
 										<a href="#" title="">
-											<img src="${indexSlideUrl}${item.IMAGE}" alt="">
+											<img src="${nginxImage}${item.IMAGE}" alt="">
 										</a>
 									</div><!-- /.box-image -->
 									<div class="box-content">
@@ -39,13 +39,13 @@
 										</div>
 										<div class="price">
 											<span class="regular">￥${item.PRICE,numberFormat}</span>
-											<span class="sale">$1,250.00</span>
+											<span class="sale">￥${item.OLD_PRICE,numberFormat}</span>
 										</div>
 									</div><!-- /.box-content -->
 									<div class="box-bottom">
 										<div class="compare-wishlist">
 											<a href="#" class="compare" title="">
-												<img src="images/icons/compare.png" alt="">备选
+												<img src="images/icons/compare.png" alt="">比较
 											</a>
 											<a href="#" class="wishlist" title="">
 												<img src="images/icons/wishlist.png" alt="">收藏

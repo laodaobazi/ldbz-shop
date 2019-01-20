@@ -17,6 +17,7 @@ import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 
 import cn.ldbz.constant.Const;
+import cn.ldbz.pojo.LdbzIndexRecommendAd;
 import cn.ldbz.pojo.LdbzIndexSlideAd;
 import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.pojo.LdbzSheet;
@@ -35,13 +36,9 @@ public class IndexController {
     private JedisClient jedisClient;
 
     //首页广告图片的URL路径
-    @Value("${redisKey.indexSlide.url.key}")
-    private String INDEX_SLIDE_URL;
+    @Value("${redisKey.nginxImage.url.key}")
+    private String INDEX_NGINX_IMAGE_URL;
 
-    //首页商品图片的URL路径
-    @Value("${redisKey.indexSlide.url.key}")
-    private String INDEX_ITEM_URL;
-    
     /**
      * 监听配置项是否有修改
      */
@@ -52,9 +49,8 @@ public class IndexController {
 			logger.debug("Found change - key: {}, oldValue: {}, newValue: {}, changeType: {}",
 					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType());
 			switch(key) {
-				case "redisKey.indexSlide.url.key" : 
-					INDEX_SLIDE_URL = change.getNewValue();
-					INDEX_ITEM_URL = change.getNewValue();
+				case "redisKey.nginxImage.url.key" : 
+					INDEX_NGINX_IMAGE_URL = change.getNewValue();
 			}
 		}
 	}
@@ -67,9 +63,13 @@ public class IndexController {
     	model.addAttribute("categorys", ret.getData());
     	
     	//获取首页轮播广告
-    	model.addAttribute("indexSlideUrl", INDEX_SLIDE_URL);
+    	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
     	List<LdbzIndexSlideAd> ret2 = indexService.getIndexSlideAd();
     	model.addAttribute("indexSlides", ret2);
+    	
+    	//获取首页推荐广告
+    	List<LdbzIndexRecommendAd> ret4 = indexService.getIndexRecommendAd();
+    	model.addAttribute("indexRecommends", ret4);
     	
     	//获取所有有效板块
     	LdbzResult ret3 = indexService.getSheetList();

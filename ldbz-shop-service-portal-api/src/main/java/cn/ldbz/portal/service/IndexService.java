@@ -4,6 +4,7 @@ package cn.ldbz.portal.service;
 import java.util.List;
 import java.util.Map;
 
+import cn.ldbz.pojo.LdbzIndexRecommendAd;
 import cn.ldbz.pojo.LdbzIndexSlideAd;
 import cn.ldbz.pojo.LdbzResult;
 
@@ -17,6 +18,11 @@ public interface IndexService {
 	 * 获取首页轮播广告
 	 */
 	List<LdbzIndexSlideAd> getIndexSlideAd();
+	
+	/**
+	 * 获取首页推荐广告
+	 */
+	List<LdbzIndexRecommendAd> getIndexRecommendAd();
 	
 	/**
 	 * 获取所有有效板块

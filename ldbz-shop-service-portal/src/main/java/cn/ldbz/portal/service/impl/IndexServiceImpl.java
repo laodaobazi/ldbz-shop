@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 
+import cn.ldbz.advertisement.service.IndexRecommendAdService;
 import cn.ldbz.advertisement.service.IndexSlideAdService;
 import cn.ldbz.constant.Const;
 import cn.ldbz.item.service.CategoryService;
 import cn.ldbz.item.service.SheetService;
+import cn.ldbz.pojo.LdbzIndexRecommendAd;
 import cn.ldbz.pojo.LdbzIndexSlideAd;
 import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.pojo.LdbzSheet;
@@ -30,6 +32,9 @@ public class IndexServiceImpl implements IndexService {
     
 	@Reference(version = Const.LDBZ_SHOP_ADVERTISEMENT_VERSION)
 	private IndexSlideAdService indexSlideAdService ;
+	
+	@Reference(version = Const.LDBZ_SHOP_ADVERTISEMENT_VERSION)
+	private IndexRecommendAdService indexRecommendAdService ;
 
     @Reference(version = Const.LDBZ_SHOP_SHEET_VERSION, timeout=30000)
     private SheetService sheetService;
@@ -44,6 +49,12 @@ public class IndexServiceImpl implements IndexService {
 	public List<LdbzIndexSlideAd> getIndexSlideAd() {
 		logger.debug("获取首页轮播广告");
 		return indexSlideAdService.getIndexSlideAdByRedis();
+	}
+
+	@Override
+	public List<LdbzIndexRecommendAd> getIndexRecommendAd() {
+		logger.debug("获取首页推荐广告");
+		return indexRecommendAdService.getIndexRecommendAdByRedis();
 	}
 
 	@Override

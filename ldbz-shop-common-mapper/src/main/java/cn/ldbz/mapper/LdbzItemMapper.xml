@@ -16,6 +16,7 @@
     <result column="code" property="code" jdbcType="BIGINT" />
     <result column="sell_point" property="sellPoint" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="FLOAT" />
+    <result column="old_price" property="oldPrice" jdbcType="FLOAT" />
     <result column="num" property="num" jdbcType="INTEGER" />
     <result column="barcode" property="barcode" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
@@ -27,8 +28,8 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id , sort_order, created , creator , creator_name, updated , updator, updator_name , 
-    title , code , sell_point , price , num , barcode , image , cid , status , weight , colour , size
+    id , sort_order, created , creator , creator_name, updated , updator, updator_name , title , 
+    code , sell_point , old_price , price , num , barcode , image , cid , status , weight , colour , size
   </sql>
   
   <select id="selectByEntity" resultMap="BaseResultMap"  parameterType="cn.ldbz.pojo.LdbzItem">
@@ -91,12 +92,12 @@
   
   <insert id="insertByEntity" parameterType="cn.ldbz.pojo.LdbzItem" >
     insert into ldbz_item (
-	    id , sort_order, created , creator , creator_name, 
-    	code , title , sell_point , price , num , barcode , image , cid , status , weight , colour , size
+	    id , sort_order, created , creator , creator_name, code , title , sell_point , 
+    	old_price , price , num , barcode , image , cid , status , weight , colour , size
     )
     values (#{id,jdbcType=BIGINT},#{sortOrder,jdbcType=TIMESTAMP}, #{created,jdbcType=TIMESTAMP}, 
     	#{creator,jdbcType=VARCHAR} , #{creatorName,jdbcType=VARCHAR},#{code,jdbcType=BIGINT},
-    	#{title,jdbcType=VARCHAR},#{sellPoint,jdbcType=VARCHAR},#{price,jdbcType=BIGINT},
+    	#{title,jdbcType=VARCHAR},#{sellPoint,jdbcType=VARCHAR},#{oldPrice,jdbcType=BIGINT},#{price,jdbcType=BIGINT},
         #{num,jdbcType=INTEGER},#{barcode,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR},#{cid,jdbcType=BIGINT},
         #{status,jdbcType=INTEGER},#{weight,jdbcType=INTEGER}, #{colour,jdbcType=VARCHAR} , #{size,jdbcType=VARCHAR}
       )
@@ -202,6 +203,7 @@
       title = #{title,jdbcType=VARCHAR} ,
       sell_point = #{sellPoint,jdbcType=VARCHAR} ,
       price = #{price,jdbcType=BIGINT} ,
+      old_price = #{oldPrice,jdbcType=BIGINT} ,
       num = #{num,jdbcType=INTEGER},
       barcode = #{barcode,jdbcType=VARCHAR} ,
       image = #{image,jdbcType=VARCHAR} ,

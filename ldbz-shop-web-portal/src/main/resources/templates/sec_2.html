@@ -44,12 +44,12 @@
 									 <ul class="box-image owl-carousel-1">
 										<li>
 											<a href="#" title="">
-												<img src="${indexSlideUrl}${item.IMAGE}" alt="">
+												<img src="${nginxImage}${item.IMAGE}" alt="">
 											</a>
 										</li>
 										<li>
 											<a href="#" title="">
-												<img src="${indexSlideUrl}${item.IMAGE}" alt="">
+												<img src="${nginxImage}${item.IMAGE}" alt="">
 											</a>
 										</li>
 									</ul><!-- /.box-image -->
@@ -62,7 +62,7 @@
 										</div>
 										<div class="price">
 											<span class="sale">￥${item.PRICE,numberFormat}</span>
-											<span class="regular">$2,999.00</span>
+											<span class="regular">￥${item.OLD_PRICE,numberFormat}</span>
 										</div>
 									</div><!-- /.box-content -->
 									<div class="box-bottom">
@@ -73,7 +73,7 @@
 										</div>
 										<div class="compare-wishlist">
 											<a href="#" class="compare" title="">
-												<img src="images/icons/compare.png" alt="">备选
+												<img src="images/icons/compare.png" alt="">比较
 											</a>
 											<a href="#" class="wishlist" title="">
 												<img src="images/icons/wishlist.png" alt="">收藏

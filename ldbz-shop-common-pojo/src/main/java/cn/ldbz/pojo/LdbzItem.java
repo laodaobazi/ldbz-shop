@@ -34,6 +34,8 @@ public class LdbzItem  implements Serializable {
     
     private Float price ;
     
+    private Float oldPrice ;
+    
     private int num ;
     
     private String barcode ;

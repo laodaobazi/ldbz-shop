@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>首页推荐广告-列表</title>
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+
+	<table id="demo" lay-filter="test"></table>
+	
+	<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">修改</button>
+  </div>
+	</script>
+	 
+	<script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	</script>
+
+	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/static/js/ldbz_util.js"></script>
+	<script>
+    layui.use(['table','jquery','laydate'], function(){
+      var table = layui.table , $ = jQuery = layui.$ ;
+      
+      table.init('demo', {
+        height: 'full-10'
+        ,limit: 10
+      }); 
+    
+      //第一个实例
+      var tableIns = table.render({
+        elem: '#demo'
+        ,toolbar: '#toolbarDemo'
+        ,url: '/admin/indexRecommendAd/getIndexRecommendAdPage' //数据接口
+        ,method: 'post'
+        ,limit: 10
+        ,contentType: 'application/x-www-form-urlencoded'
+        ,parseData: function(res){ //res 即为原始返回的数据
+    	    return {
+    	      "code": res.status,
+    	      "msg": res.msg,
+    	      "count": res.data.total,
+    	      "data": res.data.list
+    	    };
+    	 }
+        ,page: true //开启分页
+        ,cols: [[ //表头
+          {type: 'checkbox', fixed: 'left'}
+          ,{field: 'adDesc', title: '描述', width: 120} ,
+          ,{field: 'src', title: '图片', width: 80 , templet: function(d){
+        	  return '<img src="${request.contextPath}' + d.src + '" />';
+          }}
+          ,{field: 'href', title: '网址', width: 80}
+          ,{field: 'alt', title: '提示', width: 80}
+          ,{field: 'id', title: 'ID', hide:true}
+          ,{field: 'created', title: '创建时间', width:100 ,templet: function(d){
+              if(d.created){
+            	  return new Date(d.created).Format("yyyy-MM-dd hh:mm:ss");
+          	  }else{
+          		  return "";
+          	  } 
+          }}
+          ,{field: 'creator', title: '创建人', width:80}
+          ,{field: 'creatorName', title: '创建人', width:80} 
+          ,{field: 'updated', title: '修改时间', width: 100 ,templet: function(d){
+              if(d.updated){
+            	  return new Date(d.updated).Format("yyyy-MM-dd hh:mm:ss");
+          	  }else{
+          		  return "";
+          	  } 
+          }}
+          ,{field: 'updator', title: '修改人', width: 80}
+          ,{field: 'updatorName', title: '修改人', width: 80}
+          ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+        ]]
+      });
+      
+      //头工具栏事件
+      table.on('toolbar(test)', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        var data = checkStatus.data;
+        switch(obj.event){
+          case 'edit':
+        	  if(data.length==1){
+        		  editRec(data[0]);
+        	  }else{
+	          	layer.msg("请选择一条需要修改的记录。");
+        	  }
+          break;
+        };
+      });
+      
+      //监听行工具事件
+      table.on('tool(test)', function(obj){
+        var data = obj.data;
+        if(obj.event === 'edit'){
+        	editRec(data);
+        }
+      });
+    
+      //修改
+	  function editRec(data){
+		  var edit_full = layer.open({
+			  type: 2,
+			  shade: false,
+			  title: "编辑",
+			  maxmin: false,
+			  content: '${request.contextPath}/admin/indexRecommendAd/editIndexRecommendAd/' + data.id,
+			  success: function(layero){
+			    layer.setTop(layero);
+			  },
+			  end: function () {
+				  tableIns.reload('demo');
+			  }
+			});
+		layer.full(edit_full);
+      }
+      
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzIndexRecommendAdMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzIndexRecommendAd" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="alt" property="alt" jdbcType="VARCHAR" />
+    <result column="href" property="href" jdbcType="VARCHAR" />
+    <result column="src" property="src" jdbcType="VARCHAR" />
+    <result column="ad_key" property="adKey" jdbcType="VARCHAR" />
+    <result column="ad_desc" property="adDesc" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="updator_name" property="updatorName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, alt, href, src, ad_key , ad_desc , created , creator , creator_name, updated , updator, updator_name
+  </sql>
+  
+  <select id="selectByEntity" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from ldbz_index_recommend_ad
+    <where>
+    	<if test="entity.adKey != null and entity.adKey != '' " >
+        and ad_key = #{entity.adKey,jdbcType=VARCHAR}
+      </if>
+    	<if test="entity.alt != null and entity.alt != '' " >
+        and alt = #{entity.alt,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.href != null and entity.href != '' " >
+        and href = #{entity.href,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.src != null and entity.src != '' " >
+        and src = #{entity.src,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.created != null" >
+        and date(created) = #{entity.created,jdbcType=DATE}
+      </if>
+      <if test="entity.creator != null and entity.creator != '' " >
+        and creator = #{entity.creator,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.creatorName != null and entity.creatorName != '' " >
+        and creator_name = #{entity.creatorName,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.updated != null" >
+        and date(updated) = #{entity.updated,jdbcType=DATE}
+      </if>
+      <if test="entity.updator != null and entity.updator != '' " >
+        and updator = #{entity.updator,jdbcType=VARCHAR}
+      </if>
+      <if test="entity.updatorName != null and entity.updatorName != '' " >
+        and updator_name = #{entity.updatorName,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by updated desc
+    limit #{start} , #{limit}
+  </select>
+  
+  <select id="selectByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ldbz_index_recommend_ad
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="countByEntity" parameterType="cn.ldbz.pojo.LdbzIndexRecommendAd" resultType="java.lang.Long" >
+    select count(*) from ldbz_index_recommend_ad
+    <where>
+    	<if test="adKey!= null and adKey != '' " >
+        and ad_key = #{adKey,jdbcType=VARCHAR}
+      </if>
+    	<if test="alt != null and alt != '' " >
+        and alt = #{alt,jdbcType=VARCHAR}
+      </if>
+      <if test="href != null and href != '' " >
+        and href = #{href,jdbcType=VARCHAR}
+      </if>
+      <if test="src != null and src != '' " >
+        and src = #{src,jdbcType=VARCHAR}
+      </if>
+      <if test="created != null" >
+        and date(created) = #{created,jdbcType=DATE}
+      </if>
+      <if test="creator != null and creator != '' " >
+        and creator = #{creator,jdbcType=VARCHAR}
+      </if>
+      <if test="creatorName != null and creatorName != '' " >
+        and creator_name = #{creatorName,jdbcType=VARCHAR}
+      </if>
+      <if test="updated != null" >
+        and date(updated) = #{updated,jdbcType=DATE}
+      </if>
+      <if test="updator != null and updator != '' " >
+        and updator = #{updator,jdbcType=VARCHAR}
+      </if>
+      <if test="updatorName != null and updatorName != '' " >
+        and updator_name = #{updatorName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  
+  <update id="updateByKey" parameterType="cn.ldbz.pojo.LdbzIndexRecommendAd" >
+    update ldbz_index_recommend_ad
+    set alt = #{alt,jdbcType=VARCHAR},
+      href = #{href,jdbcType=VARCHAR},
+      src = #{src,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR}, 
+      creator_name = #{creatorName,jdbcType=VARCHAR},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=VARCHAR},
+      updator_name = #{updatorName,jdbcType=VARCHAR}
+    where 
+      id = #{id,jdbcType=BIGINT}
+  </update>
+  
+</mapper>
