@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +34,7 @@ import cn.ldbz.pojo.LdbzResult;
 @RequestMapping("/admin")
 public class AdminPictureController {
 	
-	private static Logger logger = Logger.getLogger(AdminPictureController.class);
+	private static Logger logger = LoggerFactory.getLogger(AdminPictureController.class);
 	
 	/**
      * 上传的根路径
@@ -58,8 +59,8 @@ public class AdminPictureController {
 	public void onChange(ConfigChangeEvent changeEvent) {
 		for (String key : changeEvent.changedKeys()) {
 			ConfigChange change = changeEvent.getChange(key);
-			logger.debug(String.format("Found change - key: %s, oldValue: %s, newValue: %s, changeType: %s",
-					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType()));
+			logger.debug("Found change - key: {}, oldValue: {}, newValue: {}, changeType: {}",
+					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType());
 			switch(key) {
 				case "upload.root" : 
 					UPLOAD_ROOT = change.getNewValue() ;

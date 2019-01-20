@@ -3,8 +3,8 @@ package cn.ldbz.admin.controller;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +20,7 @@ import cn.ldbz.utils.StorageService;
 @Controller
 public class PictureController {
 
-    private static Logger logger = Logger.getLogger(PictureController.class);
+    private static Logger logger = LoggerFactory.getLogger(PictureController.class);
 
 //    @Value("${fastdfs.base.url}")
 //    private String FASTDFS_BASE_URL;

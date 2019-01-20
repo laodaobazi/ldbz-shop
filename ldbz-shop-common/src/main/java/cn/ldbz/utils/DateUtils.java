@@ -1,14 +1,4 @@
-/*
- * ====================================================================
- * 龙果学院： www.roncoo.com （微信公众号：RonCoo_com）
- * 超级教程系列：《微服务架构的分布式事务解决方案》视频教程
- * 讲师：吴水成（水到渠成），840765167@qq.com
- * 课程地址：http://www.roncoo.com/details/7ae3d7eddc4742f78b0548aa8bd9ccdb
- * ====================================================================
- */
 package cn.ldbz.utils;
-
-import org.apache.log4j.Logger;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -18,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 日期工具类
@@ -46,7 +38,7 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 	 */
 	public final static int COMP_MODEL_DATETIME = 3;
 
-	private static Logger logger = Logger.getLogger(DateUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(DateUtils.class);
 
 	/**
 	 * 要用到的DATE Format的定义
@@ -76,7 +68,7 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 		try {
 			return parseDate(str, new String[] { parsePatterns });
 		} catch (ParseException e) {
-			logger.error(e);
+			logger.error(e.getMessage());
 			return null;
 		}
 	}
@@ -525,7 +517,7 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 		try {
 			sRet = formatter.format(dt).toString();
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error(e.getMessage());
 			sRet = null;
 		}
 
@@ -965,7 +957,7 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 		try {
 			date = sdf.parse(dateString);
 		} catch (ParseException e) {
-			logger.error(e);
+			logger.error(e.getMessage());
 		}
 		return date;
 	}
@@ -993,7 +985,7 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 		try {
 			date1 = sdf.parse(dateStr);
 		} catch (ParseException e) {
-			logger.error(e);
+			logger.error(e.getMessage());
 		}
 		return date1;
 	}
@@ -1205,7 +1197,7 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils {
 		try {
 			return formatter.parse(dateStr);
 		} catch (ParseException e) {
-			logger.error(e);
+			logger.error(e.getMessage());
 			return null;
 		}
 	}

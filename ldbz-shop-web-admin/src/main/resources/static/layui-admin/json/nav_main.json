@@ -38,6 +38,10 @@
 	          "text": "首页轮播广告",
 	          "icon": "&#xe621;",
 	          "href": "indexSlideAd/indexSlideAd"
+	        },{
+	          "text": "首页推荐广告",
+	          "icon": "&#xe621;",
+	          "href": "indexRecommendAd/indexRecommendAd"
 	        }]
 	  }, {
       "text": "商城内容管理",

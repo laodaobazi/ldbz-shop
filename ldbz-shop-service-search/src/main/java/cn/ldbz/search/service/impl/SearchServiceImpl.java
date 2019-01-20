@@ -1,25 +1,28 @@
 package cn.ldbz.search.service.impl;
 
-import cn.ldbz.constant.Const;
-import cn.ldbz.pojo.SearchResult;
-import cn.ldbz.pojo.SolrItem;
-import cn.ldbz.pojo.LdbzResult;
-import cn.ldbz.search.mapper.SearchMapper;
-import cn.ldbz.search.service.SearchService;
-import com.alibaba.dubbo.config.annotation.Service;
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import com.alibaba.dubbo.config.annotation.Service;
+
+import cn.ldbz.constant.Const;
+import cn.ldbz.pojo.LdbzResult;
+import cn.ldbz.pojo.SearchResult;
+import cn.ldbz.pojo.SolrItem;
+import cn.ldbz.search.mapper.SearchMapper;
+import cn.ldbz.search.service.SearchService;
 
 /**
  * Solr Service 实现类
@@ -38,7 +41,7 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     private SolrClient solrClient;
 
-    private static Logger logger = Logger.getLogger(SearchServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(SearchServiceImpl.class);
 
     @Override
     public LdbzResult importAllItems() {
