@@ -120,7 +120,6 @@
                 
             });
 
-
             $(document).on('click', '#mega-mobile ul.menu li a .btn-dropdown', function(e) {
                 $(this).toggleClass('active').closest('li').children('.drop-menu').slideToggle(400);
                 e.stopImmediatePropagation();
@@ -194,64 +193,10 @@
                 return false;
             });
 
-            
         }; // Responsive Menu Mega
 
-        var searchButton = function() {
-            var showsearch = $('.show-search button');
-            showsearch.on('click',function() {
-                $('.show-search').parent('div').children('.top-search.style1').toggleClass('active');
-                showsearch.toggleClass('active');
-            });
-        }; // Show Search
 
-        var searchFilterbox = function(){
-			var buttonFilter=$('.filter');
-				buttonFilter.on('click',function(){
-					$('.box-filter').toggleClass('active');
-				});
-			};
-
-        var waveButton = function () {
-            Waves.attach('.button', ['waves-button', 'waves-float']);
-            Waves.init();
-        };
-
-        var slider = function() {
-            $(".owl-carousel").owlCarousel({
-                autoplay:true,
-                nav: false,
-                responsive: true,
-                margin:0,
-                loop:true,
-                items:1
-            });
-        };// slider
-
-        var slideProduct = function() {
-            $(".owl-carousel-1").owlCarousel({
-                autoplay: true,
-                nav: true,
-                dots: false,
-                responsive: true,
-                margin:0,
-                loop:true,
-                items:1,
-            });
-        };// slide Product
-
-        var slideCounter = function() {
-            $(".owl-carousel-2").owlCarousel({
-                autoplay:true,
-                nav: true,
-                dots: false,
-                responsive: true,
-                margin:0,
-                loop:true,
-                items:1
-            });
-        };// slide Counter
-
+		//最受欢迎商品滚动
         var slideMostViewer = function() {
             $(".owl-carousel-3").owlCarousel({
                 autoplay:true,
@@ -288,171 +233,138 @@
                 }
             });
         };// slide Most Viewer
-
-
-
-        var slideBrand = function() {
-            $(".owl-carousel-5").owlCarousel({
-                autoplay:true,
-                nav: false,
-                dots: false,
-                responsive: true,
-                margin:20,
-                loop:true,
-                items:5,
-                responsive:{
-                    0:{
-                        items: 2
-                    },
-
-                    479:{
-                        items: 4
-                    },
-                    768:{
-                        items: 4
-                    },
-                    991:{
-                        items: 5
-                    },
-                    1200: {
-                        items: 5
-                    }
-                }
+        
+        //商品明细页面，图片预览
+        var flexProduct = function() {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: "thumbnails"
             });
-        };// slide Brand
+        }; // Flex Product
 
-        var slideAccessories = function() {
-            $(".owl-carousel-7").owlCarousel({
-                autoplay:true,
-                nav: true,
-                dots: false,
-                responsive: true,
-                margin:0,
-                loop:true,
-                items:1
-            });
-        };// slide Accessories
 
-        var slideTeam = function() {
-            $(".owl-carousel-8").owlCarousel({
-                autoplay:true,
-                nav: false,
-                dots: true,
-                responsive: true,
-                margin:30,
-                loop:true,
-                items:4,
-                responsive:{
-                    0:{
-                        items: 1,
-                        dots: false,
-                        nav: true,
-                    },
-                    479:{
-                        items: 2,
-                    },
-                    599:{
-                        items: 2,
-                    },
-                    768:{
-                        items: 3
-                    },
-                    991:{
-                        items: 4
-                    },
-                    1200: {
-                        items: 4
-                    }
-                }
-            });
-        };// slide Team
-
-        var slideBrand_s2 = function() {
-            $(".owl-carousel-9").owlCarousel({
-                autoplay:true,
-                nav: false,
-                dots: true,
-                responsive: true,
-                margin:30,
-                loop:true,
-                items:6,
-                responsive:{
-                    0:{
-                        items: 1,
-                        dots: false,
-                        nav: true,
-                    },
-                    479:{
-                        items: 2,
-                        dots: false,
-                        nav: true,
-                    },
-                    599:{
-                        items: 3,
-                         dots: false,
-                        nav: true,
-                    },
-                    768:{
-                        items: 4
-                    },
-                    991:{
-                        items: 5
-                    },
-                    1200: {
-                        items: 6
-                    }
-                }
-            });
-        };// slide Brand s2
-
-        var slider_s2 = function() {
-            $(".owl-carousel-11").owlCarousel({
-                autoplay:true,
-                nav: false,
-                dots: true,
-                responsive: true,
-                margin:20,
-                loop:true,
-                items:1
-            });
-        };// slider s2
-
-        var slideTestimonial = function() {
-            $(".owl-carousel-17").owlCarousel({
-                autoplay:true,
-                nav: false,
-                responsive: true,
-                margin:0,
-                loop:true,
-                items:1
-            });
-        };// slide Testimonial
-
-        var CountDown = function() {
-            var before = '<div class="square"><div class="numb">',
-                textday = '</div><div class="text">DAYS',
-                texthour = '</div><div class="text">HOURS',
-                textmin = '</div><div class="text">MINS',
-                textsec = '</div><div class="text">SECS';
-                if ($().countdown) {
-                    $(".count-down").countdown('2017/12/20', function(event) {
-                      $(this).html(event.strftime(before + '%D' + textday + '</div></div>' + before + '%H' + texthour + '</div></div>' + before + '%M' + textmin + '</div></div>' + before + '%S' + textsec + '</div>'));
+        //页头检索框遮罩
+        var showSuggestions = function() {
+            $( ".top-search form.form-search .box-search" ).each(function() {
+                $( "form.form-search .box-search input" ).on('focus', (function() {
+                    $(this).closest('.boxed').children('.overlay').css({
+                        opacity: '1',
+                        display: 'block'
                     });
-                }
-        }; // Count Down
-
-        var CountDown_s2 = function() {
-            var before = '<div class="square"><div class="numb">',
-                textday = '</div><div class="text">DAYS',
-                texthour = '</div><div class="text">HOURS',
-                textsec = '</div><div class="text">SECS';
-                if ($().countdown) {
-                    $(".counter.style1.v1 .counter-content .count-down").countdown('2017/12/20', function(event) {
-                      $(this).html(event.strftime(before + '%D' + textday + '</div></div>' + before + '%H' + texthour + '</div></div>' + before + '%S' + textsec + '</div>'));
+                    $(this).parent('.box-search').children('.search-suggestions').css({
+                        opacity: '1',
+                        visibility: 'visible',
+                        top: '77px'
                     });
-                }
-        }; // Count Down
+                }));
+                $( "form.form-search .box-search input" ).on('blur', (function() {
+                    $(this).closest('.boxed').children('.overlay').css({
+                        opacity: '0',
+                        display: 'none'
+                    });
+                    $(this).parent('.box-search').children('.search-suggestions').css({
+                        opacity: '0',
+                        visibility: 'hidden',
+                        top: '100px'
+                    });
+                }));
+            });
 
+            $( ".top-search.style1 form.form-search .box-search" ).each(function() {
+                $( "form.form-search .box-search input" ).on('focus', (function() {
+                    $(this).closest('.boxed').children('.overlay').css({
+                        opacity: '1',
+                        display: 'block'
+                    });
+                    $(this).parent('.box-search').children('.search-suggestions').css({
+                        opacity: '1',
+                        visibility: 'visible',
+                        top: '50px'
+                    });
+                }));
+            });
+        }; // Toggle Location
+
+        //显示页头购物车
+        var showAllcat = function() {
+    		//显示购物车中的商品数量
+        	var arr = [] ;
+        	var _cart = getCookie("_cart");
+        	if(_cart){
+        		_cart = Base64.decode(_cart);
+    			arr = $.parseJSON(_cart);
+    			var item_count = 0 , item_price = 0 ;
+    			$(arr).each(function(i , o){
+    				item_count += o.count ;
+    				item_price += (o.count * o.item_price);
+    			});
+    			$("#span_cart_itemcount").text(item_count).show();
+    			$("#span_cart_itemprice").text("￥"+item_price).show();
+        	}else{
+        		$("#span_cart_itemcount").text('').hide();
+        	}
+
+        	//页头下拉框检索
+            $('.cat-wrap').each(function() {
+                $(this).on('click', function() {
+                    $(this).children('.all-categories').toggleClass('show');
+                });
+            });
+            
+            function showCartItems(){
+            	var _cart = getCookie("_cart");
+    			_cart = Base64.decode(_cart);
+    			var arr = $.parseJSON(_cart);
+    			
+            	$("#ul_items").empty();
+            	var item_count = 0 , item_price = 0 ;
+    			$(arr).each(function(i , o){
+    				var item = '<li><div class="img-product"><img src="' + o.item_image + '" alt="" style="width:64px;height:64px;"></div>' +
+									'<div class="info-product">' +
+									'	<div class="name" style="width: 95%;">' + o.item_title + '</div>' +
+									'	<div class="price"><span>' + o.count + ' x</span><span>' + o.item_price + '</span></div>' +
+									'</div>' +
+									'<div class="clearfix"></div><span item_code="' + o.item_code + '" class="delete" name="span_delete_item">x</span></li>';
+    				$("#ul_items").append(item);
+    				item_count = item_count + o.count ;
+    				item_price += (o.item_price*o.count) ;
+    			});
+    			$("#span_cart_itemcount").text(item_count).show();
+    			$("#span_cart_itemprice").text("￥"+item_price).show();
+    			
+    			
+    			//将商品从购物车删除
+    			$("#ul_items").find('span[name="span_delete_item"]').click(function(){
+    				var item_code = $(this).attr('item_code');
+    				$(arr).each(function(i , o){
+    					if(o.item_code == item_code){
+    						if(o.count == 1){
+    							arr.splice(i , 1);
+    						}else{
+    							o.count = o.count-1;
+    						}
+    					}
+    				});
+        			setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
+        			showCartItems();
+    			});
+    			
+            }
+
+            //显示购物车
+            $("div[name='div_show_cart']").hover(function(){
+        		var _cart = getCookie("_cart");
+        		if(_cart){
+        			showCartItems();
+        			$(this).children("div:last-child").fadeIn(600);
+        		}
+            } , function(){
+            	$(this).children("div:last-child").fadeOut(10);
+            });
+            
+        };
+
+        //商品明细页面下方Tab切换
         var tabProductDetail = function() {
             $('.flat-product-content').each(function() {
                 $(this).find('ul.product-detail-bar').children().first().addClass('active');
@@ -474,194 +386,35 @@
                     e.preventDefault();
                 });
             });
-        }; // Tab Productdetail
+        };
 
-        var tabSortproduct = function() {
-            $('.wrap-imagebox').each(function() {
-                $(this).find('ul.icons').children('li').first().addClass('active');
-                $(this).find('.tab-product').children('.sort-box').first().show().siblings().hide();
-                $(this).find('ul.icons').children('li').on('click', function(e) {
-                    var liActive = $(this).index();
-                    $(this).addClass('active').siblings().removeClass('active');
-                     $(this).closest('.wrap-imagebox').find('.tab-product').children('.sort-box').eq(liActive).fadeIn(1000).show().siblings().hide();
-                    e.preventDefault();
+        //首页弹出框
+        var popup = function() {
+            $('.popup-newsletter').each( function() {
+                $(this).closest('.boxed').children('.overlay').css({
+                    opacity: '1',
+                    display: 'block',
+                    zIndex: '89999'
                 });
-            });
-        }; // Tab Sort Product
-
-        var tabElement = function() {
-            $('.flat-tab').each(function() {
-                $(this).find('ul.tab-list').children().first().addClass('active');
-                $(this).find('.tab-content').children('.tab-item').first().show().siblings().hide();
-                $(this).find('ul.tab-list').children('li').on('click', function(e) {
-                    var liActive = $(this).index();
-                    $(this).addClass('active').siblings().removeClass('active');
-                     $(this).closest('.flat-tab').find('.tab-content').children('.tab-item').eq(liActive).fadeIn(1000).show().siblings().hide();
-                    e.preventDefault();
-                });
-            });
-        }; // Tab Element
-
-        var FilterPrice = function() {
-            if( $().slider ) {
-                $( function() {
-                    $( "#slider-range" ).slider({
-                      range: true,
-                      min: 18,
-                      max: 1000,
-                      values: [ 18, 500 ],
-                      slide: function( event, ui ) {
-                        $( "#amount" ).val( ui.values[ 0 ] + "$" + " - " + ui.values[ 1 ] + "$" );
-                      }
+                $(".popup span" ).on('click', function() {
+                    $(this).closest('.popup-newsletter').hide(400);
+                    $(this).closest('.boxed').children('.overlay').css({
+                        opacity: '0',
+                        display: 'none',
+                         zIndex: '909'
                     });
-                    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) + "$" + " - " + $( "#slider-range" ).slider( "values", 1 ) + "$" );
                 });
-            }
-        }; // Filter Price
-
-        var scrollbarCheckbox = function() {
-            if ( $().mCustomScrollbar ) {
-               $(".box-checkbox").mCustomScrollbar({
-                scrollInertia:400,
-                theme:"light-3",
-               });
-            }
-        }; // Scrollbar Checkbox
-
-        var scrollbarTableCart = function() {
-            $(".table-cart").mCustomScrollbar({
-                axis:"x",
-                advanced:{autoExpandHorizontalScroll:true},
-                scrollInertia:400,
             });
-        }; // Scrollbar Table Cart
+        };
 
-        var scrollbarWishlist = function() {
-           $(".wishlist-content").mCustomScrollbar({
-                axis:"x",
-                theme:"light-3",
-                advanced:{autoExpandHorizontalScroll:true},
-                scrollInertia:400,
-            });
-        }; // Scrollbar Compare
-
-        var scrollbarCategories = function() {
-            if ( $().mCustomScrollbar ) {
-               $(".all-categories").mCustomScrollbar({
-                scrollInertia:400,
-                theme:"light-3",
-               });
-            }
-        }; // Scrollbar Categories
-
-        var scrollbarSearch = function() {
-            if ( $().mCustomScrollbar ) {
-               $(".search-suggestions .box-cat").mCustomScrollbar({
-                scrollInertia:400,
-                theme:"light-3",
-               });
-            }
-        }; // Scrollbar Search
-
-        var toggleWidget = function() {
-            $( ".widget .widget-title h3 span" ).on('click', function() {
-                $(this).toggleClass('active');
-              $(this).closest('.widget').children('.widget-content').slideToggle(300);
-            });
-        }; // Toggle Widget
-
-        var toggleCatlist = function() {
-            $('.cat-list.style1').each(function() {
-                $(this).children('li').children('ul.cat-child').hide();
-                // $(this).children('li').children('ul.cat-child').first().show()
-                $( ".cat-list.style1 li span" ).on('click', function() {
-                    $(this).parent('li').toggleClass('active');
-                    $(this).toggleClass('active');
-                    $(this).parent('li').children('ul.cat-child').slideToggle(300);
-                    // var liActive = $(this).index(),
-                    // contentActive = $(this).parent('li').siblings().removeClass('active').children('ul-cat-child').eq(liActive);
-                    // contentActive.addClass('active').parent('li').fadeIn("slow");
-                    // contentActive.parent('li').siblings().removeClass('active');
-                    // $(this).parent('li').addClass('active').children('.ul-cat-child').eq(liActive).siblings().hide();
-                });
-            })
-        }; // Toggle Cat List
-
-        var toggleDropdown = function() {
-            $( ".form-box .form-box-content .dropdown-title" ).on('click', function() {
-                $(this).toggleClass('active');
-                $(this).parent('.form-box-content').children('ul').slideToggle(300);
-            });
-        }; // Toggle Dropdown
-
-        var toggleLocation = function() {
-            $( ".location .location-content .select-location select" ).on('click', function() {
-                $(this).toggleClass('active');
-                $(this).closest('.location-content').children('ul.location-list').slideToggle(300);
-            });
-        }; // Toggle Location
-
-        var flexProduct = function() {
-            $('.flexslider').flexslider({
-                animation: "slide",
-                controlNav: "thumbnails"
-            });
-        }; // Flex Product
-
-        var progressCircle = function() {
-            $('.progress-circle').waypoint(function() {
-                $('.demo').percentcircle({
-                    coverBg: '#e1e1e4',
-                    bgColor: '#e1e1e4',
-                    fillColor: '#f28b00'
-                });
-                $('.demo').children('div:not(:first-child)').css({
-                    display: 'none'
-                });
-            }, {offset: '100%'});
-        }; // Progress Circle
-
-        var detectViewport = function() {
-            $('[data-waypoint-active="yes"]').waypoint(function() {
-                $(this).trigger('on-appear');
-            }, { offset: '100%', triggerOnce: true });
-            $(window).on('load', function() {
-                setTimeout(function() {
-                    $.waypoints('refresh');
-                }, 100);
-            });
-        }; // Detect Viewport
-
-        var BrandsIsotope = function() { 
-            if ( $().isotope ) {           
-                var $container = $('.brands-list');
-                var selector = $(this).attr('data-filter');
-                $container.imagesLoaded(function(){
-                    $container.isotope({
-                        itemSelector: '.ipsotope',
-                        transitionDuration: '1s'
-                    });
-                   
-                     $container.isotope({ filter: '*' })
-                });
-
-                $('.brands-tablist li').on('click',function() {                           
-                    var selector = $(this).attr('data-filter');
-                    $('.brands-tablist li').removeClass('active');
-                    $(this).addClass('active');
-                    $container.isotope({ filter: selector });
-                    return false;
-                });            
-            };
-        }; // Brands Isotope
-
+        //置顶
         var goTop = function(){
             var gotop = $('.btn-scroll');
             gotop.on('click', function() {
                 $('html, body').animate({ scrollTop: 0}, 800, 'easeInOutExpo');
                 return false;
             });
-        }; // Go Top
+        };
 
         var overlay = function(){
             var megaMenu = $('ul.menu li');
@@ -679,54 +432,56 @@
             });
         }; // Overlay
 
+        //隐藏加载状态
         var removePreloader = function() { 
             $(window).on('load', function() {
                 setTimeout(function() {
                     $('.preloader').hide(); }, 300           
                 ); 
             });  
-        }; //remove Preloader
+        };
 
     // Dom Ready
     $(function() {
         responsiveMenu();
+        tabProductDetail();
         responsiveMenuMega_S2();
         responsiveMenuMega();
-        searchButton();
-        searchFilterbox();
-        waveButton();
-        slider();
-        slider_s2();
-        slideProduct();
-        slideCounter();
         slideMostViewer();
-        slideBrand();
-        slideAccessories();
-        slideTeam();
-        slideBrand_s2();
-        slideTestimonial();
-        CountDown();
-        CountDown_s2();
-        tabProductDetail();
-        tabElement();
-        tabSortproduct();
-        overlay();
-        FilterPrice();        
-        toggleWidget();
-        toggleCatlist();
-        toggleDropdown();
-        toggleLocation();
         flexProduct();
-        detectViewport();
-        progressCircle();
-        BrandsIsotope();
-        scrollbarCheckbox();
-        scrollbarTableCart();
-        scrollbarWishlist();
-        scrollbarCategories();
-        scrollbarSearch();
-        goTop();
-        removePreloader();
+        overlay();
+        showSuggestions();
+        showAllcat();
+        goTop();//置顶
+        popup();//首页弹出框
+        removePreloader();//隐藏加载状态
     });
 
 })(jQuery);
+
+function setCookie(name,value)
+{
+	var Days = 30;
+	var exp = new Date();
+	exp.setTime(exp.getTime() + Days*24*60*60*1000);
+	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+
+
+function getCookie(name)
+{
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+		return unescape(arr[2]);
+	else
+		return null;
+}
+
+function delCookie(name)
+{
+	var exp = new Date();
+	exp.setTime(exp.getTime() - 1);
+	var cval=getCookie(name);
+	if(cval!=null)
+		document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+}

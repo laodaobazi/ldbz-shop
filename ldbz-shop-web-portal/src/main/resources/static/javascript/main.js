@@ -196,21 +196,6 @@
             
         }; // Responsive Menu Mega
 
-        var searchButton = function() {
-            var showsearch = $('.show-search button');
-            showsearch.on('click',function() {
-                $('.show-search').parent('div').children('.top-search.style1').toggleClass('active');
-                showsearch.toggleClass('active');
-            });
-        }; // Show Search
-
-        var searchFilterbox = function(){
-			var buttonFilter=$('.filter');
-				buttonFilter.on('click',function(){
-					$('.box-filter').toggleClass('active');
-				});
-			};
-
         var slider = function() {
             $(".owl-carousel").owlCarousel({
                 autoplay:true,
@@ -560,8 +545,6 @@
         responsiveMenu();
         responsiveMenuMega_S2();
         responsiveMenuMega();
-        searchButton();
-        searchFilterbox();
         slider();
         slideProduct();
         slideMostViewer();
