@@ -29,11 +29,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.piggsoft</groupId>
-			<artifactId>beetl-spring-boot-starter</artifactId>
-			<version>0.0.3</version>
-		</dependency>
 
 		<dependency>
 			<groupId>cn.ldbz</groupId>
@@ -43,7 +38,7 @@
 		
 		<dependency>
 			<groupId>cn.ldbz</groupId>
-			<artifactId>ldbz-shop-service-item-api</artifactId>
+			<artifactId>ldbz-shop-common-tag</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>

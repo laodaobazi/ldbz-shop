@@ -11,7 +11,16 @@ public interface ItemService {
 	
 	LdbzResult getItemList(LdbzItem entity);
 
+	/**
+	 * 根据板块Key获取商品列表
+	 * @param key
+	 * @return
+	 */
+	LdbzResult selectItemListBySheetKey(String key);
+
 	LdbzResult selectByKey(Long id);
+	
+	LdbzResult selectByCode(Long code);
 	
 	LdbzResult deleteByKey(String id);
 	

@@ -229,4 +229,16 @@
       id = #{id,jdbcType=BIGINT}
   </update>
   
+  
+  
+  <select id="getCategoryByLevelAndFid" resultMap="BaseResultMap" >
+  	select
+    <include refid="Base_Column_List" />
+    from ldbz_category
+    where  category_level = #{level ,jdbcType=VARCHAR}
+    and status = 1
+    and fid = #{fid ,jdbcType=BIGINT}
+    order by sort_order
+  </select>
+  
 </mapper>

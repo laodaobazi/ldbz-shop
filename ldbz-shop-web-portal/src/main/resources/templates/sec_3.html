@@ -9,17 +9,15 @@
 					</div><!-- /.col-md-12 -->
 				</div><!-- /.row -->
 				<div class="row ">
-				<%
-				for(sheet in sheets){
-						if(sheet.sheetKey == 'Recommend'){
-				%>
 					<div class="col-md-12 owl-carousel-10">
-						<% 
-							for(entry in sheet_items){
-								if(entry.key==sheet.sheetKey){
-									for(item in entry.value){
+						<%
+							var ad_index = 0 ;
 						%>
-						<%if(itemLP.odd){%>
+						<ldbz:sheet_item_tag key="Recommend" ;item>
+						<%
+						++ad_index ;
+						if(ad_index%2==1){
+						%>
 						<div class="owl-carousel-item">
 						<%}%>
 						
@@ -60,20 +58,13 @@
 								</div><!-- /.imagebox style1 -->
 							</div>
 							
-						<%if(itemLP.even){%>
+						<%if(ad_index%2==0){%>
 						</div>
 						<%}%>
 						
-						<%
-								}
-							}
-						}
-						%>
+						</ldbz:sheet_item_tag>
+						
 					</div>
-					<% 
-						}
-					}
-					%>
 				</div><!-- /.row -->
 			</div><!-- /.container -->
 		</section><!-- /.flat-imagebox style1 -->

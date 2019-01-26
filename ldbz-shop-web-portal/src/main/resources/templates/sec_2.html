@@ -4,17 +4,9 @@
 					<div class="col-md-12">
 						<div class="product-tab">
 							<ul class="tab-list">
-								<% 
-								for(sheet in sheets){
-									if(sheet.sheetKey == 'New_Arrivals' ||
-										sheet.sheetKey == 'Featured' ||
-										sheet.sheetKey == 'Top_Selling'){
-								%>
+								<ldbz:sheet_tag key="'New_Arrivals','Featured','Top_Selling'" ;sheet>
 										<li>${sheet.sheetName}</li>
-								<% 
-									}
-								}
-								%>
+								</ldbz:sheet_tag>
 								<!-- <li class="active">最新发布</li>
 								<li>特色商品</li>
 								<li>热销商品</li> -->
@@ -23,20 +15,15 @@
 					</div><!-- /.col-md-12 -->
 				</div><!-- /.row -->
 				<div class="box-product">
-					<% 
-					for(sheet in sheets){
-						if(sheet.sheetKey == 'New_Arrivals' ||
-							sheet.sheetKey == 'Featured' ||
-							sheet.sheetKey == 'Top_Selling'){
-					%>
-					
+					<ldbz:sheet_tag key="'New_Arrivals','Featured','Top_Selling'" ;sheet>
 					<div class="row">
 						<%
-						for(entry in sheet_items){
-							if(entry.key==sheet.sheetKey){
-								for(item in entry.value){
+							var ad_index_1 = 0 ;
 						%>
-						<%if(itemLP.odd){%>
+						<ldbz:sheet_item_tag key="${sheet.sheetKey}" ;item>
+						<%
+						++ad_index_1 ;
+						if(ad_index_1%2==1){%>
 						<div class="col-lg-3 col-sm-6">
 						<%}%>
 							<div class="product-box">
@@ -85,22 +72,12 @@
 								</div><!-- /.imagebox -->
 							</div>
 							
-						<%if(itemLP.even){%>
+						<%if(ad_index_1%2==0){%>
 						</div><!-- /.col-lg-3 col-sm-6 -->
 						<%}%>
-						
-						<%
-								}
-							}
-						}
-						%>
+						</ldbz:sheet_item_tag>
 					</div><!-- /.row -->
-					
-					<% 
-						}
-					}
-					%>
-					
+					</ldbz:sheet_tag>
 				</div><!-- /.box-product -->
 			</div><!-- /.container -->
 		</section><!-- /.flat-imagebox -->

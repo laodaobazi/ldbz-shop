@@ -134,30 +134,35 @@ public class SheetServiceImpl implements SheetService {
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List<Map> getSheetAssignListByRedis(long sheetId) {
+	public List<Map> getSheetAssignListByKey(Object sheetKey) {
 		try {
-	        String jsonItem = jedisClient.get(SHEET_ASSIGNS_KEY+sheetId);
+	        String jsonItem = jedisClient.get(SHEET_ASSIGNS_KEY+sheetKey);
 	        if (StringUtils.isNotEmpty(jsonItem) && jsonItem.length()>2) {
-	            logger.info("Redis 查询 板块ID:" + sheetId);
+	            logger.info("Redis 查询 板块ID:" + sheetKey);
 	            List<Map> items = FastJsonConvert.convertJSONToArray(jsonItem, Map.class);
 	            return items;
 	        } else {
-	            logger.error("Redis 查询不到 key:" + sheetId);
+	            logger.error("Redis 查询不到 key:" + sheetKey);
 	        }
 	    } catch (Exception e) {
 	        logger.error("板块信息 获取缓存报错",e);
 	    }
 		
-		List<Map> items = (List)mapper.getSheetAssignListByRedis(sheetId) ;
+		List<Map> items = (List)mapper.getSheetAssignListByKey(sheetKey) ;
 		
 		try {
-	        jedisClient.set(SHEET_ASSIGNS_KEY+sheetId, FastJsonConvert.convertObjectToJSON(items));
-	        jedisClient.expire(SHEET_ASSIGNS_KEY+sheetId, REDIS_EXPIRE_TIME);
-	        logger.info("Redis 缓存板块信息 key:" + SHEET_ASSIGNS_KEY+sheetId);
+	        jedisClient.set(SHEET_ASSIGNS_KEY+sheetKey, FastJsonConvert.convertObjectToJSON(items));
+	        jedisClient.expire(SHEET_ASSIGNS_KEY+sheetKey, REDIS_EXPIRE_TIME);
+	        logger.info("Redis 缓存板块信息 key:" + SHEET_ASSIGNS_KEY+sheetKey);
 	    } catch (Exception e) {
-	        logger.error("缓存错误板块ID:" + sheetId, e);
+	        logger.error("缓存错误板块ID:" + sheetKey, e);
 	    }
 		return items;
+	}
+
+	@Override
+	public List<LdbzSheet> getEnableSheetsByKeys(Object sheetKeys) {
+		return mapper.getEnableSheetsByKeys(sheetKeys);
 	}
 
 }

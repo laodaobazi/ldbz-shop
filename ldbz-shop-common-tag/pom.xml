@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ldbz-shop</artifactId>
+        <groupId>cn.ldbz</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ldbz-shop-common-tag</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>ldbz-shop-common-tag</name>
+
+    <dependencies>
+		<dependency>
+			<groupId>cn.ldbz</groupId>
+			<artifactId>ldbz-shop-common</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.piggsoft</groupId>
+			<artifactId>beetl-spring-boot-starter</artifactId>
+			<version>0.0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.ldbz</groupId>
+			<artifactId>ldbz-shop-service-redis-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.ldbz</groupId>
+			<artifactId>ldbz-shop-service-item-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.ldbz</groupId>
+			<artifactId>ldbz-shop-service-advertisement-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+    </dependencies>
+</project>

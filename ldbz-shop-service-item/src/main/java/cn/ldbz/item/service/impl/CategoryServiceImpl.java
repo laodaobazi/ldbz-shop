@@ -133,13 +133,13 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public LdbzResult getCategoryTreeRedis(long fid) {
+	public List<LdbzCategory> getCategoryTreeRedis(Object level , Object fid) {
+		String key = CATEGORY_INFO_KEY + level + fid ;
 		try {
-	        String json = jedisClient.get(CATEGORY_INFO_KEY);
+	        String json = jedisClient.get(key);
 	        if (StringUtils.isNotBlank(json)) {
 	        	logger.info("Redis 获取商品分类:");
-	            List<LdbzCategory> list = FastJsonConvert.convertJSONToArray(json, LdbzCategory.class);
-	            return LdbzResult.ok(list);
+	            return FastJsonConvert.convertJSONToArray(json, LdbzCategory.class);
 	        } else {
 	            logger.error("Redis 查询不到商品分类");
 	        }
@@ -147,15 +147,16 @@ public class CategoryServiceImpl implements CategoryService {
 	        logger.error("商品分类 获取缓存报错",e);
 	    }
 		
-		LdbzResult ret = LdbzResult.ok(mapper.getCategoryTree(fid)) ;
+		List<LdbzCategory> list = mapper.getCategoryByLevelAndFid(level , fid) ;
+		
 		try {
             logger.info("Redis 更新商品分类:");
-	        jedisClient.set(CATEGORY_INFO_KEY, FastJsonConvert.convertObjectToJSON(ret.getData()));
-	        jedisClient.expire(CATEGORY_INFO_KEY, REDIS_EXPIRE_TIME);
+	        jedisClient.set(key, FastJsonConvert.convertObjectToJSON(list));
+	        jedisClient.expire(key, REDIS_EXPIRE_TIME);
 	    } catch (Exception e) {
 	        logger.error("Redis 更新商品分类缓存报错",e);
 	    }
-		return ret ;
+		return list ;
 	}
 
 	@Override

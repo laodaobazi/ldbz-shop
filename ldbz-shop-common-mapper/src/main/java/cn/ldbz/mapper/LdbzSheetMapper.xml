@@ -42,6 +42,15 @@
     limit #{start} , #{limit}
   </select>
   
+  <select id="getEnableSheetsByKeys" resultMap="BaseResultMap" >
+	  select
+	    <include refid="Base_Column_List" />
+	    from ldbz_item_sheet
+	    where status = 1
+	    and sheet_key in (${sheetKeys})
+	  order by SORT_ORDER
+  </select>
+  
   <select id="countByEntity" parameterType="cn.ldbz.pojo.LdbzSheet" resultType="java.lang.Long" >
     select count(*) from ldbz_item_sheet
     <where>
@@ -84,12 +93,13 @@
 	  order by SORT_ORDER
   </select>
   
-  <select id="getSheetAssignListByRedis" resultType="map" >
+  <select id="getSheetAssignListByKey" resultType="map" >
 	  select t.`CODE` , t.TITLE , t.OLD_PRICE , t.PRICE , t.IMAGE , c.CATEGORY_NAME
 		from ldbz_item_sheet_assign a
+		join ldbz_item_sheet s on s.id = a.sheet_id
 		join ldbz_item t on t.id = a.item_id
 		join ldbz_category c on c.id = t.cid
-		where a.sheet_id = #{sheetId,jdbcType=BIGINT}
+		where s.sheet_key = #{sheetKey,jdbcType=VARCHAR}
 	  order by a.SORT_ORDER
   </select>
   

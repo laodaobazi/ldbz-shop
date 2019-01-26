@@ -2,7 +2,6 @@ package cn.ldbz.cart.service.impl;
 
 import cn.ldbz.cart.service.CartService;
 import cn.ldbz.constant.Const;
-import cn.ldbz.mapper.TbItemMapper;
 import cn.ldbz.pojo.CartInfo;
 import cn.ldbz.pojo.TbItem;
 import cn.ldbz.pojo.TbItemExample;
@@ -46,7 +45,7 @@ public class CartServiceImpl implements CartService {
     private JedisClient jedisClient;
 
     @Autowired
-    private TbItemMapper itemMapper;
+//    private TbItemMapper itemMapper;
 
     @Override
     public LdbzResult addCart(Long pid, Integer pcount, String uuid) {
@@ -74,13 +73,13 @@ public class CartServiceImpl implements CartService {
 
                 criteria.andIdEqualTo(pid);
 
-                List<TbItem> itemList = itemMapper.selectByExample(example);
+//                List<TbItem> itemList = itemMapper.selectByExample(example);
 
-                if (itemList != null && itemList.size() > 0) {
-                    item = itemList.get(0);
-                } else {
+//                if (itemList != null && itemList.size() > 0) {
+//                    item = itemList.get(0);
+//                } else {
                     return LdbzResult.build(500, "商品查询不到!");
-                }
+//                }
             }
 
         } catch (Exception e) {

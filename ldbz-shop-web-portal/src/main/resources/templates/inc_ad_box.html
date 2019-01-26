@@ -4,63 +4,39 @@
 			<div class="col-md-8">
 				<div class="banner-box one-half">
 					<div class="inner-box">
-						<%
-						for(recommend in indexRecommends){
-							if(recommend.adKey == 'AD_RECOMMEND_1'){
-						%>
+						<ldbz:index_recommend_tag site="AD_RECOMMEND_1" ;recommend>
 						<a href="${recommend.href}" title="">
 							<img src="${nginxImage}${recommend.src}" alt="${recommend.alt}" >
 						</a>
-						<%
-						}
-							}
-						%>
+						</ldbz:index_recommend_tag>
 					</div><!-- /.inner-box -->
 					<div class="inner-box">
-						<%
-						for(recommend in indexRecommends){
-							if(recommend.adKey == 'AD_RECOMMEND_2'){
-						%>
+						<ldbz:index_recommend_tag site="AD_RECOMMEND_2" ;recommend>
 						<a href="${recommend.href}" title="">
 							<img src="${nginxImage}${recommend.src}" alt="${recommend.alt}" >
 						</a>
-						<%
-						}
-							}
-						%>
+						</ldbz:index_recommend_tag>
 					</div><!-- /.inner-box -->
 					<div class="clearfix"></div>
 				</div><!-- /.box -->
 				<div class="banner-box">
 					<div class="inner-box">
-						<%
-						for(recommend in indexRecommends){
-							if(recommend.adKey == 'AD_RECOMMEND_3'){
-						%>
+						<ldbz:index_recommend_tag site="AD_RECOMMEND_3" ;recommend>
 						<a href="${recommend.href}" title="">
 							<img src="${nginxImage}${recommend.src}" alt="${recommend.alt}" >
 						</a>
-						<%
-						}
-							}
-						%>
+						</ldbz:index_recommend_tag>
 					</div>
 				</div><!-- /.box -->
 			</div><!-- /.col-md-8 -->
 			<div class="col-md-4">
 				<div class="banner-box">
 					<div class="inner-box">
-						<%
-						for(recommend in indexRecommends){
-							if(recommend.adKey == 'AD_RECOMMEND_4'){
-						%>
+						<ldbz:index_recommend_tag site="AD_RECOMMEND_4" ;recommend>
 						<a href="${recommend.href}" title="">
 							<img src="${nginxImage}${recommend.src}" alt="${recommend.alt}" >
 						</a>
-						<%
-						}
-							}
-						%>
+						</ldbz:index_recommend_tag>
 					</div><!-- /.inner-box -->
 				</div><!-- /.box -->
 			</div><!-- /.col-md-4 -->

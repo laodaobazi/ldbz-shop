@@ -77,12 +77,9 @@
 										<div class="all-categories">
 											<div class="cat-list-search">
 												<!-- 1级菜单 -->
-												<% for(category in categorys){
-													if(category.categoryLevel=='1'){ %>
-												<div class="title">${category.categoryName}</div>
-												<!-- <ul><li>Components</li></ul> -->
-												<% }
-												}%>
+												<ldbz:category_tag level="1" fid="1" ;category>
+													<div class="title">${category.categoryName}</div>
+												</ldbz:category_tag>
 											</div><!-- /.cat-list-search -->
 										</div><!-- /.all-categories -->
 									</div><!-- /.cat-wrap -->
@@ -143,8 +140,7 @@
 								<div class="btn-mega"><span></span>商品分类</div>
 								<ul class="menu">
 								<!-- 1级菜单 -->
-								<% for(category in categorys){
-									if(category.categoryLevel=='1'){ %>
+								<ldbz:category_tag level="1" fid="1" ;category>
 									<li>
 										<a href="#" title="" class="dropdown">
 											<span class="menu-img">
@@ -154,28 +150,23 @@
 										</a>
 										<div class="drop-menu">
 											<!-- 2级菜单 -->
-											<% for(category2 in categorys){
-												if(category2.categoryLevel=='2' && category2.fid==category.id){ %>
+											<ldbz:category_tag level="2" fid="${category.id}" ;category2>
 											<div class="one-third">
 												<div class="cat-title">${category2.categoryName}</div>
 												<ul>
 													<!-- 3级菜单 -->
-													<% for(category3 in categorys){
-														if(category3.categoryLevel=='3' && category3.fid==category2.id){ %>
+													<ldbz:category_tag level="3" fid="${category2.id}" ;category3>
 														<li><a href="#" title="">${category3.categoryName}</a></li>
-													<% }
-													}%>
+													</ldbz:category_tag>
 												</ul>
 												<!-- <div class="show">
 													<a href="#" title="">更多</a>
 												</div> -->
 											</div>
-											<% }
-											}%>
+											</ldbz:category_tag>
 										</div>
 									</li>
-									<% }
-									}%>
+									</ldbz:category_tag>
 								</ul>
 							</div>
 						</div><!-- /.col-md-3 -->
@@ -184,37 +175,30 @@
 								<div id="mainnav" class="mainnav">
 									<ul class="menu">
 										<!-- 1级菜单 -->
-										<% for(category in categorys){
-											if(category.categoryLevel=='1'){ %>
+										<ldbz:category_tag level="1"  fid="1" ;category>
 										<li class="has-mega-menu">
 											<a href="#" title="">${category.categoryName}</a>
 											<div class="submenu">
 												<div class="row">
 														<!-- 2级菜单 -->
-														<% for(category2 in categorys){
-															if(category2.categoryLevel=='2' && category2.fid==category.id){ %>
+														<ldbz:category_tag level="2" fid="${category.id}" ;category2>
 															<div class="col-lg-3 col-md-12">
 																<h3 class="cat-title">${category2.categoryName}</h3>
 																<ul class="submenu-child">
 																	<!-- 3级菜单 -->
-																	<% for(category3 in categorys){
-																		if(category3.categoryLevel=='3' && category3.fid==category2.id){ %>
+																	<ldbz:category_tag level="3" fid="${category2.id}" ;category3>
 																		<li><a href="#" title="">${category3.categoryName}</a></li>
-																	<% }
-																	}%>
+																	</ldbz:category_tag>
 																</ul>
 																<!-- <div class="show">
 																	<a href="#" title="">更多</a>
 																</div> -->
 															</div>
-														<% }
-														}%>
+														</ldbz:category_tag>
 												</div>
 											</div>
 										</li>
-										<% }
-										}%>
-										
+										</ldbz:category_tag>
 									</ul><!-- /.menu -->
 								</div><!-- /.mainnav -->
 							</div><!-- /.nav-wrap -->

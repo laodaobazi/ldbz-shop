@@ -25,6 +25,7 @@
     <result column="weight" property="weight" jdbcType="INTEGER" />
     <result column="colour" property="colour" jdbcType="VARCHAR" />
     <result column="size" property="size" jdbcType="VARCHAR" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -71,6 +72,13 @@
     <include refid="Base_Column_List" />
     from ldbz_item
     where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ldbz_item
+    where code = #{code,jdbcType=BIGINT}
   </select>
   
   <delete id="deleteByKey" parameterType="java.lang.Long" >
@@ -215,5 +223,14 @@
     where 
       id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="selectItemListBySheetKey" parameterType="string"  resultMap="BaseResultMap" >
+    select	a.id , a.sort_order, a.title , a.code , a.sell_point , a.old_price , a.price , a.num , a.barcode , a.image , a.weight , a.colour , a.size , d.category_name
+    from ldbz_item a join ldbz_item_sheet_assign b on a.id = b.item_id
+    join ldbz_item_sheet c on c.id = b.sheet_id
+    join ldbz_category d on a.cid = d.id
+    where c.sheet_key = #{key}
+    and a.status = 1
+  </select>
   
 </mapper>

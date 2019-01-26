@@ -3,13 +3,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="slider owl-carousel">
-				
-					<% for(indexSlide in indexSlides){%>
+					<ldbz:index_slide_tag ;ad>
 					<div class="slider-item style2">
-						<a href="${indexSlide.href}" target="_blank"><img src="${nginxImage}${indexSlide.src}" alt="${indexSlide.alt}" /></a>
+						<a href="${ad.href}" target="_blank"><img src="${nginxImage}${ad.src}" alt="${ad.alt}" /></a>
 					</div>
-					<% }%>
-					
+					</ldbz:index_slide_tag>
 				</div><!-- /.slider -->
 			</div><!-- /.col-md-12 -->
 		</div><!-- /.row -->

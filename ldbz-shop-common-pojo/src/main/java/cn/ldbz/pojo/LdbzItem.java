@@ -52,4 +52,5 @@ public class LdbzItem  implements Serializable {
     
     private String size ;
 
+    private String categoryName ;
 }

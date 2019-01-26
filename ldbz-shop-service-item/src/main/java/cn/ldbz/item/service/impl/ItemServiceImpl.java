@@ -101,54 +101,20 @@ public class ItemServiceImpl implements ItemService {
     
 	@Override
 	public LdbzResult selectByKey(Long itemId) {
-			String key = ITEM_INFO_PROFIX + itemId + ITEM_INFO_BASE_SUFFIX;
-		    try {
-		        String jsonItem = jedisClient.get(key);
-		        if (StringUtils.isNotBlank(jsonItem)) {
-		            logger.info("Redis 查询 商品信息 商品ID:" + itemId);
-		            LdbzItem item = FastJsonConvert.convertJSONToObject(jsonItem, LdbzItem.class);
-		            return LdbzResult.ok(item);
-		        } else {
-		            logger.error("Redis 查询不到 key:" + key);
-		        }
-		    } catch (Exception e) {
-		        logger.error("商品信息 获取缓存报错",e);
-		    }
-		    logger.info("根据商品ID"+itemId+"查询商品！");
 		    LdbzItem item = mapper.selectByKey(itemId);
-		    try {
-		        jedisClient.set(key, FastJsonConvert.convertObjectToJSON(item));
-		        jedisClient.expire(key, REDIS_EXPIRE_TIME);
-		        logger.info("Redis 缓存商品信息 key:" + key);
-		    } catch (Exception e) {
-		        logger.error("缓存错误商品ID:" + itemId, e);
-		    }
 		    return LdbzResult.ok(item);
 	}
 
 	@Override
 	public LdbzResult deleteByKey(String itemId) {
-		String key = ITEM_INFO_PROFIX + itemId + ITEM_INFO_BASE_SUFFIX;
 		logger.debug("deleteByKey id : {} " , itemId);
 		if(StringUtils.contains(itemId, ",")) {
 			List<Long> ids = new ArrayList<Long>();
 			for(String _id : StringUtils.split(itemId , ",")) {
-				try {
-			        jedisClient.del(key);
-			        logger.info("Redis 删除商品信息 key:" + key);
-			    } catch (Exception e) {
-			        logger.error("缓存错误商品ID:" + itemId, e);
-			    }
 				ids.add(Long.valueOf(_id));
 			}
 			return LdbzResult.ok(mapper.deleteByKeys(ids));
 		}else {
-			try {
-		        jedisClient.del(key);
-		        logger.info("Redis 删除商品信息 key:" + key);
-		    } catch (Exception e) {
-		        logger.error("缓存错误商品ID:" + itemId, e);
-		    }
 			return LdbzResult.ok(mapper.deleteByKey(Long.valueOf(itemId)));
 		}
 	}
@@ -165,17 +131,63 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public LdbzResult updateByKey(LdbzItem entity) {
-		long itemId = entity.getId() ;
-		String key = ITEM_INFO_PROFIX + itemId + ITEM_INFO_BASE_SUFFIX;
-	    try {
-	            logger.info("Redis 更新 商品信息 商品ID:" + itemId);
-		        jedisClient.set(key, FastJsonConvert.convertObjectToJSON(entity));
-		        jedisClient.expire(key, REDIS_EXPIRE_TIME);
-	    } catch (Exception e) {
-	        logger.error("商品信息 更新缓存报错",e);
-	    }
 		logger.debug("updateByKey entity : {} " , entity);
 		return LdbzResult.ok(mapper.updateByKey(entity));
 	}
 
+	@Override
+	public LdbzResult selectItemListBySheetKey(String key) {
+		String sheetKey = ITEM_INFO_PROFIX + key + ITEM_INFO_BASE_SUFFIX;
+	    try {
+	        String jsonItem = jedisClient.get(sheetKey);
+	        if (StringUtils.isNotBlank(jsonItem)) {
+	            logger.info("Redis 查询 商品信息 板块Key:" + sheetKey);
+	            List<LdbzItem> items = FastJsonConvert.convertJSONToArray(jsonItem, LdbzItem.class);
+	            return LdbzResult.ok(items);
+	        } else {
+	            logger.error("Redis 查询不到 key:" + sheetKey);
+	        }
+	    } catch (Exception e) {
+	        logger.error("商品板块信息 获取缓存报错",e);
+	    }
+
+		List<LdbzItem> items = mapper.selectItemListBySheetKey(key);
+	    
+		try {
+	        jedisClient.set(sheetKey, FastJsonConvert.convertObjectToJSON(items));
+	        jedisClient.expire(sheetKey, REDIS_EXPIRE_TIME);
+	        logger.info("Redis 缓存板块商品信息 key:" + sheetKey);
+	    } catch (Exception e) {
+	        logger.error("缓存错误商品板块:" + sheetKey, e);
+	    }
+	    return LdbzResult.ok(items);
+	}
+
+	@Override
+	public LdbzResult selectByCode(Long code) {
+		String key = ITEM_INFO_PROFIX + code + ITEM_INFO_BASE_SUFFIX;
+		try {
+			String jsonItem = jedisClient.get(key);
+			if (StringUtils.isNotBlank(jsonItem)) {
+				logger.info("Redis 查询 商品信息 商品code:" + code);
+				LdbzItem item = FastJsonConvert.convertJSONToObject(jsonItem, LdbzItem.class);
+				return LdbzResult.ok(item);
+			} else {
+				logger.error("Redis 查询不到 code:" + code);
+			}
+		} catch (Exception e) {
+			logger.error("商品信息 获取缓存报错",e);
+		}
+		logger.info("根据商品code"+code+"查询商品！");
+		LdbzItem item = mapper.selectByCode(code);
+		try {
+			jedisClient.set(key, FastJsonConvert.convertObjectToJSON(item));
+			jedisClient.expire(key, REDIS_EXPIRE_TIME);
+			logger.info("Redis 缓存商品信息 key:" + key);
+		} catch (Exception e) {
+			logger.error("缓存错误商品code:" + code, e);
+		}
+		return LdbzResult.ok(item);
+	}
+	
 }

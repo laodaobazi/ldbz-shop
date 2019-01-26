@@ -1,9 +1,5 @@
 package cn.ldbz.portal.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,10 +13,6 @@ import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 
 import cn.ldbz.constant.Const;
-import cn.ldbz.pojo.LdbzIndexRecommendAd;
-import cn.ldbz.pojo.LdbzIndexSlideAd;
-import cn.ldbz.pojo.LdbzResult;
-import cn.ldbz.pojo.LdbzSheet;
 import cn.ldbz.portal.service.IndexService;
 import cn.ldbz.redis.service.JedisClient;
 
@@ -56,37 +48,10 @@ public class IndexController {
 	}
 
 	@RequestMapping("/index")
-	@SuppressWarnings({ "unchecked", "rawtypes" })
     public String index(Model model) {
-    	//获取分类
-    	LdbzResult ret = indexService.getCategory() ;
-    	model.addAttribute("categorys", ret.getData());
     	
     	//获取首页轮播广告
     	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
-    	List<LdbzIndexSlideAd> ret2 = indexService.getIndexSlideAd();
-    	model.addAttribute("indexSlides", ret2);
-    	
-    	//获取首页推荐广告
-    	List<LdbzIndexRecommendAd> ret4 = indexService.getIndexRecommendAd();
-    	model.addAttribute("indexRecommends", ret4);
-    	
-    	//获取所有有效板块
-    	LdbzResult ret3 = indexService.getSheetList();
-    	if(ret3!=null && ret3.getData()!=null) {
-    		List<LdbzSheet> sheets = (List<LdbzSheet>)ret3.getData() ;
-    		model.addAttribute("sheets", sheets);
-    		
-    		Map<String,Object> sheet_items = new HashMap<String,Object>();
-    		if(sheets!=null && sheets.size()>0){
-    			for(LdbzSheet sheet : sheets) {
-    				//根据板块获取分配的商品
-    				List<Map> items = indexService.getSheetAssignList(sheet.getId());
-    				sheet_items.put(sheet.getSheetKey(), items);
-    			}
-    		}
-    		model.addAttribute("sheet_items", sheet_items);
-    	}
     	
     	return "index";
     }

@@ -1,5 +1,7 @@
 package cn.ldbz.item.service;
 
+import java.util.List;
+
 import cn.ldbz.pojo.LdbzCategory;
 import cn.ldbz.pojo.LdbzResult;
 
@@ -21,7 +23,7 @@ public interface CategoryService {
 
 	LdbzResult getCategoryTree(long fid);
 	
-	LdbzResult getCategoryTreeRedis(long fid);
+	List<LdbzCategory> getCategoryTreeRedis(Object level , Object fid);
 
 	LdbzResult updateSort(String ids);
 	

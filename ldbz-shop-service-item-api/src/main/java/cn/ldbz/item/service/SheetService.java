@@ -15,6 +15,8 @@ public interface SheetService {
 	
 	LdbzResult getSheetList(LdbzSheet entity);
 
+	List<LdbzSheet> getEnableSheetsByKeys(Object sheetKeys);
+
 	LdbzResult selectByKey(Long id);
 	
 	LdbzResult updateByKey(LdbzSheet entity);
@@ -22,7 +24,7 @@ public interface SheetService {
 	LdbzResult getSheetAssignList(long sheetId);
 
 	@SuppressWarnings("rawtypes")
-	List<Map> getSheetAssignListByRedis(long sheetId);
+	List<Map> getSheetAssignListByKey(Object sheetKey);
 	
 	LdbzResult deleteAssign(String ids);
 

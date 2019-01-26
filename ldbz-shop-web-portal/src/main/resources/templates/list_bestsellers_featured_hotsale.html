@@ -1,159 +1,108 @@
 <section class="flat-highlights">
 	<div class="container">
 		<div class="row">
-			<%
-			for(sheet in sheets){
-					if(sheet.sheetKey == 'Bestsellers'){
-			%>
 			<div class="col-md-4">
 				<div class="flat-row-title">
 					<h3>畅销</h3>
 				</div>
 				<ul class="product-list style1">
-				<%
-					for(entry in sheet_items){
-						if(entry.key==sheet.sheetKey){
-							for(item in entry.value){
-				%>
-					<li>
-						<div class="img-product">
-							<a href="#" title="">
-								<img src="${nginxImage}${item.IMAGE}" alt="">
-							</a>
-						</div>
-						<div class="info-product">
-							<div class="name">
-								<a href="#" title="">${item.TITLE}</a>
+					<ldbz:sheet_item_tag key="Bestsellers" ;item>
+						<li>
+							<div class="img-product">
+								<a href="#" title="">
+									<img src="${nginxImage}${item.IMAGE}" alt="">
+								</a>
 							</div>
-							<div class="queue">
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
+							<div class="info-product">
+								<div class="name">
+									<a href="#" title="">${item.TITLE}</a>
+								</div>
+								<div class="queue">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+								</div>
+								<div class="price">
+									<span class="sale">￥${item.PRICE,numberFormat}</span>
+									<span class="regular">￥${item.OLD_PRICE,numberFormat}</span>
+								</div>
 							</div>
-							<div class="price">
-								<span class="sale">￥${item.PRICE,numberFormat}</span>
-								<span class="regular">￥${item.OLD_PRICE,numberFormat}</span>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</li>
-					<%
-								}
-							}
-						}
-					%>
+							<div class="clearfix"></div>
+						</li>
+					</ldbz:sheet_item_tag>
 				</ul><!-- /.product-list style1 -->
 			</div><!-- /.col-md-4 -->
-			<%
-				}
-			}
-			%>
 			
-			
-			<%
-			for(sheet in sheets){
-					if(sheet.sheetKey == 'Featured_2'){
-			%>
 			<div class="col-md-4">
 				<div class="flat-row-title">
 					<h3>特色</h3>
 				</div>
 				<ul class="product-list style1">
-				<%
-						for(entry in sheet_items){
-							if(entry.key==sheet.sheetKey){
-								for(item in entry.value){
-				%>
-					<li>
-						<div class="img-product">
-							<a href="#" title="">
-								<img src="${nginxImage}${item.IMAGE}" alt="">
-							</a>
-						</div>
-						<div class="info-product">
-							<div class="name">
-								<a href="#" title="">${item.TITLE}</a>
+					<ldbz:sheet_item_tag key="Featured_2" ;item>
+						<li>
+							<div class="img-product">
+								<a href="#" title="">
+									<img src="${nginxImage}${item.IMAGE}" alt="">
+								</a>
 							</div>
-							<div class="queue">
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
+							<div class="info-product">
+								<div class="name">
+									<a href="#" title="">${item.TITLE}</a>
+								</div>
+								<div class="queue">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+								</div>
+								<div class="price">
+									<span class="sale">￥${item.PRICE,numberFormat}</span>
+									<span class="regular">￥${item.OLD_PRICE,numberFormat}</span>
+								</div>
 							</div>
-							<div class="price">
-								<span class="sale">￥${item.PRICE,numberFormat}</span>
-								<span class="regular">￥${item.OLD_PRICE,numberFormat}</span>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</li>
-					<%
-								}
-							}
-						}
-					%>
+							<div class="clearfix"></div>
+						</li>
+					</ldbz:sheet_item_tag>
 				</ul>
 			</div><!-- /.col-md-4 -->
-			<%
-				}
-			}
-			%>
 			
 			
-			
-			<%
-			for(sheet in sheets){
-					if(sheet.sheetKey == 'Hot_Sale'){
-			%>
 			<div class="col-md-4">
 				<div class="flat-row-title">
 					<h3>热卖</h3>
 				</div>
 				<ul class="product-list style1">
-				<%
-							for(entry in sheet_items){
-								if(entry.key==sheet.sheetKey){
-									for(item in entry.value){
-				%>
-					<li>
-						<div class="img-product">
-							<a href="#" title="">
-								<img src="${nginxImage}${item.IMAGE}" alt="">
-							</a>
-						</div>
-						<div class="info-product">
-							<div class="name">
-								<a href="#" title="">${item.TITLE}</a>
+					<ldbz:sheet_item_tag key="Hot_Sale" ;item>
+						<li>
+							<div class="img-product">
+								<a href="#" title="">
+									<img src="${nginxImage}${item.IMAGE}" alt="">
+								</a>
 							</div>
-							<div class="queue">
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
-								<i class="fa fa-star" aria-hidden="true"></i>
+							<div class="info-product">
+								<div class="name">
+									<a href="#" title="">${item.TITLE}</a>
+								</div>
+								<div class="queue">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+								</div>
+								<div class="price">
+									<span class="sale">￥${item.PRICE,numberFormat}</span>
+									<span class="regular">￥${item.OLD_PRICE,numberFormat}</span>
+								</div>
 							</div>
-							<div class="price">
-								<span class="sale">￥${item.PRICE,numberFormat}</span>
-								<span class="regular">￥${item.OLD_PRICE,numberFormat}</span>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</li>
-					<%
-								}
-							}
-						}
-					%>
-					
+							<div class="clearfix"></div>
+						</li>
+					</ldbz:sheet_item_tag>
 				</ul>
 			</div><!-- /.col-md-4 -->
-			<%
-				}
-			}
-			%>
 		</div><!-- /.row -->
 	</div><!-- /.container -->
 </section><!-- /.flat-highlights -->
