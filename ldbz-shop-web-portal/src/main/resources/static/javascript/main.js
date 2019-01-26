@@ -510,7 +510,7 @@
         var goTop = function(){
             var gotop = $('.btn-scroll');
             gotop.on('click', function() {
-                $('html, body').animate({ scrollTop: 0}, 800, 'easeInOutExpo');
+                $('html, body').animate({ scrollTop: 0}, 800);
                 return false;
             });
         };

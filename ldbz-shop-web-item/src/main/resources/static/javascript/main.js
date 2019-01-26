@@ -388,30 +388,11 @@
             });
         };
 
-        //首页弹出框
-        var popup = function() {
-            $('.popup-newsletter').each( function() {
-                $(this).closest('.boxed').children('.overlay').css({
-                    opacity: '1',
-                    display: 'block',
-                    zIndex: '89999'
-                });
-                $(".popup span" ).on('click', function() {
-                    $(this).closest('.popup-newsletter').hide(400);
-                    $(this).closest('.boxed').children('.overlay').css({
-                        opacity: '0',
-                        display: 'none',
-                         zIndex: '909'
-                    });
-                });
-            });
-        };
-
         //置顶
         var goTop = function(){
             var gotop = $('.btn-scroll');
             gotop.on('click', function() {
-                $('html, body').animate({ scrollTop: 0}, 800, 'easeInOutExpo');
+                $('html, body').animate({ scrollTop: 0}, 800);
                 return false;
             });
         };
@@ -453,7 +434,6 @@
         showSuggestions();
         showAllcat();
         goTop();//置顶
-        popup();//首页弹出框
         removePreloader();//隐藏加载状态
     });
 
