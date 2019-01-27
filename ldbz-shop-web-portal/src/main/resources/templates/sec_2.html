@@ -30,22 +30,22 @@
 								<div class="imagebox">
 									 <ul class="box-image owl-carousel-1">
 										<li>
-											<a href="#" title="">
+											<a href="javascript:;" title="">
 												<img src="${nginxImage}${item.IMAGE}" alt="">
 											</a>
 										</li>
 										<li>
-											<a href="#" title="">
+											<a href="javascript:;" title="">
 												<img src="${nginxImage}${item.IMAGE}" alt="">
 											</a>
 										</li>
 									</ul><!-- /.box-image -->
 									<div class="box-content">
 										<div class="cat-name">
-											<a href="#" title="">${item.CATEGORY_NAME}</a>
+											<a href="javascript:;" title="">${item.CATEGORY_NAME}</a>
 										</div>
 										<div class="product-name">
-											<a href="#" title="">${item.TITLE}</a>
+											<a href="javascript:;" title="">${item.TITLE}</a>
 										</div>
 										<div class="price">
 											<span class="sale">￥${item.PRICE,numberFormat}</span>
@@ -57,15 +57,15 @@
 											<a name="a_add_cart" href="javascript:;" title="加入购物车"
 												item_code="${item.CODE}" item_image="${nginxImage}${item.IMAGE}"
 												item_price="${item.PRICE}" item_title="${item.TITLE}">
-												<img src="images/icons/add-cart.png" alt="">加入购物车
+												<img src="${request.contextPath}/images/icons/add-cart.png" alt="">加入购物车
 											</a>
 										</div>
 										<div class="compare-wishlist">
-											<a href="#" class="compare" title="">
-												<img src="images/icons/compare.png" alt="">比较
+											<a href="javascript:;" class="compare" title="">
+												<img src="${request.contextPath}/images/icons/compare.png" alt="">比较
 											</a>
-											<a href="#" class="wishlist" title="">
-												<img src="images/icons/wishlist.png" alt="">收藏
+											<a href="javascript:;" class="wishlist" title="">
+												<img src="${request.contextPath}/images/icons/wishlist.png" alt="">收藏
 											</a>
 										</div>
 									</div><!-- /.box-bottom -->

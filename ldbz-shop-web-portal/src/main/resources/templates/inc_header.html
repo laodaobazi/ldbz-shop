@@ -5,30 +5,30 @@
 						<div class="col-md-4">
 							<ul class="flat-support">
 								<li>
-									<a href="#" title="">老刀把子欢迎你！</a>
+									<a href="javascript:;" title="">老刀把子欢迎你！</a>
 								</li>
 								<li>
-									<a href="#" title="">免费注册</a>
+									<a href="javascript:;" title="">免费注册</a>
 								</li>
 								<li>
-									<a href="#" title="">会员登录</a>
+									<a href="javascript:;" title="">会员登录</a>
 								</li>
 							</ul><!-- /.flat-support -->
 						</div><!-- /.col-md-4 -->
 						<div class="col-md-4">
 							<ul class="flat-infomation">
 								<li class="phone">
-									联系客服: <a href="#" title="">(888) 1234 56789</a>
+									联系客服: <a href="javascript:;" title="">(888) 1234 56789</a>
 								</li>
 							</ul><!-- /.flat-infomation -->
 						</div><!-- /.col-md-4 -->
 						<div class="col-md-4">
 							<ul class="flat-unstyled">
 								<li class="account">
-									<a href="#" title="">我的淘宝<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+									<a href="javascript:;" title="">我的淘宝<i class="fa fa-angle-down" aria-hidden="true"></i></a>
 									<ul class="unstyled">
 										<li>
-											<a href="#" title="">登录</a>
+											<a href="javascript:;" title="">登录</a>
 										</li>
 										<li>
 											<a href="shop-cart.html" title="">购物车</a>
@@ -42,13 +42,13 @@
 									</ul><!-- /.unstyled -->
 								</li>
 								<li>
-									<a href="#" title="">简体中文<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+									<a href="javascript:;" title="">简体中文<i class="fa fa-angle-down" aria-hidden="true"></i></a>
 									<ul class="unstyled">
 										<li>
-											<a href="#" title="">English</a>
+											<a href="javascript:;" title="">English</a>
 										</li>
 										<li>
-											<a href="#" title="">简体中文</a>
+											<a href="javascript:;" title="">简体中文</a>
 										</li>
 									</ul><!-- /.unstyled -->
 								</li>
@@ -86,7 +86,7 @@
 									<div class="box-search">
 										<input type="text" name="search" placeholder="输入关键字检索商品">
 										<span class="btn-search">
-											<button type="submit" class="waves-effect"><img src="images/icons/search.png" alt=""></button>
+											<button type="submit" class="waves-effect"><img src="${request.contextPath}/images/icons/search.png" alt=""></button>
 										</span>
 									</div><!-- /.box-search -->
 								</form><!-- /.form-search -->
@@ -97,13 +97,13 @@
 								<div class="inner-box">
 									<ul class="menu-compare-wishlist">
 										<li class="compare">
-											<a href="#" title="">
-												<img src="images/icons/compare.png" alt="">
+											<a href="javascript:;" title="">
+												<img src="${request.contextPath}/images/icons/compare.png" alt="">
 											</a>
 										</li>
 										<li class="wishlist">
 											<a href="wishlist.html" title="">
-												<img src="images/icons/wishlist.png" alt="">
+												<img src="${request.contextPath}/images/icons/wishlist.png" alt="">
 											</a>
 										</li>
 									</ul><!-- /.menu-compare-wishlist -->
@@ -111,7 +111,7 @@
 								<div name="div_show_cart" class="inner-box">
 									<a href="javascript:;" title="购物车">
 										<div class="icon-cart">
-											<img src="images/icons/cart.png" alt="">
+											<img src="${request.contextPath}/images/icons/cart.png" alt="">
 											<span id="span_cart_itemcount" style="display:none;"></span>
 										</div>
 									</a>
@@ -142,9 +142,9 @@
 								<!-- 1级菜单 -->
 								<ldbz:category_tag level="1" fid="1" ;category>
 									<li>
-										<a href="#" title="" class="dropdown">
+										<a href="javascript:;" title="" class="dropdown">
 											<span class="menu-img">
-												<img src="images/icons/menu/01.png" alt="">
+												<img src="${request.contextPath}/images/icons/menu/01.png" alt="">
 											</span>
 											<span class="menu-title">${category.categoryName}</span>
 										</a>
@@ -156,11 +156,11 @@
 												<ul>
 													<!-- 3级菜单 -->
 													<ldbz:category_tag level="3" fid="${category2.id}" ;category3>
-														<li><a href="#" title="">${category3.categoryName}</a></li>
+														<li><a href="javascript:;" title="">${category3.categoryName}</a></li>
 													</ldbz:category_tag>
 												</ul>
 												<!-- <div class="show">
-													<a href="#" title="">更多</a>
+													<a href="javascript:;" title="">更多</a>
 												</div> -->
 											</div>
 											</ldbz:category_tag>
@@ -177,7 +177,7 @@
 										<!-- 1级菜单 -->
 										<ldbz:category_tag level="1"  fid="1" ;category>
 										<li class="has-mega-menu">
-											<a href="#" title="">${category.categoryName}</a>
+											<a href="javascript:;" title="">${category.categoryName}</a>
 											<div class="submenu">
 												<div class="row">
 														<!-- 2级菜单 -->
@@ -187,11 +187,11 @@
 																<ul class="submenu-child">
 																	<!-- 3级菜单 -->
 																	<ldbz:category_tag level="3" fid="${category2.id}" ;category3>
-																		<li><a href="#" title="">${category3.categoryName}</a></li>
+																		<li><a href="javascript:;" title="">${category3.categoryName}</a></li>
 																	</ldbz:category_tag>
 																</ul>
 																<!-- <div class="show">
-																	<a href="#" title="">更多</a>
+																	<a href="javascript:;" title="">更多</a>
 																</div> -->
 															</div>
 														</ldbz:category_tag>
