@@ -27,9 +27,12 @@ public class IndexController {
     @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
-    //首页广告图片的URL路径
+    //图片的URL路径
     @Value("${redisKey.nginxImage.url.key}")
     private String INDEX_NGINX_IMAGE_URL;
+    //商品的URL路径
+    @Value("${redisKey.item.url.key}")
+    private String NGINX_ITEM_URL;
 
     /**
      * 监听配置项是否有修改
@@ -43,6 +46,8 @@ public class IndexController {
 			switch(key) {
 				case "redisKey.nginxImage.url.key" : 
 					INDEX_NGINX_IMAGE_URL = change.getNewValue();
+				case "redisKey.item.url.key" : 
+					NGINX_ITEM_URL = change.getNewValue();
 			}
 		}
 	}
@@ -50,7 +55,7 @@ public class IndexController {
 	@RequestMapping("/index")
     public String index(Model model) {
     	
-    	//获取首页轮播广告
+    	model.addAttribute("itemUrl", NGINX_ITEM_URL);
     	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
     	
     	return "index";

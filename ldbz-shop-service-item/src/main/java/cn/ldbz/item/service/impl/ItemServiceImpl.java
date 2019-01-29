@@ -189,5 +189,38 @@ public class ItemServiceImpl implements ItemService {
 		}
 		return LdbzResult.ok(item);
 	}
+
+	@Override
+	public String getItemImageByRedis(Object itemCode , Object type) {
+		String key = ITEM_INFO_PROFIX + itemCode + "-" + type + ITEM_INFO_BASE_SUFFIX;
+		try {
+			String itemImage = jedisClient.get(key);
+			if (StringUtils.isNotEmpty(itemImage)) {
+				logger.info("Redis 查询 商品图片:" + key);
+				return itemImage ;
+			} else {
+				logger.error("Redis 查询不到图片:" + key);
+			}
+		} catch (Exception e) {
+			logger.error("商品信息 获取缓存报错",e);
+		}
+		logger.info("根据商品code"+key+"查询商品图片！");
+
+		String images = mapper.getItemImageByType(itemCode , type);
+		
+		try {
+			jedisClient.set(key, images);
+			jedisClient.expire(key, REDIS_EXPIRE_TIME);
+			logger.info("Redis 缓存商品图片信息 key:" + key);
+		} catch (Exception e) {
+			logger.error("缓存错误商品图片code:" + key, e);
+		}
+		return images ;
+	}
+	
+	@Override
+	public String getItemImage(Object itemCode , Object type) {
+		return mapper.getItemImageByType(itemCode , type);
+	}
 	
 }

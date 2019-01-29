@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzItemCommentMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzItemComment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    
+    <result column="item_code" property="itemCode" jdbcType="BIGINT" />
+    <result column="star" property="star" jdbcType="INTEGER" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id , created , creator , creator_name, item_code, star, comment
+  </sql>
+  
+  <select id="selectByEntity" resultMap="BaseResultMap"  parameterType="cn.ldbz.pojo.LdbzItemComment">
+    select
+    <include refid="Base_Column_List" />
+    from ldbz_item_comment
+    <where>
+      <if test="entity.status != null and entity.status != '' " >
+        and status = #{entity.status ,jdbcType=INTEGER}
+      </if>
+      <if test="entity.itemCode != null and entity.itemCode != '' " >
+        and item_code = #{entity.itemCode ,jdbcType=BIGINT}
+      </if>
+    </where>
+    order by created desc 
+    limit #{start} , #{limit}
+  </select>
+  
+  <select id="countByEntity" parameterType="cn.ldbz.pojo.LdbzItemComment" resultType="java.lang.Long" >
+    select count(*) from ldbz_item_comment
+    <where>
+      <if test="status != null and status != '' " >
+        and status = #{status ,jdbcType=INTEGER}
+      </if>
+      <if test="itemCode != null and itemCode!='' " >
+        and item_code = #{itemCode ,jdbcType=BIGINT}
+      </if>
+    </where>
+  </select>
+  
+</mapper>

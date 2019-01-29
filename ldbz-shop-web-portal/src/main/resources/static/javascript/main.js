@@ -370,7 +370,7 @@
     			arr = $.parseJSON(_cart);
     			var item_count = 0 , item_price = 0 ;
     			$(arr).each(function(i , o){
-    				item_count += o.count ;
+    				item_count += (o.count*1) ;
     				item_price += (o.count * o.item_price);
     			});
     			$("#span_cart_itemcount").text(item_count).show();
@@ -416,7 +416,7 @@
         		if(arr.length>0){
         			var item_count = 0 , item_price = 0 ;
         			$(arr).each(function(i , o){
-        				item_count += o.count ;
+        				item_count += (o.count*1) ;
         				item_price += (o.item_price*o.count) ;
         			});
         			$("#span_cart_itemcount").text(item_count).show();
@@ -434,46 +434,6 @@
                 });
             });
             
-            function showCartItems(){
-            	var _cart = getCookie("_cart");
-    			_cart = Base64.decode(_cart);
-    			var arr = $.parseJSON(_cart);
-    			
-            	$("#ul_items").empty();
-            	var item_count = 0 , item_price = 0 ;
-    			$(arr).each(function(i , o){
-    				var item = '<li><div class="img-product"><img src="' + o.item_image + '" alt="" style="width:64px;height:64px;"></div>' +
-									'<div class="info-product">' +
-									'	<div class="name" style="width: 95%;">' + o.item_title + '</div>' +
-									'	<div class="price"><span>' + o.count + ' x</span><span>' + o.item_price + '</span></div>' +
-									'</div>' +
-									'<div class="clearfix"></div><span item_code="' + o.item_code + '" class="delete" name="span_delete_item">x</span></li>';
-    				$("#ul_items").append(item);
-    				item_count = item_count + o.count ;
-    				item_price += (o.item_price*o.count) ;
-    			});
-    			$("#span_cart_itemcount").text(item_count).show();
-    			$("#span_cart_itemprice").text("￥"+item_price).show();
-    			
-    			
-    			//将商品从购物车删除
-    			$("#ul_items").find('span[name="span_delete_item"]').click(function(){
-    				var item_code = $(this).attr('item_code');
-    				$(arr).each(function(i , o){
-    					if(o.item_code == item_code){
-    						if(o.count == 1){
-    							arr.splice(i , 1);
-    						}else{
-    							o.count = o.count-1;
-    						}
-    					}
-    				});
-        			setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
-        			showCartItems();
-    			});
-    			
-            }
-            
             //显示购物车
             $("div[name='div_show_cart']").hover(function(){
         		var _cart = getCookie("_cart");
@@ -486,6 +446,49 @@
             });
             
         };
+        
+
+        //显示购物车中商品条目
+        var showCartItems = function(){
+        	var _cart = getCookie("_cart");
+			_cart = Base64.decode(_cart);
+			var arr = $.parseJSON(_cart);
+			
+        	$("#ul_items").empty();
+        	var item_count = 0 , item_price = 0 ;
+			$(arr).each(function(i , o){
+				var item = '<li><div class="img-product"><img src="' + nginxImage + o.item_image + '" alt="" style="width:64px;height:64px;"></div>' +
+								'<div class="info-product">' +
+								'	<div class="name" style="width: 95%;">' + o.item_title + '</div>' +
+								'	<div class="price"><span>' + o.count + ' x</span><span>' + o.item_price + '</span></div>' +
+								'</div>' +
+								'<div class="clearfix"></div><span item_code="' + o.item_code + '" class="delete" name="span_delete_item">x</span></li>';
+				$("#ul_items").append(item);
+				item_count = item_count*1 + o.count ;
+				item_price += (o.item_price*o.count) ;
+			});
+			$("#span_cart_itemcount").text(item_count).show();
+			$("#span_cart_itemprice").text("￥"+item_price).show();
+			
+			
+			//将商品从购物车删除
+			$("#ul_items").find('span[name="span_delete_item"]').click(function(){
+				var item_code = $(this).attr('item_code');
+				$(arr).each(function(i , o){
+					if(o.item_code == item_code){
+						if(o.count == 1){
+							arr.splice(i , 1);
+						}else{
+							o.count = o.count-1;
+						}
+					}
+				});
+    			setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
+    			showCartItems();
+			});
+			
+        }
+        
 
         //首页弹出框
         var popup = function() {

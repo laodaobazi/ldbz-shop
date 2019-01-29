@@ -25,12 +25,15 @@
     <result column="weight" property="weight" jdbcType="INTEGER" />
     <result column="colour" property="colour" jdbcType="VARCHAR" />
     <result column="size" property="size" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="detail_image" property="detailImage" jdbcType="VARCHAR" />
+    <result column="preview_image" property="previewImage" jdbcType="VARCHAR" />
     <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id , sort_order, created , creator , creator_name, updated , updator, updator_name , title , 
-    code , sell_point , old_price , price , num , barcode , image , cid , status , weight , colour , size
+    id , sort_order, created , creator , creator_name, updated , updator, updator_name , title , code , sell_point , 
+    old_price , price , num , barcode , image , cid , status , weight , colour , size , detail , detail_image , preview_image
   </sql>
   
   <select id="selectByEntity" resultMap="BaseResultMap"  parameterType="cn.ldbz.pojo.LdbzItem">
@@ -100,14 +103,15 @@
   
   <insert id="insertByEntity" parameterType="cn.ldbz.pojo.LdbzItem" >
     insert into ldbz_item (
-	    id , sort_order, created , creator , creator_name, code , title , sell_point , 
-    	old_price , price , num , barcode , image , cid , status , weight , colour , size
+	    id , sort_order, created , creator , creator_name, code , title , sell_point , old_price , 
+    	price , num , barcode , image , cid , status , weight , colour , size , detail , detail_image , preview_image
     )
     values (#{id,jdbcType=BIGINT},#{sortOrder,jdbcType=TIMESTAMP}, #{created,jdbcType=TIMESTAMP}, 
     	#{creator,jdbcType=VARCHAR} , #{creatorName,jdbcType=VARCHAR},#{code,jdbcType=BIGINT},
     	#{title,jdbcType=VARCHAR},#{sellPoint,jdbcType=VARCHAR},#{oldPrice,jdbcType=BIGINT},#{price,jdbcType=BIGINT},
         #{num,jdbcType=INTEGER},#{barcode,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR},#{cid,jdbcType=BIGINT},
-        #{status,jdbcType=INTEGER},#{weight,jdbcType=INTEGER}, #{colour,jdbcType=VARCHAR} , #{size,jdbcType=VARCHAR}
+        #{status,jdbcType=INTEGER},#{weight,jdbcType=INTEGER}, #{colour,jdbcType=VARCHAR} , #{size,jdbcType=VARCHAR}, 
+        #{detail,jdbcType=VARCHAR} , #{detailImage,jdbcType=VARCHAR} , #{previewImage,jdbcType=VARCHAR}
       )
   </insert>
   
@@ -219,7 +223,10 @@
       status = #{status,jdbcType=INTEGER},
       weight = #{weight,jdbcType=INTEGER},
       colour = #{colour,jdbcType=VARCHAR} ,
-      size = #{size,jdbcType=VARCHAR} 
+      size = #{size,jdbcType=VARCHAR} ,
+      detail = #{detail,jdbcType=VARCHAR}, 
+      detail_image = #{detailImage,jdbcType=VARCHAR} ,
+      preview_image = #{previewImage,jdbcType=VARCHAR}
     where 
       id = #{id,jdbcType=BIGINT}
   </update>
@@ -230,6 +237,19 @@
     join ldbz_item_sheet c on c.id = b.sheet_id
     join ldbz_category d on a.cid = d.id
     where c.sheet_key = #{key}
+    and a.status = 1
+  </select>
+  
+  <select id="getItemImageByType" parameterType="string"  resultType="string" >
+    select
+	    <if test="type == 1" >
+	    	a.preview_image
+	    </if>
+	    <if test="type == 2" >
+	    	a.detail_image
+	    </if>
+    from ldbz_item a
+    where a.code = #{code,jdbcType=VARCHAR}
     and a.status = 1
   </select>
   

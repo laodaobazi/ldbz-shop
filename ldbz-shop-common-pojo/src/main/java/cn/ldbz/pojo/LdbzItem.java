@@ -51,6 +51,12 @@ public class LdbzItem  implements Serializable {
     private String colour ;
     
     private String size ;
+    
+    private String detail ;
+    
+    private String detailImage ;
+    
+    private String previewImage ;
 
     private String categoryName ;
 }

@@ -30,12 +30,12 @@
 								<div class="imagebox">
 									 <ul class="box-image owl-carousel-1">
 										<li>
-											<a href="javascript:;" title="">
+											<a href="${itemUrl}/item/${item.CODE}" target="_blank">
 												<img src="${nginxImage}${item.IMAGE}" alt="">
 											</a>
 										</li>
 										<li>
-											<a href="javascript:;" title="">
+											<a href="${itemUrl}/item/${item.CODE}" target="_blank">
 												<img src="${nginxImage}${item.IMAGE}" alt="">
 											</a>
 										</li>
@@ -45,7 +45,7 @@
 											<a href="javascript:;" title="">${item.CATEGORY_NAME}</a>
 										</div>
 										<div class="product-name">
-											<a href="javascript:;" title="">${item.TITLE}</a>
+											<a href="${itemUrl}/item/${item.CODE}" target="_blank">${item.TITLE}</a>
 										</div>
 										<div class="price">
 											<span class="sale">￥${item.PRICE,numberFormat}</span>
@@ -55,7 +55,7 @@
 									<div class="box-bottom">
 										<div class="btn-add-cart">
 											<a name="a_add_cart" href="javascript:;" title="加入购物车"
-												item_code="${item.CODE}" item_image="${nginxImage}${item.IMAGE}"
+												item_code="${item.CODE}" item_image="${item.IMAGE}"
 												item_price="${item.PRICE}" item_title="${item.TITLE}">
 												<img src="${request.contextPath}/images/icons/add-cart.png" alt="">加入购物车
 											</a>

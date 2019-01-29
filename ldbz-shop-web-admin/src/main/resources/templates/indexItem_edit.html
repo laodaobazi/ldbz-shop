@@ -46,12 +46,6 @@
 			      </div>
 			  </div>
 			  <div class="layui-form-item">
-			      <label class="layui-form-label">尺寸/规格</label>
-			      <div class="layui-input-block">
-			        <input name="size" autocomplete="off" class="layui-input" type="text" value="${item.size}">
-			      </div>
-			  </div>
-			  <div class="layui-form-item">
 			    <label class="layui-form-label">商品图片</label>
 				<div class="layui-upload">
 				  <button type="button" class="layui-btn" id="btn_upload_image">上传</button>
@@ -85,9 +79,9 @@
 			      </div>
 			  </div>
 			  <div class="layui-form-item">
-			      <label class="layui-form-label">商品买点</label>
+			      <label class="layui-form-label">尺寸/规格</label>
 			      <div class="layui-input-block">
-			        <input name="sellPoint" autocomplete="off" class="layui-input" type="text" value="${item.sellPoint}">
+			        <input name="size" autocomplete="off" class="layui-input" type="text" value="${item.size}">
 			      </div>
 			  </div>
 			  <div class="layui-form-item">
@@ -119,6 +113,53 @@
 			  <input type="hidden" name="id" value="${item.id}">
 	    
 	    </div>
+	    
+	    
+	    <div class="layui-col-xs12">
+	    	<div class="layui-form-item">
+			      <label class="layui-form-label">商品描述</label>
+			      <div class="layui-input-block">
+			        <textarea name="detail" lay-verify="required" autocomplete="off" maxlength="300" class="layui-textarea" placeholder="最多300字">${item.detail!}</textarea>
+			      </div>
+			  </div>
+	    </div>
+	    
+	    <div class="layui-col-xs6">
+			  <div class="layui-form-item layui-col-xs6">
+			    <label class="layui-form-label">商品预览</label>
+				<div class="layui-upload">
+				  <button type="button" class="layui-btn" id="btn_upload_images">上传</button>
+				  <div class="layui-upload-list">
+				    <div id="item_images_preview">
+				    	<ldbz:item_image_tag type="1" code="${item.code}" redis="false";image>
+				    		<img class="layui-upload-img" src="${nginxImage}${image!}" onclick="removeImage('images' , '${image!}' , this)" alt="" style="width:100%;">
+				    	</ldbz:item_image_tag>
+				    </div>
+				    <p id="uploadTextImages"></p>
+				    <input type="hidden" name="previewImage" id="images" value="${item.previewImage!}">
+				  </div>
+				</div>   
+			  </div>
+	    </div>
+	    
+	    <div class="layui-col-xs6">
+			  <div class="layui-form-item layui-col-xs6">
+			    <label class="layui-form-label">商品图解</label>
+				<div class="layui-upload">
+				  <button type="button" class="layui-btn" id="btn_upload_detail_image">上传</button>
+				  <div class="layui-upload-list">
+				    <div id="item_detail_image_preview">
+				    	<ldbz:item_image_tag type="2" code="${item.code}" redis="false";image>
+				    		<img class="layui-upload-img" src="${nginxImage}${image!}" onclick="removeImage('detailImage' , '${image!}' , this)" alt="" style="width:100%;">
+				    	</ldbz:item_image_tag>
+				    </div>
+				    <p id="uploadTextDetailImage"></p>
+				    <input type="hidden" name="detailImage" id="detailImage"  value="${item.detailImage!}">
+				  </div>
+				</div>   
+			  </div>
+	    </div>
+	    
 	  </div>
 
   
@@ -128,12 +169,14 @@
       <button type="reset" class="layui-btn layui-btn-primary">重置</button>
     </div>
   </div>
+  
 </form>
  
 <script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
 <script type="text/javascript" src="${request.contextPath}/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="${request.contextPath}/bootstrap.autocomplete.js"></script>
-<script>
+<script type="text/javascript">
+var nginxImage = "${nginxImage}" ;
 layui.use(['form', 'layedit' , 'upload'], function(){
   var form = layui.form
   ,layer = layui.layer
@@ -165,6 +208,10 @@ layui.use(['form', 'layedit' , 'upload'], function(){
   initUpload(upload , "btn_upload_image" , "item_image_preview" , "item_image" , "image" , "uploadTextImage");
   //商品图片上传
   initUpload(upload , "btn_upload_barcode" , "item_barcode_preview" , "item_barcode" , "barcode" , "uploadTextBarcode");
+  //商品图解上传
+  initUpload(upload , "btn_upload_detail_image" , "item_detail_image_preview" , "item_image_detail" , "detailImage" , "uploadTextDetailImage" , true);
+  //商品预览上传
+  initUpload(upload , "btn_upload_images" , "item_images_preview" , "item_image_detail" , "images" , "uploadTextImages" , true);
   
   $.post("${request.contextPath}/admin/category/getCategoryList" , {
 		id : $("#cid").val()
@@ -176,20 +223,26 @@ layui.use(['form', 'layedit' , 'upload'], function(){
   
 });
 
+function removeImage(id , img , _this){
+	layer.confirm('确认删除吗？', {
+        btn : [ '确定', '取消' ]
+    }, function(index) {
+        layer.close(index);
+		var val = $("#"+id).val();
+		val = val.replace(img,'');
+		$("#"+id).val(val);
+		$(_this).remove();
+    }); 
+}
+
 //初始化上传
-function initUpload(upload , btn , preview , module , input , reload_btn){
+function initUpload(upload , btn , preview , module , input , reload_btn , multiple){
 	//普通图片上传
 	  var uploadInst = upload.render({
 	    elem: '#' + btn
 	    ,url: '${request.contextPath}/admin/upload'
 	    ,accept: 'file' //普通文件
 	    ,exts: 'jpg|png|gif'
-	    ,before: function(obj){
-	      //预读本地文件示例，不支持ie8
-	      obj.preview(function(index, file, result){
-	        $('#' + preview).attr('src', result); //图片链接（base64）
-	      });
-	    }
 	    ,data :{
 	    	module: module
 	    }
@@ -198,8 +251,16 @@ function initUpload(upload , btn , preview , module , input , reload_btn){
 		      //如果上传失败
 	        return layer.msg('上传失败');
 	      }else{
-		      //上传成功
-		      $("#" + input).val(res.data);
+	    	  if(multiple){
+	    		  //如果多文件上传
+	    		  var val = $("#" + input).val();
+	    		  $("#" + input).val(res.data + "," + val);
+	    		  $("#"+preview).append('<img class="layui-upload-img" style="width:100%;" src="' + nginxImage + res.data + '" onclick="removeImage(\'' + input + '\' , \'' + res.data + '\' , this)">');
+	    	  }else{
+			      //上传成功
+			      $("#" + input).val(res.data);
+			      $('#' + preview).attr('src', nginxImage + res.data);
+	    	  }
 	      }
 	    }
 	    ,error: function(){

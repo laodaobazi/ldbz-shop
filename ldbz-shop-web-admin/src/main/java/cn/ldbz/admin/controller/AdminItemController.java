@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.ctrip.framework.apollo.model.ConfigChange;
+import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 
 import cn.ldbz.admin.service.AdminItemService;
 import cn.ldbz.constant.Const;
@@ -28,20 +32,41 @@ public class AdminItemController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminItemController.class);
 
+    //图片的URL路径
+    @Value("${redisKey.nginxImage.url.key}")
+    private String INDEX_NGINX_IMAGE_URL;
+
+    /**
+     * 监听配置项是否有修改
+     */
+    @ApolloConfigChangeListener
+	public void onChange(ConfigChangeEvent changeEvent) {
+		for (String key : changeEvent.changedKeys()) {
+			ConfigChange change = changeEvent.getChange(key);
+			logger.debug("Found change - key: {}, oldValue: {}, newValue: {}, changeType: {}",
+					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType());
+			switch(key) {
+				case "redisKey.nginxImage.url.key" : 
+					INDEX_NGINX_IMAGE_URL = change.getNewValue();
+			}
+		}
+	}
+
     @Reference(version = Const.LDBZ_SHOP_ADMIN_VERSION, timeout=30000)
     private AdminItemService adminItemService;
     
     @ApiOperation(value="产品页面跳转", notes="跳转到产品页面")
     @RequestMapping(value="/indexItem" , method = RequestMethod.GET)
-    public String adminAuthUser() {
+    public String indexItem() {
     	logger.debug("go to indexItem");
     	return "indexItem";
     }
     
     @ApiOperation(value="新增页面跳转", notes="跳转到产品新增页面")
     @RequestMapping(value="/addItem" , method = RequestMethod.GET)
-    public String addItem() {
+    public String addItem(Model model) {
     	logger.debug("go to indexItem_add ");
+    	model.addAttribute("nginxImage" , INDEX_NGINX_IMAGE_URL);
     	return "indexItem_add";
     }
     
@@ -52,6 +77,7 @@ public class AdminItemController {
     	logger.debug("go to indexItem_edit id : {}" , id);
     	LdbzResult ret = adminItemService.selectByKey(id);
     	model.addAttribute("item" , ret.getData());
+    	model.addAttribute("nginxImage" , INDEX_NGINX_IMAGE_URL);
     	return "indexItem_edit";
     }
     

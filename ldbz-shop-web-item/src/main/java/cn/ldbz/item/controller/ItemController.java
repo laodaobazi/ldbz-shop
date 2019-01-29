@@ -57,6 +57,7 @@ public class ItemController {
     public String  getItemByItemId(@PathVariable("code") Long itemCode, Model model) {
     	
     	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
+    	model.addAttribute("itemCode", itemCode);
     	
     	//获取商品
     	LdbzResult ret2 = itemService.selectByCode(itemCode);

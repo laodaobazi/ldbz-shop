@@ -27,5 +27,14 @@ public interface ItemService {
 	LdbzResult insertByEntity(LdbzItem entity);
 
 	LdbzResult updateByKey(LdbzItem entity);
+	
+	/**
+	 * 获取商品图片
+	 * @param itemCode
+	 * @param type 1:商品预览图 ; 2:商品描述详解图
+	 * @return
+	 */
+	String getItemImageByRedis(Object itemCode , Object type);
+	String getItemImage(Object itemCode , Object type);
 
 }

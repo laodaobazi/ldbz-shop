@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/style.css">
 	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/responsive.css">
 	<link rel="shortcut icon" href="${request.contextPath}/favicon.ico" />
+	<script type="text/javascript" src="${request.contextPath}/javascript/jquery.min.js"></script>
 </head>
 <body class="header_sticky">
 	<div class="boxed">
@@ -47,14 +48,20 @@
 	</div><!-- /.boxed -->
 
 	<!-- Javascript -->
-	<script type="text/javascript" src="${request.contextPath}/javascript/jquery.min.js"></script>
 	<script type="text/javascript" src="${request.contextPath}/javascript/tether.min.js"></script>
 	<script type="text/javascript" src="${request.contextPath}/javascript/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${request.contextPath}/javascript/jquery.flexslider-min.js"></script>
 	<script type="text/javascript" src="${request.contextPath}/javascript/owl.carousel.js"></script>
 	<script type="text/javascript" src="${request.contextPath}/javascript/base64.js"></script>
 
-		<script type="text/javascript" src="${request.contextPath}/javascript/main.js"></script>
+	<script type="text/javascript">
+		var itemCode = "${itemCode}" ;
+		var nginxImage = "${nginxImage}" ;
+	</script>
+	<script type="text/javascript" src="${request.contextPath}/javascript/main.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/toast.css" />
+	<script type="text/javascript" src="${request.contextPath}/javascript/toast.js"></script>
 
 	</body>	
 </html>

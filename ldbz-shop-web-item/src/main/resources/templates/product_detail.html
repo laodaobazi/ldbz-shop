@@ -4,23 +4,11 @@
 			<div class="col-md-6">
 				<div class="flexslider">
 					<ul class="slides">
-					    <li data-thumb="${request.contextPath}/images/product/flexslider/thumb/2.jpg">
-					      <img src="${request.contextPath}/images/product/flexslider/l01.jpg" alt="image slider" />
-					      <span>NEW</span>
-					    </li>
-					    <li data-thumb="${request.contextPath}/images/product/flexslider/thumb/3.jpg">
-					      <img src="${request.contextPath}/images/product/flexslider/l01.jpg" alt="image slider" />
-					    </li>
-					    <li data-thumb="${request.contextPath}/images/product/flexslider/thumb/4.jpg">
-					      <img src="${request.contextPath}/images/product/flexslider/l01.jpg" alt="image slider" />
-					      <span>NEW</span>
-					    </li>
-					    <li data-thumb="${request.contextPath}/images/product/flexslider/thumb/5.jpg">
-					      <img src="${request.contextPath}/images/product/flexslider/l01.jpg" alt="image slider" />
-					    </li>
-					    <li data-thumb="${request.contextPath}/images/product/flexslider/thumb/6.jpg">
-					      <img src="${request.contextPath}/images/product/flexslider/l01.jpg" alt="image slider" />
-					    </li>
+						<ldbz:item_image_tag type="1" code="${item.code}" ;image>
+						    <li data-thumb="${nginxImage}${image!}">
+						      <img src="${nginxImage}${image!}" alt="" />
+						    </li>
+				    	</ldbz:item_image_tag>
 					</ul><!-- /.slides -->
 				</div><!-- /.flexslider -->
 			</div><!-- /.col-md-6 -->
@@ -28,9 +16,6 @@
 				<div class="product-detail">
 					<div class="header-detail">
 						<h4 class="name">${item.title}</h4>
-						<div class="category">
-							Smart Watches
-						</div>
 					</div><!-- /.header-detail -->
 					<div class="content-detail">
 						<div class="price">
@@ -42,31 +27,34 @@
 							</div>
 						</div>
 						<div class="info-text">
-							Vivamus in tempor eros. Phasellus rhoncus in nunc sit amet mattis. Integer in ipsum vestibulum, molestie arcu ac, efficitur tellus. Phasellus id vulputate erat.
-						</div>
-						<div class="product-id">
-							SKU: <span class="id">FW511948218</span>
+							${item.detail}
 						</div>
 					</div><!-- /.content-detail -->
 					<div class="footer-detail">
 						<div class="quanlity-box">
-							<div class="colors">
+							<!-- <div class="colors">
 								<select name="color">
 									<option value="">选择颜色</option>
 									<option value="">Black</option>
 									<option value="">Red</option>
 									<option value="">White</option>
 								</select>
-							</div>
+							</div> -->
 							<div class="quanlity" style="top:18px;">
-								<span class="btn-down"></span>
-								<input type="number" name="number" value="" min="1" max="100" placeholder="数量">
-								<span class="btn-up"></span>
+								<span id="span_down_count" class="btn-down"></span>
+								<input id="input_item_count" type="number" name="number" value="" min="1" max="100" placeholder="数量">
+								<span id="span_up_count" class="btn-up" 
+									item_code="${item.code}" item_image="${item.image}"
+									item_price="${item.price}" item_title="${item.title}"
+								></span>
 							</div>
 						</div><!-- /.quanlity-box -->
 						<div class="box-cart style2">
 							<div class="btn-add-cart">
-								<a href="javascript:;" title=""><img src="${request.contextPath}/images/icons/add-cart.png" alt="">加入购物车</a>
+								<a id="a_add_item" href="javascript:;" title="添加购物车"
+									item_code="${item.code}" item_image="${item.image}"
+									item_price="${item.price}" item_title="${item.title}"
+								><img src="${request.contextPath}/images/icons/add-cart.png" alt="">加入购物车</a>
 							</div>
 							<div class="compare-wishlist">
 								<a href="javascript:;" class="compare" title=""><img src="${request.contextPath}/images/icons/compare.png" alt="">比较</a>

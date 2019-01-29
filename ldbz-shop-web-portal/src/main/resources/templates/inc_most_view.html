@@ -14,7 +14,7 @@
 					<ldbz:sheet_item_tag key="Most_Viewed" ;item>
 						<div class="imagebox style4">
 							<div class="box-image">
-								<a href="javascript:;" title="">
+								<a href="${itemUrl}/item/${item.CODE}" target="_blank">
 									<img src="${nginxImage}${item.IMAGE}" alt="">
 								</a>
 							</div><!-- /.box-image -->
@@ -23,7 +23,7 @@
 									<a href="javascript:;" title="">${item.CATEGORY_NAME}</a>
 								</div>
 								<div class="product-name">
-									<a href="javascript:;" title="">${item.TITLE}</a>
+									<a href="${itemUrl}/item/${item.CODE}" target="_blank">${item.TITLE}</a>
 								</div>
 								<div class="price">
 									<span class="sale">￥${item.PRICE,numberFormat}</span>
