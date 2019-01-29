@@ -1,41 +1,70 @@
 package cn.ldbz.search.controller;
 
-import cn.ldbz.constant.Const;
-import cn.ldbz.pojo.SearchResult;
-import cn.ldbz.search.service.SearchService;
-import com.alibaba.dubbo.config.annotation.Reference;
+import java.io.UnsupportedEncodingException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.UnsupportedEncodingException;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.ctrip.framework.apollo.model.ConfigChange;
+import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 
-/**
- * 搜索 Controller
- *
- */
+import cn.ldbz.constant.Const;
+import cn.ldbz.pojo.SearchResult;
+import cn.ldbz.search.service.SearchService;
+
 
 @Controller
 public class SearchController {
 
+	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
+	
     @Reference(version = Const.LDBZ_SHOP_SEARCH_VERSION)
     private SearchService searchService;
+
+    //图片的URL路径
+    @Value("${nginxImage.url.key}")
+    private String INDEX_NGINX_IMAGE_URL;
+    //商品的URL路径
+    @Value("${item.url.key}")
+    private String NGINX_ITEM_URL;
 
     @Value("${search_result_rows}")
     private Integer SEARCH_RESULT_ROWS;
 
+    /**
+     * 监听配置项是否有修改
+     */
+    @ApolloConfigChangeListener
+	public void onChange(ConfigChangeEvent changeEvent) {
+		for (String key : changeEvent.changedKeys()) {
+			ConfigChange change = changeEvent.getChange(key);
+			logger.debug("Found change - key: {}, oldValue: {}, newValue: {}, changeType: {}",
+					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType());
+			switch(key) {
+				case "nginxImage.url.key" : 
+					INDEX_NGINX_IMAGE_URL = change.getNewValue();
+				case "item.url.key" : 
+					NGINX_ITEM_URL = change.getNewValue();
+				case "search_result_rows" : 
+					SEARCH_RESULT_ROWS = Integer.valueOf(change.getNewValue());
+			}
+		}
+	}
+
     @RequestMapping("/search")
     public String search(@RequestParam("q") String queryString,
-                         @RequestParam(defaultValue = "1") Integer page,
-                         @RequestParam(defaultValue = "0") Integer rows, Model model) throws Exception {
+                         @RequestParam(defaultValue = "1") Integer page, Model model) {
+    	
+    	model.addAttribute("itemUrl", NGINX_ITEM_URL);
+    	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
 
-//        if (rows == 0) {
-//            rows = SEARCH_RESULT_ROWS;
-//        }
-//
 //        if (queryString != null) {
 //
 //            String string = null;
@@ -90,12 +119,4 @@ public class SearchController {
         return "search";
     }
     
-    @RequestMapping("/adguard-ajax-api/api")
-    @ResponseBody
-    public String search223() throws Exception {
-        //http://localhost:8102/adguard-ajax-api/api?type=gm-get-value&unique_name=Adguard%20Assistant&variable_key=settings&sn=fd731a823bcd6a61809b11be5fc8568e964b56bd12048c49cb7e3fe6af2e3860
-        return "[LString;{\"buttonPositionTop\":false,\"buttonPositionLeft\":false,\"largeIcon\":true,\"assistantFirstStart\"\n" +
-                ":false,\"showWarnings\":true,\"scriptVersion\":1}";
-    }
-
 }

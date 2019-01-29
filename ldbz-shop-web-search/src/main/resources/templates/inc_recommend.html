@@ -1,0 +1,40 @@
+<section class="flat-imagebox style4">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="flat-row-title">
+					<h3>商品推荐</h3>
+				</div>
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="owl-carousel-3">
+				
+					<ldbz:sheet_item_tag key="Recommend" ;item>
+						<div class="imagebox style4">
+							<div class="box-image">
+								<a href="${itemUrl}/item/${item.CODE}" target="_blank">
+									<img src="${nginxImage}${item.IMAGE}" alt="">
+								</a>
+							</div><!-- /.box-image -->
+							<div class="box-content">
+								<div class="cat-name">
+									<a href="javascript:;" title="">${item.CATEGORY_NAME}</a>
+								</div>
+								<div class="product-name">
+									<a href="${itemUrl}/item/${item.CODE}" target="_blank" title="${item.TITLE}">${item.TITLE}</a>
+								</div>
+								<div class="price">
+									<span class="sale">￥${item.OLD_PRICE,numberFormat}</span>
+									<span class="regular">￥${item.PRICE,numberFormat}</span>
+								</div>
+							</div><!-- /.box-content -->
+						</div>
+					</ldbz:sheet_item_tag>	
+					
+				</div><!-- /.owl-carousel-3 -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</section><!-- /.flat-imagebox style4 -->
