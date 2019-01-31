@@ -9,7 +9,7 @@
 	* `Maven`构建项目
 	* `Jenkins`作为持续集成
 	* 采用`Dubbo`作为RPC框架
-	* 使用 `Apollo` 配置中心
+	* 使用 `Apollo` 分布式配置中心
 	* 使用`Spring`+`Spring MVC`+`MyBatis`SSM框架
 	* 数据库连接池使用`druid`
 	* 数据存储使用`MySQL`和`Redis`
@@ -61,7 +61,7 @@
 ## project 骨架
 ![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/frame.png)
 
-## 首页页效果图
+## 首页效果图
 ![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/index.png)
 
 ## 商品明细页效果图
