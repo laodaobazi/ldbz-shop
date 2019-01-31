@@ -42,29 +42,16 @@
 	          "text": "首页推荐广告",
 	          "icon": "&#xe621;",
 	          "href": "indexRecommendAd/indexRecommendAd"
+	        },{
+	          "text": "检索页轮播广告",
+	          "icon": "&#xe621;",
+	          "href": "searchSlideAd/searchSlideAd"
+	        },{
+	          "text": "检索页左侧广告",
+	          "icon": "&#xe621;",
+	          "href": "searchLeftAd/searchLeftAd"
 	        }]
 	  }, {
-      "text": "商城内容管理",
-      "icon": "&#xe620;",
-      "subset": [
-        {
-          "text": "首页导航管理",
-          "icon": "&#xe621;",
-          "href": "demo/btn.html"
-        },{
-          "text": "首页板块管理",
-          "icon": "&#xe621;",
-          "href": "demo/btn.html"
-        },{
-          "text": "首页板块内容管理",
-          "icon": "&#xe621;",
-          "href": "demo/btn.html"
-        },{
-          "text": "其他板块内容管理",
-          "icon": "&#xe621;",
-          "href": "demo/btn.html"
-        }]
-    },{
       "text": "订单管理",
       "icon": "&#xe620;",
       "subset": [

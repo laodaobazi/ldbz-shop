@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>检索页添加广告</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+          
+<form class="layui-form" action="return false;">
+  <div class="layui-form-item">
+    <label class="layui-form-label">图片</label>
+	<div class="layui-upload">
+	  <button type="button" class="layui-btn" id="btn_upload">上传</button>
+	  <div class="layui-upload-list">
+	    <img class="layui-upload-img" id="ad_img" alt="">
+	    <p id="uploadText"></p>
+	    <input type="hidden" name="src" id="src">
+	  </div>
+	</div>   
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">链接</label>
+    <div class="layui-input-block">
+      <input name="href" lay-verify="required" autocomplete="off" placeholder="请输入点击后的跳转链接" class="layui-input" type="text">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">提示</label>
+    <div class="layui-input-block">
+      <input name="alt" lay-verify="required" autocomplete="off" placeholder="请输入提示语" autocomplete="off" class="layui-input" type="text">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+      <label class="layui-form-label">排序</label>
+      <div class="layui-input-block">
+        <input name="sortOrder" lay-verify="required|number" autocomplete="off" class="layui-input" type="number">
+      </div>
+  </div>
+  
+  
+  <div class="layui-form-item">
+    <label class="layui-form-label">是否启用</label>
+    <div class="layui-input-block">
+      <input checked="" name="status" lay-skin="switch" lay-text="ON|OFF" type="checkbox">
+    </div>
+  </div>
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+ 
+<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+<script>
+layui.use(['form', 'layedit', 'laydate','upload','jquery'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,upload = layui.upload
+  ,$ = layui.jquery
+  ,laydate = layui.laydate;
+  
+
+  //普通图片上传
+  var uploadInst = upload.render({
+    elem: '#btn_upload'
+    ,url: '${request.contextPath}/admin/upload'
+    ,accept: 'file' //普通文件
+    ,exts: 'jpg|png|gif'
+    ,before: function(obj){
+      //预读本地文件示例，不支持ie8
+      obj.preview(function(index, file, result){
+        $('#ad_img').attr('src', result); //图片链接（base64）
+      });
+    }
+    ,data :{
+    	module: 'ad'
+    }
+    ,done: function(res){
+      //如果上传失败
+      if(res.status!=200){
+        return layer.msg('上传失败');
+      }
+      //上传成功
+      $("#src").val(res.data);
+    }
+    ,error: function(){
+      //演示失败状态，并实现重传
+      var demoText = $('#uploadText');
+      demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+      demoText.find('.demo-reload').on('click', function(){
+        uploadInst.upload();
+      });
+    }
+  });
+  
+  //监听提交
+  form.on('submit(demo1)', function(data){
+	if(data.field.status=='on'){
+		data.field.status=1 ;
+	}else{
+		data.field.status=0 ;
+	}
+    $.post("${request.contextPath}/admin/searchSlideAd/insertByEntity" , data.field , function(ret){
+    	if(ret.status==200){
+			  var index = parent.layer.getFrameIndex(window.name);
+			  parent.layer.close(index);
+			  parent.layer.msg("添加成功");
+    	}else{
+    		layer.msg(ret.msg);
+    	}
+    });
+    return false;
+  });
+  
+});
+</script>
+</body>
+</html>

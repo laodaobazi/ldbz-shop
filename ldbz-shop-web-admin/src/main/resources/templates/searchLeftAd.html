@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>检索页左侧广告-列表</title>
+<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+</head>
+<body>
+
+	<form class="layui-form layui-row" action="return false;">
+	
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	    <label class="layui-form-label">创建时间</label>
+	    <div class="layui-input-block">
+	      <input class="layui-input" id="query_create_date" placeholder="创建时间" type="text">
+	    </div>
+	  </div>
+	  
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	    <label class="layui-form-label">状态</label>
+	    <div class="layui-input-block">
+	      <select id="query_status">
+	        <option value="">请选择</option>
+	        <option value="1">启用</option>
+	        <option value="0">禁用</option>
+	      </select>
+	    </div>
+	  </div>
+	  
+	  <div class="layui-col-xs4" style="margin-top: 20px;">
+	  	<button id="btn_reload" class="layui-btn layui-btn-radius" style="margin-left:65px;" type="button">查询</button>
+	  </div>
+	  
+	</form>
+	
+	<table id="demo" lay-filter="test"></table>
+	
+	<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-warm layui-btn-sm" lay-event="add">新建</button>
+    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">修改</button>
+    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
+  </div>
+	</script>
+	 
+	<script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+
+	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/static/js/ldbz_util.js"></script>
+	<script>
+    layui.use(['table','jquery','laydate'], function(){
+      var table = layui.table , $ = jQuery = layui.$ , laydate = layui.laydate;
+      
+      //日期
+      laydate.render({
+        elem: '#query_create_date'
+      });
+
+      table.init('demo', {
+        height: 'full-10'
+        ,limit: 10
+      }); 
+    
+      //第一个实例
+      var tableIns = table.render({
+        elem: '#demo'
+        ,toolbar: '#toolbarDemo'
+        ,url: '/admin/searchLeftAd/getSearchLeftAdPage' //数据接口
+        ,method: 'post'
+        ,limit: 10
+        ,contentType: 'application/x-www-form-urlencoded'
+//         ,where: {
+//         	id : 1
+//         }
+        ,parseData: function(res){ //res 即为原始返回的数据
+    	    return {
+    	      "code": res.status,
+    	      "msg": res.msg,
+    	      "count": res.data.total,
+    	      "data": res.data.list
+    	    };
+    	 }
+        ,page: true //开启分页
+        ,cols: [[ //表头
+          {type: 'checkbox', fixed: 'left'}
+          ,{field: 'src', title: '图片', width: 80 , templet: function(d){
+        	  return '<img src="${request.contextPath}' + d.src + '" />';
+          }}
+          ,{field: 'href', title: '网址', width: 80}
+          ,{field: 'alt', title: '提示', width: 80}
+          ,{field: 'status', title: '状态', width: 80 , templet: function(d){
+        	  return '<input type="checkbox" disabled lay-skin="switch" lay-text="ON|OFF" ' + ( d.status == 1 ? "checked" : "" ) + '>';
+          }}
+          ,{field: 'sortOrder', title: '排序', width: 135}
+          ,{field: 'id', title: 'ID', hide:true}
+          ,{field: 'created', title: '创建时间', width:100 ,templet: function(d){
+              if(d.created){
+            	  return new Date(d.created).Format("yyyy-MM-dd hh:mm:ss");
+          	  }else{
+          		  return "";
+          	  } 
+          }}
+          ,{field: 'creator', title: '创建人', width:80}
+          ,{field: 'creatorName', title: '创建人', width:80} 
+          ,{field: 'updated', title: '修改时间', width: 100 ,templet: function(d){
+              if(d.updated){
+            	  return new Date(d.updated).Format("yyyy-MM-dd hh:mm:ss");
+          	  }else{
+          		  return "";
+          	  } 
+          }}
+          ,{field: 'updator', title: '修改人', width: 80}
+          ,{field: 'updatorName', title: '修改人', width: 80}
+          ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+        ]]
+      });
+      
+      //头工具栏事件
+      table.on('toolbar(test)', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        var data = checkStatus.data;
+        switch(obj.event){
+          case 'add':
+        	  addRec();
+          break;
+          case 'edit':
+        	  if(data.length==1){
+        		  editRec(data[0]);
+        	  }else{
+	          	layer.msg("请选择一条需要修改的记录。");
+        	  }
+          break;
+          case 'del':
+        	  if(data.length>0){
+        		  layer.confirm('是否确定删除选中行记录', function(index){
+			          var ids = $(data).map(function(i , o){ return o.id ; }).get().join(",");
+                	  $.post("${request.contextPath}/admin/searchLeftAd/deleteByKey/" + ids , function(ret){
+                		  if(ret.data>0 && ret.msg=='OK'){
+                			  tableIns.reload('demo');
+        			          layer.close(index);
+                		  }
+                	  });
+                  });
+        	  }else{
+	          	layer.msg("请选择要删除的记录。");
+        	  }
+          break;
+        };
+      });
+      
+      //监听行工具事件
+      table.on('tool(test)', function(obj){
+        var data = obj.data;
+        if(obj.event === 'del'){
+          layer.confirm('是否确定删除该行记录', function(index){
+        	  $.post("${request.contextPath}/admin/searchLeftAd/deleteByKey/"+data.id, function(ret){
+        		  if(ret.data>0 && ret.msg=='OK'){
+			          obj.del();
+			          layer.close(index);
+        		  }
+        	  });
+          });
+        } else if(obj.event === 'edit'){
+        	editRec(data);
+        }
+      });
+    
+      //新建
+		function addRec(){
+			var add_full = layer.open({
+				  type: 2,
+				  shade: false,
+				  title: "新建",
+				  maxmin: false,
+				  content: '${request.contextPath}/admin/searchLeftAd/addSearchLeftAd',
+				  success: function(layero){
+				    layer.setTop(layero);
+				  },
+				  end: function () {
+					  tableIns.reload('demo');
+				  }
+				});
+			layer.full(add_full);
+		}
+      
+      //修改
+	  function editRec(data){
+		  var edit_full = layer.open({
+			  type: 2,
+			  shade: false,
+			  title: "编辑",
+			  maxmin: false,
+			  content: '${request.contextPath}/admin/searchLeftAd/editSearchLeftAd/' + data.id,
+			  success: function(layero){
+			    layer.setTop(layero);
+			  },
+			  end: function () {
+				  tableIns.reload('demo');
+			  }
+			});
+		layer.full(edit_full);
+      }
+      
+      $("#btn_reload").click(function(){
+          var _status = $("#query_status").val() ;
+          var _created = $("#query_create_date").val() ;
+	       table.reload('demo', {
+	 	          page: {
+	 	            curr: 1 //重新从第 1 页开始
+	 	          }
+	       		  ,coverWhere : true//覆盖之前的参数
+	 	          ,where: {
+	 	        	  status : _status ,
+	 	        	 created : _created ? new Date(_created) : undefined
+	 	          }
+	 	    });
+    	  
+      });
+      
+    });
+    </script>
+</body>
+</html>

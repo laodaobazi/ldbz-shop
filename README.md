@@ -60,3 +60,12 @@
 
 ## project 骨架
 ![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/frame.png)
+
+## 首页页效果图
+![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/index.png)
+
+## 商品明细页效果图
+![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/item.png)
+
+## 后台管理页效果图
+![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/admin.png)

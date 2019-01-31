@@ -261,6 +261,19 @@
                 }
             });
         };// slide Most Viewer
+        
+        //页头广告
+        var slideProduct_s6 = function() {
+            $(".owl-carousel-16").owlCarousel({
+                autoplay:true,
+                nav: false,
+                dots: true,
+                responsive: true,
+                margin:0,
+                loop:true,
+                items:1
+            });
+        };// slide Product s6
 
 
         var tabImagebox = function() {
@@ -467,6 +480,7 @@
         showAllcat();
         goTop();
         removePreloader();
+        slideProduct_s6();
     });
 
 })(jQuery);
