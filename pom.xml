@@ -433,11 +433,11 @@
             </dependency>
 
             <!-- fastdfs -->
-            <dependency>
+            <!-- <dependency>
                 <groupId>org.csource</groupId>
                 <artifactId>fastdfs</artifactId>
                 <version>${fast.version}</version>
-            </dependency>
+            </dependency> -->
 
             <!-- swagger2 -->
             <dependency>
