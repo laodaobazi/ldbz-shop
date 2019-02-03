@@ -10,7 +10,7 @@ import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 @EnableDubboConfiguration
 @EnableApolloConfig
 @SpringBootApplication
-@MapperScan(basePackages = "cn.ldbz.search.mapper")
+@MapperScan(basePackages = "cn.ldbz.mapper")
 public class LdbzShopServiceSearchApplication {
 
 	public static void main(String[] args) {

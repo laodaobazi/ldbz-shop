@@ -52,7 +52,7 @@
 ## Apollo 配置中心
 ![apollo.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/apollo.png)
 
-## SolrCloud 分片
+## SolrCloud 检索
 ![solrcloud.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/solrcloud.png)
 
 ## mavne 构建

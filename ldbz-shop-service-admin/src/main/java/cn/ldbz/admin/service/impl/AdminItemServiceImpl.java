@@ -12,6 +12,7 @@ import cn.ldbz.constant.Const;
 import cn.ldbz.item.service.ItemService;
 import cn.ldbz.pojo.LdbzItem;
 import cn.ldbz.pojo.LdbzResult;
+import cn.ldbz.search.service.SearchService;
 
 @Component
 @Service(version = Const.LDBZ_SHOP_ADMIN_VERSION)
@@ -21,6 +22,9 @@ public class AdminItemServiceImpl implements AdminItemService {
 
 	@Reference(version = Const.LDBZ_SHOP_ITEM_VERSION, timeout=30000)
     private ItemService itemService;
+
+    @Reference(version = Const.LDBZ_SHOP_SEARCH_VERSION , timeout=30000)
+    private SearchService searchService;
 
 	@Override
 	public LdbzResult selectByKey(long id) {
@@ -61,6 +65,11 @@ public class AdminItemServiceImpl implements AdminItemService {
 	@Override
 	public LdbzResult countItem() {
 		return itemService.countItem(null);
+	}
+
+	@Override
+	public LdbzResult syncItemToSolrByCode(long code) {
+		return searchService.syncItemToSolrByCode(code);
 	}
 	
 }

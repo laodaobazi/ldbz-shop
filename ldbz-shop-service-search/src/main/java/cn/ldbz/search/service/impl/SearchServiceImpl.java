@@ -1,11 +1,15 @@
 package cn.ldbz.search.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -18,138 +22,110 @@ import org.springframework.stereotype.Component;
 import com.alibaba.dubbo.config.annotation.Service;
 
 import cn.ldbz.constant.Const;
+import cn.ldbz.mapper.LdbzSolrItemMapper;
 import cn.ldbz.pojo.LdbzResult;
-import cn.ldbz.pojo.SearchResult;
-import cn.ldbz.pojo.SolrItem;
-import cn.ldbz.search.mapper.SearchMapper;
+import cn.ldbz.pojo.LdbzSolrItem;
 import cn.ldbz.search.service.SearchService;
 
-/**
- * Solr Service 实现类
- *
- */
 @Component
 @Service(version = Const.LDBZ_SHOP_SEARCH_VERSION)
 public class SearchServiceImpl implements SearchService {
 
     @Autowired
-    private SearchMapper searchMapper;
-
-    //@Autowired
-    //private SolrServer solrServer;
-
-    @Autowired
     private SolrClient solrClient;
 
+    @Autowired
+    private LdbzSolrItemMapper mapper ;
+    
     private static Logger logger = LoggerFactory.getLogger(SearchServiceImpl.class);
 
-    @Override
-    public LdbzResult importAllItems() {
-
-        List<SolrItem> solrItemList = searchMapper.getSolrItemList();
-
-        try {
-            for (SolrItem solrItem : solrItemList) {
-
-                SolrInputDocument document = new SolrInputDocument();
-
-                document.addField("id", solrItem.getId());
-                document.addField("item_category_name", solrItem.getCategory_name());
-                document.addField("item_title", solrItem.getTitle());
-
-                String image = solrItem.getImage();
-                String[] split = image.split(",");
-
-                document.addField("item_image", split[0]);
-                document.addField("item_price", solrItem.getPrice());
-                document.addField("item_sell_point", solrItem.getSell_point());
-                document.addField("item_desc", solrItem.getItem_desc());
-
-                solrClient.add(document);
-
-            }
-
-            solrClient.commit();
-
-            logger.info("===========>导入商品成功 导入商品" + solrItemList.size() + "件");
-        } catch (Exception e) {
-            logger.error("===========>导入Solr索引失败");
-        }
-
-        return LdbzResult.ok();
-    }
-
-    @Override
-    public SearchResult search(String queryString, Integer page, Integer rows) throws Exception {
-
-        SearchResult searchResult = new SearchResult();
-
-        SolrQuery query = new SolrQuery();
-
-        //设置查询条件
-        query.setQuery(queryString);
-
+	@Override
+	public LdbzResult getItemPage(LdbzSolrItem entity, int pn, int limit) {
+		//{"id":148630831972868,"title":"无线蓝牙耳机 迷你超小运动Air双耳pods入耳式 白色","code":1546693041205,"price":36.00,"oldPrice":48.85,"image":"/uploadfiles/item_image/2019/01/05/1546692944934.jpg","category":54,"categoryName":"蓝牙耳机","created":"2018-12-31T23:59:59Z"}
+		String key = String.format("title:%s AND category:%s" , 
+				StringUtils.isNotEmpty(entity.getTitle())?entity.getTitle():"*" , 
+						entity.getCategory()!=0?entity.getCategory():"*") ;
+		if(entity.getPriceFrom()!=null && entity.getPriceTo()!=null 
+				&& entity.getPriceTo()>=entity.getPriceFrom()) {
+			key += " AND price:[" + entity.getPriceFrom() + " TO " + entity.getPriceTo() + "]" ;
+		}
+		
+		SolrQuery query = new SolrQuery();
+		query.set("collection", "items");
+		query.setQuery(key);
+		
         //设置分页
-        query.setStart((page - 1) * rows);
-
-        query.setRows(rows);
-
-        //设置默认搜素域
-        query.set("df", "item_keywords");
-
-        query.setHighlight(true);
-
-        query.addHighlightField("item_title");
-
-        query.setHighlightSimplePre("<em style=\"color:red\">");
-
-        query.setHighlightSimplePost("</em>");
-
-        QueryResponse response = solrClient.query(query);
-
-        SolrDocumentList results = response.getResults();
-
-        searchResult.setRecordCount(results.getNumFound());
-
-        List<SolrItem> solrItems = new ArrayList<SolrItem>();
-
-        Map<String, Map<String, List<String>>> highlighting = response.getHighlighting();
-
-        for (SolrDocument result : results) {
-
-            SolrItem solrItem = new SolrItem();
-
-            solrItem.setId((String) result.get("id"));
-
-            List<String> strings = highlighting.get(result.get("id")).get("item_title");
-            if (strings != null && strings.size() > 0) {
-                solrItem.setTitle(strings.get(0));
-            } else {
-                solrItem.setTitle((String) result.get("item_title"));
-            }
-            solrItem.setCategory_name((String) result.get("item_category_name"));
-            solrItem.setImage((String) result.get("item_image"));
-            solrItem.setSell_point((String) result.get("item_sell_point"));
-            solrItem.setItem_desc((String) result.get("item_desc"));
-            solrItem.setPrice((Long) result.get("item_price"));
-
-            solrItems.add(solrItem);
-
+        query.setStart((pn - 1) * limit);
+        query.setRows(limit);
+        
+        //自定义排序列
+        if(StringUtils.isNotEmpty(entity.getField()) && StringUtils.isNotEmpty(entity.getOrder())) {
+        	query.addSort(entity.getField(), "desc".equals(entity.getOrder())?SolrQuery.ORDER.desc:SolrQuery.ORDER.asc);
         }
 
-        searchResult.setItemList(solrItems);
-        searchResult.setCurPage(page);
+        Map<String,Object> map = new HashMap<String,Object>();
+        long total = 0 ;
+        try {
+			QueryResponse response = solrClient.query(query);
+			SolrDocumentList results = response.getResults();
+			total = results.getNumFound() ;
+	        
+			List<LdbzSolrItem> solrItems = new ArrayList<LdbzSolrItem>();
+			Map<String, Map<String, List<String>>> highlighting = response.getHighlighting();
+			for (SolrDocument result : results) {
+				LdbzSolrItem item = new LdbzSolrItem();
+				
+				item.setId(Long.valueOf(result.get("id").toString()));
+				item.setCode(Long.valueOf(result.get("code").toString()));
+				item.setTitle(result.get("title").toString());
+				item.setImage(result.get("image").toString());
+				item.setCategoryName(result.get("categoryName").toString());
+				item.setPrice(Float.valueOf(result.get("price").toString()));
+				item.setOldPrice(Float.valueOf(result.get("oldPrice").toString()));
+				
+				solrItems.add(item);
+			}
+			map.put("list", solrItems) ;
+		} catch (SolrServerException | IOException e) {
+			e.printStackTrace();
+		}
+        
+        map.put("total", total) ;
+		return LdbzResult.ok(map);
+	}
 
-        long recordCount = searchResult.getRecordCount();
-        long pageCount = recordCount / rows;
+	@Override
+	public LdbzSolrItem selectByCode(long code) {
+		return mapper.selectByCode(code);
+	}
 
-        if (recordCount % rows > 0) {
-            pageCount++;
-        }
-
-        searchResult.setPageCount(pageCount);
-
-        return searchResult;
-
-    }
+	@Override
+	public LdbzResult syncItemToSolrByCode(long code) {
+		LdbzSolrItem item = mapper.selectByCode(code);
+		
+		try {
+			SolrInputDocument document = new SolrInputDocument();
+			document.addField("id", item.getId());
+			document.addField("code", item.getCode());
+			document.addField("created", item.getCreated());
+			document.addField("title", item.getTitle());
+			document.addField("detail", item.getDetail());
+			document.addField("price", item.getPrice());
+			document.addField("oldPrice", item.getOldPrice());
+			document.addField("image", item.getImage());
+			document.addField("category", item.getCategory());
+			document.addField("categoryName", item.getCategoryName());
+			
+			solrClient.add("items" , document);
+			solrClient.commit("items");
+			
+			return LdbzResult.ok();
+		} catch (SolrServerException | IOException e) {
+			e.printStackTrace();
+		}
+		return LdbzResult.build(500, "Create Index Error");
+	}
+	
+	
+    
 }

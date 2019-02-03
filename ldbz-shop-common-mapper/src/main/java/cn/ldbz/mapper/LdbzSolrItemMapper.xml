@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzSolrItemMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzSolrItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="FLOAT" />
+    <result column="old_price" property="oldPrice" jdbcType="FLOAT" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="BIGINT" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectByCode" resultMap="BaseResultMap"  parameterType="long">
+    select a.id , a.`code` , a.created , a.title , a.detail , a.price , a.old_price , a.image , a.cid category ,b.category_name
+	from ldbz_item a 
+	join ldbz_category b on a.cid = b.id
+	where a.`code` = #{code ,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

@@ -1,10 +1,4 @@
 <div class="wrap-imagebox">
-	<div class="flat-row-title">
-		<span>
-			Showing 1–15 of 20 results
-		</span>
-		<div class="clearfix"></div>
-	</div>
 	<div class="sort-product">
 		<ul class="icons">
 			<li>
@@ -16,49 +10,56 @@
 		</ul>
 		<div class="sort">
 			<div class="popularity">
-				<select name="popularity">
-					<option value="">Sort by popularity</option>
-					<option value="">Sort by popularity</option>
-					<option value="">Sort by popularity</option>
-					<option value="">Sort by popularity</option>
+				<select id="select_popularity">
+					<option value="1">时间倒序</option>
+					<option value="2">时间正序</option>
+					<option value="3">价格倒叙</option>
+					<option value="4">价格正序</option>
 				</select>
 			</div>
 			<div class="showed">
-				<select name="showed">
-					<option value="">Show 15</option>
-					<option value="">Show 15</option>
-					<option value="">Show 15</option>
-					<option value="">Show 15</option>
+				<select id="select_page_showed">
+					<option value="9">每页9条</option>
+					<option value="15">每页15条</option>
+					<option value="21">每页21条</option>
+					<option value="30">每页30条</option>
 				</select>
 			</div>
 		</div>
 		<div class="clearfix"></div>
 	</div>
 	<div class="tab-product">
-		<div class="row sort-box">
+	
+		<div class="row sort-box" id="item_container_1"></div>
+		<div class="sort-box" id="item_container_2"></div>
 		
-		
+	</div>
+</div><!-- /.wrap-imagebox -->
+
+<div>
+	<ul class="pagination"></ul>
+</div>
+
+<script id="item_template_1" type="text/html">
+		{{each $data as item i}}
 			<div class="col-lg-4 col-sm-6">
 				<div class="product-box">
 					<div class="imagebox">
 						<div class="box-image owl-carousel-1">
-							<a href="#" title="">
-								<img src="images/product/other/06.jpg" alt="">
+							<a href="${itemUrl}/item/{{item.code}}" title="" target="_blank" >
+								<img src="${nginxImage}{{item.image}}" alt="">
 							</a>
-							<a href="#" title="">
-								<img src="images/product/other/06.jpg" alt="">
-							</a>
-						</div><!-- /.box-image -->
+						</div>
 						<div class="box-content">
 							<div class="cat-name">
-								<a href="#" title="">Cameras</a>
+								<a href="javascript:;" title="">{{item.categoryName}}</a>
 							</div>
 							<div class="product-name">
-								<a href="#" title="">New X5C-1 2.4Ghz Gyro <br />RC Quadcopter Drone</a>
+								<a href="${itemUrl}/item/{{item.code}}" title="" target="_blank" >{{item.title}}</a>
 							</div>
 							<div class="price">
-								<span class="sale">$2,009.00</span>
-								<span class="regular">$2,999.00</span>
+								<span class="sale">￥{{item.price}}</span>
+								<span class="regular">￥{{item.oldPrice}}</span>
 							</div>
 						</div><!-- /.box-content -->
 						<div class="box-bottom">
@@ -69,102 +70,132 @@
 							</div>
 							<div class="compare-wishlist">
 								<span class="compare">
-									<a href="#" title="">
+									<a href="javascript:;" title="">
 										<img src="${request.contextPath}/images/icons/compare.png" alt="">比较
 									</a>
 								</span>
 								<span class="wishlist">
-									<a href="#" title="">
+									<a href="javascript:;" title="">
 										<img src="${request.contextPath}/images/icons/wishlist.png" alt="">收藏
 									</a>
 								</span>
 							</div>
-						</div><!-- /.box-bottom -->
-					</div><!-- /.imagebox -->
+						</div>
+					</div>
 				</div>
-			</div><!-- /.col-lg-4 col-sm-6 -->
-			
-			
-		</div>
-		<div class="sort-box">
-		
-		
+			</div>
+		{{/each}}
+</script>
+
+<script id="item_template_2" type="text/html">
+		{{each $data as item i}}
 			<div class="product-box style3">
 				<div class="imagebox style1 v3">
 					<div class="box-image">
-						<a href="#" title="">
-							<img src="images/product/other/s02.jpg" alt="">
+						<a href="${itemUrl}/item/{{item.code}}" title="" target="_blank">
+							<img src="${nginxImage}{{item.image}}" alt="">
 						</a>
-					</div><!-- /.box-image -->
+					</div>
 					<div class="box-content">
 						<div class="cat-name">
-							<a href="#" title="">Cameras</a>
+							<a href="javascript:;" title="">￥{{item.categoryName}}</a>
 						</div>
 						<div class="product-name">
-							<a href="#" title="">Apple iPad Air 2 32GB 9.7"<br />Tablet</a>
+							<a href="${itemUrl}/item/{{item.code}}" title="" target="_blank">￥{{item.title}}</a>
 						</div>
 						<div class="info">
 							<p>
-								The iPhone 5c replaces the iPhone 5 in the Apple stable, inheriting its internals, like the A6 processor, 4" screen...
+								{{item.detail}}
 							</p>
 						</div>
-					</div><!-- /.box-content -->
+					</div>
 					<div class="box-price">
 						<div class="price">
-							<span class="regular">$2,999.00</span>
-							<span class="sale">$1,999.00</span>
+							<span class="regular">￥{{item.oldPrice}}</span>
+							<span class="sale">￥{{item.price}}</span>
 						</div>
 						<div class="btn-add-cart">
-							<a href="#" title="">
+							<a href="javascript:;" title="">
 								<img src="images/icons/add-cart.png" alt="">加入购物车
 							</a>
 						</div>
 						<div class="compare-wishlist">
-							<a href="#" class="compare" title="">
+							<a href="javascript:;" class="compare" title="">
 								<img src="${request.contextPath}/images/icons/compare.png" alt="">比较
 							</a>
-							<a href="#" class="wishlist" title="">
+							<a href="javascript:;" class="wishlist" title="">
 								<img src="${request.contextPath}/images/icons/wishlist.png" alt="">收藏
 							</a>
 						</div>
-					</div><!-- /.box-price -->
-				</div><!-- /.imagebox -->
-			</div><!-- /.product-box -->
-			
-			
-			<div style="height: 9px;"></div>
-		</div>
-	</div>
-</div><!-- /.wrap-imagebox -->
+					</div>
+				</div>
+			</div>
+		{{/each}}
+</script>
 
 
-<div class="blog-pagination">
-	<span>
-		Showing 1–15 of 20 results
-	</span>
-	<ul class="flat-pagination style1">
-		<li class="prev">
-			<a href="javascript:;" title="">
-				<img src="${request.contextPath}/images/icons/left-1.png" alt="">上一页
-			</a>
-		</li>
-		<li>
-			<a href="javascript:;" class="waves-effect" title="">01</a>
-		</li>
-		<li>
-			<a href="javascript:;" class="waves-effect" title="">02</a>
-		</li>
-		<li class="active">
-			<a href="javascript:;" class="waves-effect" title="">03</a>
-		</li>
-		<li>
-			<a href="javascript:;" class="waves-effect" title="">04</a>
-		</li>
-		<li class="next">
-			<a href="javascript:;" title="">
-				下一页<img src="${request.contextPath}/images/icons/right-1.png" alt="">
-			</a>
-		</li>
-	</ul>
-	<div class="clearfix"></div>
-</div><!-- /.blog-pagination -->
+<script>
+$(function(){
+	
+	var pn = 1 , field = "" , order = "" ;
+	var limit = $("#select_page_showed").val();
+	
+	var select_popularity = $("#select_popularity").val();
+	if(select_popularity == 1){
+		//时间倒叙
+		field = "created" ;
+		order = "desc" ;
+	}else if(select_popularity == 2){
+		//时间正叙
+		field = "created" ;
+		order = "asc" ;
+	}else if(select_popularity == 3){
+		//价格倒叙
+		field = "price" ;
+		order = "desc" ;
+	}else if(select_popularity == 4){
+		//价格正叙
+		field = "price" ;
+		order = "asc" ;
+	}
+	
+	$.ajax({
+		contentType: 'application/x-www-form-urlencoded',
+		url: '/search/getItemPage',
+		method: 'post',
+		data:{
+			limit : limit
+			, pn : pn
+			,field : field
+			,order : order
+			,priceFrom : $("#priceFrom").val() 
+			,priceTo : $("#priceTo").val() 
+// 			title : '无线',
+// 			category : 54
+		},
+		success:function(ret){
+			console.log(ret);
+			if(ret.status==200 && ret.data && ret.data.total>0){
+				
+				$("#item_container_1").html(template('item_template_1', ret.data.list));
+				$("#item_container_2").html(template('item_template_2', ret.data.list));
+				
+				$(".pagination").jBootstrapPage({
+		            pageSize : limit,
+		            total : ret.data.total ,
+		            maxPageButton:8,
+		            onPageClicked: function(obj, pageIndex) {
+		                alert((pageIndex+1)+'页');
+		            }
+		        });
+				
+			}
+			
+		},
+		error:function(ret){
+			console.log(ret);
+		}
+	});
+	
+});
+</script>
