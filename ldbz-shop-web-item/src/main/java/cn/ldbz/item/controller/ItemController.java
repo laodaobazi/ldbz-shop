@@ -34,6 +34,10 @@ public class ItemController {
     @Value("${redisKey.nginxImage.url.key}")
     private String INDEX_NGINX_IMAGE_URL;
 
+    //检索访问的URL路径
+    @Value("${search.web.url}")
+    private String SEARCH_WEB_URL;
+
     @Reference(version = Const.LDBZ_SHOP_ITEM_VERSION , timeout=30000)
     private ItemService itemService;
 
@@ -49,6 +53,8 @@ public class ItemController {
 			switch(key) {
 				case "redisKey.nginxImage.url.key" : 
 					INDEX_NGINX_IMAGE_URL = change.getNewValue();
+				case "search.web.url" : 
+					SEARCH_WEB_URL = change.getNewValue();
 			}
 		}
 	}
@@ -57,6 +63,7 @@ public class ItemController {
     public String  getItemByItemId(@PathVariable("code") Long itemCode, Model model) {
     	
     	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
+    	model.addAttribute("searchUrl", SEARCH_WEB_URL);
     	model.addAttribute("itemCode", itemCode);
     	
     	//获取商品

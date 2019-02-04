@@ -28,6 +28,8 @@ public class LdbzSolrItem implements Serializable {
     
     private long category ;
     
+    private long categoryFid ;
+    
     private String categoryName ;
     
     private Float priceFrom ;

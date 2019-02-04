@@ -12,13 +12,15 @@
     <result column="old_price" property="oldPrice" jdbcType="FLOAT" />
     <result column="image" property="image" jdbcType="VARCHAR" />
     <result column="category" property="category" jdbcType="BIGINT" />
+    <result column="category_fid" property="categoryFid" jdbcType="BIGINT" />
     <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
   </resultMap>
 
   <select id="selectByCode" resultMap="BaseResultMap"  parameterType="long">
-    select a.id , a.`code` , a.created , a.title , a.detail , a.price , a.old_price , a.image , a.cid category ,b.category_name
+    select a.id , a.`code` , a.created , a.title , a.detail , a.price , a.old_price , a.image , a.cid category , b.category_name , c.fid category_fid
 	from ldbz_item a 
 	join ldbz_category b on a.cid = b.id
+	join ldbz_category c on c.id = b.fid
 	where a.`code` = #{code ,jdbcType=BIGINT}
   </select>
   

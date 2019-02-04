@@ -15,6 +15,7 @@
    <field name="oldPrice" type="float" indexed="false" stored="true" required="true" multiValued="false" />
    <field name="image" type="string" indexed="false" stored="true" required="false" multiValued="false" />
    <field name="category" type="long" indexed="true" stored="true" required="false" multiValued="false" />
+   <field name="categoryFid" type="long" indexed="true" stored="true" required="false" multiValued="false" />
    <field name="categoryName" type="string" indexed="false" stored="true" required="false" multiValued="false" />
 
    <uniqueKey>id</uniqueKey>

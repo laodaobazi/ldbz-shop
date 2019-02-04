@@ -137,7 +137,21 @@
 <script>
 $(function(){
 	
-	var pn = 1 , field = "" , order = "" ;
+	$("#select_popularity").change(function(){
+		getItemsBySolr();
+	});	
+	$("#select_page_showed").change(function(){
+		getItemsBySolr();
+	});	
+	
+	getItemsBySolr();
+	
+});
+
+
+function getItemsBySolr(pageno){
+	
+	var pn = pageno||1 , field = "" , order = "" ;
 	var limit = $("#select_page_showed").val();
 	
 	var select_popularity = $("#select_popularity").val();
@@ -168,34 +182,35 @@ $(function(){
 			, pn : pn
 			,field : field
 			,order : order
-			,priceFrom : $("#priceFrom").val() 
+			,priceFrom : $("#priceFrom").val()
 			,priceTo : $("#priceTo").val() 
-// 			title : '无线',
-// 			category : 54
+			,category : ${parameter.cid!0}
+			,categoryFid : ${parameter.category!0}
+			,title : '${parameter.search!""}'
 		},
 		success:function(ret){
-			console.log(ret);
 			if(ret.status==200 && ret.data && ret.data.total>0){
 				
 				$("#item_container_1").html(template('item_template_1', ret.data.list));
 				$("#item_container_2").html(template('item_template_2', ret.data.list));
 				
-				$(".pagination").jBootstrapPage({
-		            pageSize : limit,
-		            total : ret.data.total ,
-		            maxPageButton:8,
-		            onPageClicked: function(obj, pageIndex) {
-		                alert((pageIndex+1)+'页');
-		            }
-		        });
+				if(pn==1){
+						$(".pagination").jBootstrapPage({
+				            pageSize : limit,
+				            total : ret.data.total ,
+				            maxPageButton:8,
+				            onPageClicked: function(obj, pageIndex) {
+				            	getItemsBySolr(pageIndex+1);
+				            }
+				        });
+				}
 				
 			}
 			
 		},
 		error:function(ret){
-			console.log(ret);
 		}
 	});
 	
-});
+}
 </script>

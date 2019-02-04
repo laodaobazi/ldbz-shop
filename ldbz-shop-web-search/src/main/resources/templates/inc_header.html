@@ -155,7 +155,7 @@
 										<ul>
 											<!-- 3级菜单 -->
 											<ldbz:category_tag level="3" fid="${category2.id}" ;category3>
-												<li><a href="javascript:;" title="">${category3.categoryName}</a></li>
+												<li><a href="${searchUrl}?category=${category.id}&cid=${category3.id}" title="">${category3.categoryName}</a></li>
 											</ldbz:category_tag>
 										</ul>
 										<!-- <div class="show">
@@ -186,7 +186,7 @@
 														<ul class="submenu-child">
 															<!-- 3级菜单 -->
 															<ldbz:category_tag level="3" fid="${category2.id}" ;category3>
-																<li><a href="javascript:;" title="">${category3.categoryName}</a></li>
+																<li><a href="${searchUrl}?category=${category.id}&cid=${category3.id}" title="">${category3.categoryName}</a></li>
 															</ldbz:category_tag>
 														</ul>
 														<!-- <div class="show">
@@ -218,7 +218,7 @@ $(function(){
 		var cid_text = $(this).text();
 
 		$("#select_category").empty();
-		$("#select_category").html("<option selected value='" + cid + "'>" + cid_text + "</option>");
+		$("#select_category").html("<option hidden selected value='" + cid + "'>" + cid_text + "</option>");
 	});
 	
 	//提交查询

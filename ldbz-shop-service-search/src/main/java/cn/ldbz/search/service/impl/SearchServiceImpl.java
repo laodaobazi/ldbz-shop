@@ -42,9 +42,10 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public LdbzResult getItemPage(LdbzSolrItem entity, int pn, int limit) {
 		//{"id":148630831972868,"title":"无线蓝牙耳机 迷你超小运动Air双耳pods入耳式 白色","code":1546693041205,"price":36.00,"oldPrice":48.85,"image":"/uploadfiles/item_image/2019/01/05/1546692944934.jpg","category":54,"categoryName":"蓝牙耳机","created":"2018-12-31T23:59:59Z"}
-		String key = String.format("title:%s AND category:%s" , 
+		String key = String.format(" title:%s AND category:%s AND categoryFid:%s " , 
 				StringUtils.isNotEmpty(entity.getTitle())?entity.getTitle():"*" , 
-						entity.getCategory()!=0?entity.getCategory():"*") ;
+						entity.getCategory()!=0?entity.getCategory():"*" , 
+						entity.getCategoryFid()!=0?entity.getCategoryFid():"*") ;
 		if(entity.getPriceFrom()!=null && entity.getPriceTo()!=null 
 				&& entity.getPriceTo()>=entity.getPriceFrom()) {
 			key += " AND price:[" + entity.getPriceFrom() + " TO " + entity.getPriceTo() + "]" ;
@@ -114,6 +115,7 @@ public class SearchServiceImpl implements SearchService {
 			document.addField("oldPrice", item.getOldPrice());
 			document.addField("image", item.getImage());
 			document.addField("category", item.getCategory());
+			document.addField("categoryFid", item.getCategoryFid());
 			document.addField("categoryName", item.getCategoryName());
 			
 			solrClient.add("items" , document);

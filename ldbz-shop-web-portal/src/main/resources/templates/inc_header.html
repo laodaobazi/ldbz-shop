@@ -156,7 +156,7 @@
 												<ul>
 													<!-- 3级菜单 -->
 													<ldbz:category_tag level="3" fid="${category2.id}" ;category3>
-														<li><a href="javascript:;" title="">${category3.categoryName}</a></li>
+														<li><a href="${searchUrl}?category=${category.id}&cid=${category3.id}" title="">${category3.categoryName}</a></li>
 													</ldbz:category_tag>
 												</ul>
 												<!-- <div class="show">
@@ -187,7 +187,7 @@
 																<ul class="submenu-child">
 																	<!-- 3级菜单 -->
 																	<ldbz:category_tag level="3" fid="${category2.id}" ;category3>
-																		<li><a href="javascript:;" title="">${category3.categoryName}</a></li>
+																		<li><a href="${searchUrl}?category=${category.id}&cid=${category3.id}" title="">${category3.categoryName}</a></li>
 																	</ldbz:category_tag>
 																</ul>
 																<!-- <div class="show">
