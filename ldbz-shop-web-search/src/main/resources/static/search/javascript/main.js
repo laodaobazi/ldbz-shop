@@ -440,54 +440,6 @@
         		$("#span_cart_itemcount").text('').hide();
         	}
         	
-        	//添加商品到购物车
-        	$("a[name='a_add_cart']").click(function(){
-        		var item_code = $(this).attr("item_code") ;
-        		var item_title = $(this).attr("item_title") ;
-        		var item_price = $(this).attr("item_price") ;
-        		var item_image = $(this).attr("item_image") ;
-        		
-        		var itemNotInCart = true ;
-    			$(arr).each(function(i , o){
-    				if(item_code == o.item_code){
-    					//已经在购物车里面
-    					arr.splice(i , 1);
-    					arr.push({'item_code':item_code , 'item_title':item_title , 'item_price':item_price , 'item_image':item_image,'count':o.count*1+1});
-    					itemNotInCart = false ;
-    				}
-    			});
-    			//如果不在购物车里面
-    			if(itemNotInCart){
-    				arr.push({'item_code':item_code , 'item_title':item_title , 'item_price':item_price , 'item_image':item_image,'count':1});
-    			}
-    			
-    			setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
-    			
-    			$('body').toast({
-    				position:'fixed',
-    				content:'已添加到购物车',
-    				duration:1500,
-    				isCenter:false,
-    				background:'rgba(230,0,0,0.5)',
-    				animateIn:'bounceIn-hastrans',
-    				animateOut:'bounceOut-hastrans',
-    			});
-    			
-        		//显示购物车中的商品数量变化
-        		if(arr.length>0){
-        			var item_count = 0 , item_price = 0 ;
-        			$(arr).each(function(i , o){
-        				item_count += (o.count*1) ;
-        				item_price += (o.item_price*o.count) ;
-        			});
-        			$("#span_cart_itemcount").text(item_count).show();
-        			$("#span_cart_itemprice").text("￥"+item_price).show();
-        		}else{
-        			$("#span_cart_itemcount").text('').hide();
-        		}
-        		
-			});
-
         	//页头下拉框检索
             $('.cat-wrap').each(function() {
                 $(this).on('click', function() {

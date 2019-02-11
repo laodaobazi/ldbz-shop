@@ -67,5 +67,8 @@
 ## 商品明细页效果图
 ![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/item.png)
 
+## 商品检索明细页效果图
+![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/search.png)
+
 ## 后台管理页效果图
 ![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/admin.png)
