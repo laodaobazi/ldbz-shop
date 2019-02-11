@@ -45,7 +45,7 @@
 </section><!-- /.flat-product-content -->
 <script type="text/javascript">
 $(function(){
-	$.post("${request.contextPath}/comment/getItemCommentPage" , {
+	$.post("${request.contextPath}/item/comment/getItemCommentPage" , {
 		itemCode : '${itemCode}' ,
 		status : 1 ,
 		page : 1 ,
@@ -53,7 +53,7 @@ $(function(){
 	} , function(ret){
 		if(ret.status==200 && ret.data.total>0){
 			$(ret.data.list).each(function( i , o ){
-				var str = showComment(o.creatorName , dateFtt("yyyy-MM-dd hh:mm:ss",new Date(o.created)) , encodeURIComponent(o.comment) , o.star);
+				var str = showComment(o.creatorName , dateFtt("yyyy-MM-dd hh:mm:ss",new Date(o.created)) , o.comment?o.comment.replace(/<[^>]+>/g,""):'' , o.star);
 				$("#ul_comment_list").html(str);
 			});
 		}

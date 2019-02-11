@@ -85,7 +85,7 @@
 							<div class="box-search">
 								<input type="text" id="input_serch" name="search" placeholder="输入关键字检索商品">
 								<span class="btn-search">
-									<button id="btn_global_search" type="button" class="waves-effect"><img src="${request.contextPath}/images/icons/search.png" alt=""></button>
+									<button id="btn_global_search" type="button" class="waves-effect"><img src="${request.contextPath}/search/images/icons/search.png" alt=""></button>
 								</span>
 							</div><!-- /.box-search -->
 						</form><!-- /.form-search -->
@@ -97,12 +97,12 @@
 							<ul class="menu-compare-wishlist">
 								<li class="compare">
 									<a href="javascript:;" title="">
-										<img src="${request.contextPath}/images/icons/compare.png" alt="">
+										<img src="${request.contextPath}/search/images/icons/compare.png" alt="">
 									</a>
 								</li>
 								<li class="wishlist">
 									<a href="wishlist.html" title="">
-										<img src="${request.contextPath}/images/icons/wishlist.png" alt="">
+										<img src="${request.contextPath}/search/images/icons/wishlist.png" alt="">
 									</a>
 								</li>
 							</ul><!-- /.menu-compare-wishlist -->
@@ -110,7 +110,7 @@
 						<div name="div_show_cart" class="inner-box">
 							<a href="javascript:;" title="购物车">
 								<div class="icon-cart">
-									<img src="${request.contextPath}/images/icons/cart.png" alt="">
+									<img src="${request.contextPath}/search/images/icons/cart.png" alt="">
 									<span id="span_cart_itemcount" style="display:none;"></span>
 								</div>
 							</a>
@@ -143,7 +143,7 @@
 							<li>
 								<a href="javascript:;" title="" class="dropdown">
 									<span class="menu-img">
-										<img src="${request.contextPath}/images/icons/menu/01.png" alt="">
+										<img src="${request.contextPath}/search/images/icons/menu/01.png" alt="">
 									</span>
 									<span class="menu-title">${category.categoryName}</span>
 								</a>
@@ -224,19 +224,6 @@ $(function(){
 	//提交查询
 	$("#btn_global_search").click(function(){
 		var key = $("#input_serch").val();
-		if(!key){
-			$('body').toast({
-				position:'fixed',
-				content:'关键字不能为空',
-				duration:1500,
-				isCenter:false,
-				background:'rgba(230,0,0,0.5)',
-				animateIn:'bounceIn-hastrans',
-				animateOut:'bounceOut-hastrans',
-			});
-			return ;
-		}
-		
 		var cid = $("#select_category").val();
 		if(!cid){
 			$('body').toast({

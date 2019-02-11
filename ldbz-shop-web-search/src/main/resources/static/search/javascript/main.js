@@ -423,12 +423,132 @@
         }; // Toggle Location
 
         var showAllcat = function() {
+    		//显示购物车中的商品数量
+        	var arr = [] ;
+        	var _cart = getCookie("_cart");
+        	if(_cart){
+        		_cart = Base64.decode(_cart);
+    			arr = $.parseJSON(_cart);
+    			var item_count = 0 , item_price = 0 ;
+    			$(arr).each(function(i , o){
+    				item_count += (o.count*1) ;
+    				item_price += (o.count * o.item_price);
+    			});
+    			$("#span_cart_itemcount").text(item_count).show();
+    			$("#span_cart_itemprice").text("￥"+item_price).show();
+        	}else{
+        		$("#span_cart_itemcount").text('').hide();
+        	}
+        	
+        	//添加商品到购物车
+        	$("a[name='a_add_cart']").click(function(){
+        		var item_code = $(this).attr("item_code") ;
+        		var item_title = $(this).attr("item_title") ;
+        		var item_price = $(this).attr("item_price") ;
+        		var item_image = $(this).attr("item_image") ;
+        		
+        		var itemNotInCart = true ;
+    			$(arr).each(function(i , o){
+    				if(item_code == o.item_code){
+    					//已经在购物车里面
+    					arr.splice(i , 1);
+    					arr.push({'item_code':item_code , 'item_title':item_title , 'item_price':item_price , 'item_image':item_image,'count':o.count*1+1});
+    					itemNotInCart = false ;
+    				}
+    			});
+    			//如果不在购物车里面
+    			if(itemNotInCart){
+    				arr.push({'item_code':item_code , 'item_title':item_title , 'item_price':item_price , 'item_image':item_image,'count':1});
+    			}
+    			
+    			setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
+    			
+    			$('body').toast({
+    				position:'fixed',
+    				content:'已添加到购物车',
+    				duration:1500,
+    				isCenter:false,
+    				background:'rgba(230,0,0,0.5)',
+    				animateIn:'bounceIn-hastrans',
+    				animateOut:'bounceOut-hastrans',
+    			});
+    			
+        		//显示购物车中的商品数量变化
+        		if(arr.length>0){
+        			var item_count = 0 , item_price = 0 ;
+        			$(arr).each(function(i , o){
+        				item_count += (o.count*1) ;
+        				item_price += (o.item_price*o.count) ;
+        			});
+        			$("#span_cart_itemcount").text(item_count).show();
+        			$("#span_cart_itemprice").text("￥"+item_price).show();
+        		}else{
+        			$("#span_cart_itemcount").text('').hide();
+        		}
+        		
+			});
+
+        	//页头下拉框检索
             $('.cat-wrap').each(function() {
                 $(this).on('click', function() {
                     $(this).children('.all-categories').toggleClass('show');
                 });
             });
+            
+            //显示购物车
+            $("div[name='div_show_cart']").hover(function(){
+        		var _cart = getCookie("_cart");
+        		if(_cart){
+        			showCartItems();
+        			$(this).children("div:last-child").fadeIn(600);
+        		}
+            } , function(){
+            	$(this).children("div:last-child").fadeOut(10);
+            });
+            
         };
+        
+
+        //显示购物车中商品条目
+        var showCartItems = function(){
+        	var _cart = getCookie("_cart");
+			_cart = Base64.decode(_cart);
+			var arr = $.parseJSON(_cart);
+			
+        	$("#ul_items").empty();
+        	var item_count = 0 , item_price = 0 ;
+			$(arr).each(function(i , o){
+				var item = '<li><div class="img-product"><img src="' + nginxImage + o.item_image + '" alt="" style="width:64px;height:64px;"></div>' +
+								'<div class="info-product">' +
+								'	<div class="name" style="width: 95%;">' + o.item_title + '</div>' +
+								'	<div class="price"><span>' + o.count + ' x</span><span>' + o.item_price + '</span></div>' +
+								'</div>' +
+								'<div class="clearfix"></div><span item_code="' + o.item_code + '" class="delete" name="span_delete_item">x</span></li>';
+				$("#ul_items").append(item);
+				item_count = item_count*1 + o.count ;
+				item_price += (o.item_price*o.count) ;
+			});
+			$("#span_cart_itemcount").text(item_count).show();
+			$("#span_cart_itemprice").text("￥"+item_price).show();
+			
+			
+			//将商品从购物车删除
+			$("#ul_items").find('span[name="span_delete_item"]').click(function(){
+				var item_code = $(this).attr('item_code');
+				$(arr).each(function(i , o){
+					if(o.item_code == item_code){
+						if(o.count == 1){
+							arr.splice(i , 1);
+						}else{
+							o.count = o.count-1;
+						}
+					}
+				});
+    			setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
+    			showCartItems();
+			});
+			
+        }
 
         //置顶
         var goTop = function(){
@@ -489,3 +609,30 @@
     });
 
 })(jQuery);
+
+function setCookie(name,value)
+{
+	var Days = 30;
+	var exp = new Date();
+	exp.setTime(exp.getTime() + Days*24*60*60*1000);
+	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+
+
+function getCookie(name)
+{
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+		return unescape(arr[2]);
+	else
+		return null;
+}
+
+function delCookie(name)
+{
+	var exp = new Date();
+	exp.setTime(exp.getTime() - 1);
+	var cval=getCookie(name);
+	if(cval!=null)
+		document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+}

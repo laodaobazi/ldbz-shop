@@ -20,7 +20,7 @@
 		}
     }
 
-    loadStyles('stylesheets/animate.css');
+    loadStyles('search/stylesheets/animate.css');
 
 	//显示提示信息    toast
 	$.fn.toast = function(options){

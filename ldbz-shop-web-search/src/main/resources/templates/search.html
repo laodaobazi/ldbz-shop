@@ -7,12 +7,12 @@
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 	<title>商品检索-ldbz</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/style.css">
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/responsive.css">
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/pagination/pagination.css">
-	<link rel="shortcut icon" href="${request.contextPath}/favicon.ico" />
-	<script type="text/javascript" src="${request.contextPath}/javascript/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/search/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/search/stylesheets/style.css">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/search/stylesheets/responsive.css">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/search/pagination/pagination.css">
+	<link rel="shortcut icon" href="${request.contextPath}/search/favicon.ico" />
+	<script type="text/javascript" src="${request.contextPath}/search/javascript/jquery.min.js"></script>
 </head>
 <body class="header_sticky">
 	<div class="boxed">
@@ -76,25 +76,32 @@
 	</div><!-- /.boxed -->
 
 		<!-- Javascript -->
-		<script type="text/javascript" src="${request.contextPath}/javascript/tether.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/bootstrap.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/jquery.flexslider-min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/owl.carousel.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/jquery-ui.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/pagination/jquery.pagination.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/template.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/search/javascript/tether.min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/search/javascript/bootstrap.min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/search/javascript/jquery.flexslider-min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/search/javascript/owl.carousel.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/search/javascript/jquery-ui.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/search/pagination/jquery.pagination.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/search/javascript/template.js"></script>
 
-		<script type="text/javascript" src="${request.contextPath}/javascript/main.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/search/javascript/main.js"></script>
 		
-		<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/toast.css" />
-		<script type="text/javascript" src="${request.contextPath}/javascript/toast.js"></script>
+		<link rel="stylesheet" type="text/css" href="${request.contextPath}/search/stylesheets/toast.css" />
+		<script type="text/javascript" src="${request.contextPath}/search/javascript/toast.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/search/javascript/base64.js"></script>
 		
 		<script type="text/javascript">
+			var nginxImage = "${nginxImage}" ;
 			$(function(){
 				//初始化页头检索框
 				$("#input_serch").val("${parameter.search}");
-				var option_text = $(".cat-list-search div[cid='${parameter.category}']").html();
-				$("#select_category").empty().append("<option value='${parameter.category}'>" + option_text + "</option>");
+				if('${parameter.category}'){
+					var option_text = $(".cat-list-search div[cid='${parameter.category}']").html();
+					$("#select_category").empty().append("<option value='${parameter.category}'>" + option_text + "</option>");
+				}else{
+					var div = $("#form_global_search .cat-list-search").find("div")[0] ;
+					location.href = "${request.contextPath}/search?category=" + $(div).attr("cid") ;
+				}
 			});
 		</script>
 
