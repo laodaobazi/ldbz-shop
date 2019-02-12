@@ -62,13 +62,13 @@
 ![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/frame.png)
 
 ## 首页效果图
-![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/index.png)
+![index.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/index.png)
 
 ## 商品明细页效果图
-![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/item.png)
+![item.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/item.png)
 
-## 商品检索明细页效果图
-![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/search.png)
+## 商品检索页效果图
+![search.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/search.png)
 
 ## 后台管理页效果图
-![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/admin.png)
+![admin.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/admin.png)

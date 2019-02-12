@@ -3,23 +3,24 @@
 		<div class="row">
 			<div class="col-lg-8">
 				<div class="flat-row-title style1">
-					<h3>Shopping Cart</h3>
+					<h3>商品列表</h3>
 				</div>
 				<div class="table-cart">
 					<table>
 						<thead>
 							<tr>
-								<th>Product</th>
-								<th>Quantity</th>
-								<th>Total</th>
+								<th>商品名称</th>
+								<th>数量</th>
+								<th>总额</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
+						
 							<tr>
 								<td>
 									<div class="img-product">
-										<img src="images/product/other/12.jpg" alt="">
+										<img src="${request.contextPath}/cart/images/product/other/12.jpg" alt="">
 									</div>
 									<div class="name-product">
 										Apple iPad Mini <br />G2356
@@ -43,41 +44,12 @@
 								</td>
 								<td>
 									<a href="#" title="">
-										<img src="images/icons/delete.png" alt="">
+										<img src="${request.contextPath}/cart/images/icons/delete.png" alt="">
 									</a>
 								</td>
 							</tr>
-							<tr>
-								<td>
-									<div class="img-product">
-										<img src="images/product/other/11.jpg" alt="">
-									</div>
-									<div class="name-product">
-										Beats Pill+ Portable<br />Speaker
-									</div>
-									<div class="price">
-										$1,250.00
-									</div>
-									<div class="clearfix"></div>
-								</td>
-								<td>
-									<div class="quanlity">
-										<span class="btn-down"></span>
-										<input type="number" name="number" value="5" min="1" max="100" placeholder="Quanlity">
-										<span class="btn-up"></span>
-									</div>
-								</td>
-								<td>
-									<div class="total">
-										$6,250.00
-									</div>
-								</td>
-								<td>
-									<span>
-										<img src="images/icons/delete.png" alt="">
-									</span>
-								</td>
-							</tr>
+							
+							
 						</tbody>
 					</table>
 					<div class="form-coupon">

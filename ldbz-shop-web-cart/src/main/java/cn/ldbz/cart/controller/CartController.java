@@ -26,9 +26,7 @@ import java.util.UUID;
 
 /**
  * 购物车 Controller
- *
  */
-
 @Controller
 public class CartController {
 
@@ -87,26 +85,6 @@ public class CartController {
         model.addAttribute("totalPrice", totalPrice);
 
         return "cart";
-    }
-
-    @RequestMapping("/showError")
-    public String showError() {
-        return "error";
-    }
-
-    @RequestMapping("/cart/miniCartServiceNew")
-    @ResponseBody
-    public String miniCartServiceNew(String callback) {
-        String  s = "{\"Cart\":{\"TheSkus\":[],\"TheGifts\":[],\"TheSuit\":[],\"ManJian\":[],\"ManZeng\":[{\"Id\":196031044\n" +
-                ",\"ManFlag\":true,\"ManNum\":0,\"ManPrice\":45.00,\"Num\":1,\"AddMoney\":45.00,\"SuitType\":11,\"PromotionPrice\":16297\n" +
-                ".00,\"ManGifts\":[],\"Skus\":[{\"Id\":3133817,\"Name\":\"Apple\\ iPhone\\ 7\\ (A1660)\\ 32G\\ \\u9ED1\\u8272\\ \\u79FB\n" +
-                "\\u52A8\\u8054\\u901A\\u7535\\u4FE14G\\u624B\\u673A\",\"Num\":2,\"ImgUrl\":\"jfs/t3298/58/1622979569/120892/64989235\n" +
-                "/57d0d400Nfd249af4.jpg\",\"PromotionPrice\":5199.00,\"Gifts\":[],\"CouponAD\":[],\"Score\":0,\"FanPrice\":\"0.00\"\n" +
-                ",\"CheckType\":\"1\",\"Cid\":\"655\",\"VenderId\":\"\"},{\"Id\":3133827,\"Name\":\"Apple\\ iPhone\\ 7\\ (A1660)\\ 128G\\ \\u9ED1\n" +
-                "\\u8272\\ \\u79FB\\u52A8\\u8054\\u901A\\u7535\\u4FE14G\\u624B\\u673A\",\"Num\":1,\"ImgUrl\":\"jfs/t3298/58/1622979569\n" +
-                "/120892/64989235/57d0d400Nfd249af4.jpg\",\"PromotionPrice\":5899.00,\"Gifts\":[],\"CouponAD\":[],\"Score\":0,\"FanPrice\"\n" +
-                ":\"0.00\",\"CheckType\":\"1\",\"Cid\":\"655\",\"VenderId\":\"\"}]}],\"TotalPromotionPrice\":16297.00,\"Num\":3}}";
-        return callback+"("+s+")";
     }
 
     @RequestMapping("/add")
