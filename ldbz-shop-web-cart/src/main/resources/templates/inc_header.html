@@ -228,15 +228,11 @@ $(function(){
 		var key = $("#input_serch").val();
 		var cid = $("#select_category").val();
 		if(!cid){
-			$('body').toast({
-				position:'fixed',
-				content:'请选择分类',
-				duration:1500,
-				isCenter:false,
-				background:'rgba(230,0,0,0.5)',
-				animateIn:'bounceIn-hastrans',
-				animateOut:'bounceOut-hastrans',
-			});
+			jqueryAlert({
+			    'icon'    : '${request.contextPath}/cart/alert/img/warning.png',
+			    'content' : '请选择分类',
+			    'closeTime' : 2000,
+			}).show();
 			return ;
 		}
 		

@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-lg-8">
 				<div class="flat-row-title style1">
-					<h3>商品列表</h3>
+					<h3>购物车中商品列表</h3>
 				</div>
 				<div class="table-cart">
 					<table>
@@ -15,92 +15,165 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody>
-						
-							<tr>
-								<td>
-									<div class="img-product">
-										<img src="${request.contextPath}/cart/images/product/other/12.jpg" alt="">
-									</div>
-									<div class="name-product">
-										Apple iPad Mini <br />G2356
-									</div>
-									<div class="price">
-										$1,250.00
-									</div>
-									<div class="clearfix"></div>
-								</td>
-								<td>
-									<div class="quanlity">
-										<span class="btn-down"></span>
-										<input type="number" name="number" value="5" min="1" max="100" placeholder="Quanlity">
-										<span class="btn-up"></span>
-									</div>
-								</td>
-								<td>
-									<div class="total">
-										$6,250.00
-									</div>
-								</td>
-								<td>
-									<a href="#" title="">
-										<img src="${request.contextPath}/cart/images/icons/delete.png" alt="">
-									</a>
-								</td>
-							</tr>
-							
-							
-						</tbody>
+						<tbody id="cart_item_container"></tbody>
 					</table>
-					<div class="form-coupon">
-						<form action="#" method="get" accept-charset="utf-8">
-							<div class="coupon-input">
-								<input type="text" name="coupon code" placeholder="Coupon Code">
-								<button type="submit">Apply Coupon</button>
-							</div>
-						</form>
-					</div><!-- /.form-coupon -->
 				</div><!-- /.table-cart -->
 			</div><!-- /.col-lg-8 -->
 			<div class="col-lg-4">
 				<div class="cart-totals">
-					<h3>Cart Totals</h3>
+					<h3>购物车汇总</h3>
 					<form action="#" method="get" accept-charset="utf-8">
 						<table>
 							<tbody>
 								<tr>
-									<td>Subtotal</td>
-									<td class="subtotal">$2,589.00</td>
+									<td>小计</td>
+									<td class="subtotal" id="td_cart_itemprice"></td>
 								</tr>
 								<tr>
-									<td>Shipping</td>
+									<td>运费</td>
 									<td class="btn-radio">
 										<div class="radio-info">
-											<input type="radio" id="flat-rate" checked name="radio-flat-rate">
-											<label for="flat-rate">Flat Rate: <span>$3.00</span></label>
-										</div>
-										<div class="radio-info">
-											<input type="radio" id="free-shipping" name="radio-flat-rate">
-											<label for="free-shipping">Free Shipping</label>
-										</div>
-										<div class="btn-shipping">
-											<a href="#" title="">Calculate Shipping</a>
+											<label for="flat-rate"><span id="span_shipping_count" price=10>￥10</span></label>
 										</div>
 									</td><!-- /.btn-radio -->
 								</tr>
 								<tr>
-									<td>Total</td>
-									<td class="price-total">$1,591.00</td>
+									<td>总计</td>
+									<td class="price-total" id="td_cart_pricetotal"></td>
 								</tr>
 							</tbody>
 						</table>
 						<div class="btn-cart-totals">
-							<a href="#" class="update" title="">Update Cart</a>
-							<a href="#" class="checkout" title="">Proceed to Checkout</a>
+							<a href="#" class="checkout" title="">下单支付</a>
 						</div><!-- /.btn-cart-totals -->
 					</form><!-- /form -->
 				</div><!-- /.cart-totals -->
 			</div><!-- /.col-lg-4 -->
 		</div><!-- /.row -->
 	</div><!-- /.container -->
-</section><!-- /.flat-shop-cart -->
+</section>
+
+<script id="cart_item_template" type="text/html">
+{{each $data as item i}}
+	<tr>
+		<td title="{{item.item_title}}">
+			<div class="img-product">
+				<a  href="${itemUrl}/item/{{item.item_code}}" title="" target="_blank"><img src="${nginxImage}{{item.item_image}}" alt=""></a>
+			</div>
+			<div class="name-product" style="padding-top:18px;width:170px;overflow:hidden; white-space:nowrap; text-overflow:ellipsis">{{item.item_title}}</div>
+			<div class="price">￥{{item.item_price}}</div>
+			<div class="clearfix"></div>
+		</td>
+		<td>
+			<div class="quanlity">
+				<span class="btn-down" name="span_btn_down" item_code="{{item.item_code}}"></span>
+				<input id="input_{{item.item_code}}" type="number" name="number" value="{{item.count}}" min="1" max="100" placeholder="数量" readonly=true >
+				<span class="btn-up" name="span_btn_up" item_code="{{item.item_code}}"></span>
+			</div>
+		</td>
+		<td>
+			<div class="total" name="div_item_total" price="{{item.item_price * item.count}}">￥{{item.item_price * item.count}}</div>
+		</td>
+		<td>
+			<a href="javascript:;" title="删除商品" name="a_del_item" item_code="{{item.item_code}}">
+				<img src="${request.contextPath}/cart/images/icons/delete.png" alt="">
+			</a>
+		</td>
+	</tr>
+{{/each}}
+</script>
+<script>
+$(function(){
+	
+	var showCartList = function(){
+		
+		var _cart = getCookie("_cart");
+		if(_cart){
+			_cart = Base64.decode(_cart);
+			var arr = $.parseJSON(_cart);
+			console.log(arr);
+			$("#cart_item_container").html(template('cart_item_template', arr));
+			
+			var item_price_total = 0;
+			var item_price = $("div[name='div_item_total']");
+			$(item_price).each(function(i , o){
+				item_price_total += ($(o).attr("price")*1); 
+			})
+			//小计
+			$("#td_cart_itemprice").text("￥"+item_price_total);
+			//总计
+			$("#td_cart_pricetotal").text("￥"+(item_price_total+$("#span_shipping_count").attr("price")*1));
+			
+			//计数器加一
+			$("span[name='span_btn_up']").click(function(){
+				var item_code = $(this).attr("item_code");
+				var input_item_count = $(this).prev().val();
+				if(input_item_count<100){
+					$(this).prev().val(input_item_count*1+1);
+				}else{
+					jqueryAlert({
+					    'icon'    : '${request.contextPath}/cart/alert/img/warning.png',
+					    'content' : '商品最大100个',
+					    'closeTime' : 2000,
+					}).show();
+				}
+				console.log(item_code);
+			});
+			//计数器减一
+			$("span[name='span_btn_down']").click(function(){
+				var item_code = $(this).attr("item_code");
+				var input_item_count = $(this).next().val();
+				if(input_item_count>1){
+					$(this).next().val(input_item_count*1-1);
+				}else{
+					jqueryAlert({
+					    'icon'    : '${request.contextPath}/cart/alert/img/warning.png',
+					    'content' : '如需清零，请点击删除按钮',
+					    'closeTime' : 2000,
+					}).show();
+				}
+				console.log(item_code);
+			});
+			//移除商品
+			$("a[name='a_del_item']").click(function(){
+				var item_code = $(this).attr("item_code");
+				console.log(item_code);
+				
+				var delItemDialog = jqueryAlert({
+				    'content' : "确定删除所选商品" ,
+				    'modal'   : true,
+				    'contentTextAlign' : 'left',
+				    'width'   : '200px',
+				    'animateType' : 'linear',
+				    'buttons' :{
+				        '取消' : function(){
+				        	delItemDialog.close();
+				        },
+				        '确定' : function(){
+				        	$(arr).each(function(i , o){
+								if(o.item_code == item_code){
+									if(o.count == 1){
+										arr.splice(i , 1);
+									}else{
+										o.count = o.count-1;
+									}
+								}
+							});
+							setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
+							showCartItems();
+							showCartList();
+				        	delItemDialog.close();
+				        }
+				    }
+				});
+				delItemDialog.show();
+			});
+			
+		}
+		
+	}
+	
+	showCartList();
+	
+})
+</script>

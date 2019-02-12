@@ -44,7 +44,7 @@ public class CartServiceImpl implements CartService {
     @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
-    @Autowired
+//    @Autowired
 //    private TbItemMapper itemMapper;
 
     @Override
@@ -53,38 +53,38 @@ public class CartServiceImpl implements CartService {
 
         String key = CART_INFO_PROFIX + uuid;
         String cartInfoString = null;
-        try {
-            cartInfoString = jedisClient.get(key);
-        } catch (Exception e) {
-            logger.error("Redis出错!", e);
-        }
+//        try {
+//            cartInfoString = jedisClient.get(key);
+//        } catch (Exception e) {
+//            logger.error("Redis出错!", e);
+//        }
 
         TbItem item = null;
 
-        try {
-            String redisItem = jedisClient.get(ITEM_INFO_PROFIX + pid + ITEM_INFO_BASE_SUFFIX);
-
-            if (StringUtils.isNotBlank(redisItem)) {
-                item = FastJsonConvert.convertJSONToObject(redisItem, TbItem.class);
-
-            } else {
-                TbItemExample example = new TbItemExample();
-                TbItemExample.Criteria criteria = example.createCriteria();
-
-                criteria.andIdEqualTo(pid);
-
-//                List<TbItem> itemList = itemMapper.selectByExample(example);
-
-//                if (itemList != null && itemList.size() > 0) {
-//                    item = itemList.get(0);
-//                } else {
-                    return LdbzResult.build(500, "商品查询不到!");
-//                }
-            }
-
-        } catch (Exception e) {
-            logger.error("Redis出错!", e);
-        }
+//        try {
+//            String redisItem = jedisClient.get(ITEM_INFO_PROFIX + pid + ITEM_INFO_BASE_SUFFIX);
+//
+//            if (StringUtils.isNotBlank(redisItem)) {
+//                item = FastJsonConvert.convertJSONToObject(redisItem, TbItem.class);
+//
+//            } else {
+//                TbItemExample example = new TbItemExample();
+//                TbItemExample.Criteria criteria = example.createCriteria();
+//
+//                criteria.andIdEqualTo(pid);
+//
+////                List<TbItem> itemList = itemMapper.selectByExample(example);
+//
+////                if (itemList != null && itemList.size() > 0) {
+////                    item = itemList.get(0);
+////                } else {
+//                    return LdbzResult.build(500, "商品查询不到!");
+////                }
+//            }
+//
+//        } catch (Exception e) {
+//            logger.error("Redis出错!", e);
+//        }
 
             CartInfo cartInfo = new CartInfo();
 
@@ -105,12 +105,12 @@ public class CartServiceImpl implements CartService {
 
                 logger.debug("第一次保存商品到Redis uuid:" + uuid);
 
-                try {
-                    jedisClient.set(key, FastJsonConvert.convertObjectToJSON(cartInfos));
-                    jedisClient.expire(key, REDIS_CART_EXPIRE_TIME);
-                } catch (Exception e) {
-                    logger.error("Redis出错!", e);
-                }
+//                try {
+//                    jedisClient.set(key, FastJsonConvert.convertObjectToJSON(cartInfos));
+//                    jedisClient.expire(key, REDIS_CART_EXPIRE_TIME);
+//                } catch (Exception e) {
+//                    logger.error("Redis出错!", e);
+//                }
 
                 return LdbzResult.build(200, "ok", cartInfo);
 
@@ -137,12 +137,12 @@ public class CartServiceImpl implements CartService {
 
                 logger.debug("商品添加完成 购物车" + list.size() + "件商品 uuid:" + uuid);
 
-                try {
-                    jedisClient.set(key, FastJsonConvert.convertObjectToJSON(list));
-                    jedisClient.expire(key, REDIS_CART_EXPIRE_TIME);
-                } catch (Exception e) {
-                    logger.error("Redis出错!", e);
-                }
+//                try {
+//                    jedisClient.set(key, FastJsonConvert.convertObjectToJSON(list));
+//                    jedisClient.expire(key, REDIS_CART_EXPIRE_TIME);
+//                } catch (Exception e) {
+//                    logger.error("Redis出错!", e);
+//                }
 
                 return LdbzResult.build(200, "ok", cartInfo);
             }
@@ -151,13 +151,13 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<CartInfo> getCartInfoListByCookiesId(String cookieUUID) {
 
-        String cartInfoString = jedisClient.get(CART_INFO_PROFIX + cookieUUID);
+//        String cartInfoString = jedisClient.get(CART_INFO_PROFIX + cookieUUID);
 
-        if (StringUtils.isNotBlank(cartInfoString)) {
-            List<CartInfo> cartInfos = FastJsonConvert.convertJSONToArray(cartInfoString, CartInfo.class);
-
-            return cartInfos;
-        }
+//        if (StringUtils.isNotBlank(cartInfoString)) {
+//            List<CartInfo> cartInfos = FastJsonConvert.convertJSONToArray(cartInfoString, CartInfo.class);
+//
+//            return cartInfos;
+//        }
 
         return null;
     }
@@ -177,22 +177,22 @@ public class CartServiceImpl implements CartService {
 
         String key = CART_INFO_PROFIX + cookieUUID;
 
-        List<CartInfo> cartInfoList = getCartInfoListByCookiesId(cookieUUID);
-        if (cartInfoList == null || cartInfoList.size() == 0) {
-            return LdbzResult.build(400, "购物车没有此商品 请不要非法操作!");
-        }
-
-        CartInfo cartInfo = cartInfoList.get(index);
-
-        if (type == 1) {
-            cartInfo.setNum(cartInfo.getNum() + pcount);
-        } else {
-            cartInfo.setNum(cartInfo.getNum() - pcount);
-        }
-        //cartInfoList.remove(index);
-        //cartInfoList.add(index, cartInfo);
-        jedisClient.set(key, FastJsonConvert.convertObjectToJSON(cartInfoList));
-        jedisClient.expire(key,REDIS_CART_EXPIRE_TIME);
+//        List<CartInfo> cartInfoList = getCartInfoListByCookiesId(cookieUUID);
+//        if (cartInfoList == null || cartInfoList.size() == 0) {
+//            return LdbzResult.build(400, "购物车没有此商品 请不要非法操作!");
+//        }
+//
+//        CartInfo cartInfo = cartInfoList.get(index);
+//
+//        if (type == 1) {
+//            cartInfo.setNum(cartInfo.getNum() + pcount);
+//        } else {
+//            cartInfo.setNum(cartInfo.getNum() - pcount);
+//        }
+//        //cartInfoList.remove(index);
+//        //cartInfoList.add(index, cartInfo);
+//        jedisClient.set(key, FastJsonConvert.convertObjectToJSON(cartInfoList));
+//        jedisClient.expire(key,REDIS_CART_EXPIRE_TIME);
 
         return LdbzResult.ok();
     }
