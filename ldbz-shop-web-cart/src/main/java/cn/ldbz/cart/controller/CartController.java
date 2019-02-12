@@ -36,8 +36,8 @@ public class CartController {
 
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
-    @Reference(version = Const.LDBZ_SHOP_CART_VERSION)
-    private CartService cartService;
+//    @Reference(version = Const.LDBZ_SHOP_CART_VERSION)
+//    private CartService cartService;
     @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
@@ -134,14 +134,14 @@ public class CartController {
     public String addCart(Long pid, Integer pcount, HttpServletRequest request, HttpServletResponse response, Model model) {
         String cookieUUID = CookieUtils.getCookieValue(request, Const.CART_KEY);
         if (StringUtils.isBlank(cookieUUID)) {
-            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-            CookieUtils.setCookie(request, response, Const.CART_KEY, uuid);
-            LdbzResult result = cartService.addCart(pid, pcount, uuid);
-            model.addAttribute("cartInfo", (CartInfo) result.getData());
+//            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+//            CookieUtils.setCookie(request, response, Const.CART_KEY, uuid);
+//            LdbzResult result = cartService.addCart(pid, pcount, uuid);
+//            model.addAttribute("cartInfo", (CartInfo) result.getData());
             return "success";
         } else {
-            LdbzResult result = cartService.addCart(pid, pcount, cookieUUID);
-            model.addAttribute("cartInfo", (CartInfo)result.getData());
+//            LdbzResult result = cartService.addCart(pid, pcount, cookieUUID);
+//            model.addAttribute("cartInfo", (CartInfo)result.getData());
             return "success";
         }
 
@@ -159,17 +159,17 @@ public class CartController {
      * @param model
      * @return
      */
-    @RequestMapping("/decreOrIncre")
-    @ResponseBody
-    public LdbzResult decreOrIncre(Long pid, Integer pcount,Integer type,Integer index, HttpServletRequest request, HttpServletResponse response, Model model) {
-        String cookieUUID = CookieUtils.getCookieValue(request, Const.CART_KEY);
-        if (StringUtils.isBlank(cookieUUID)) {
-            model.addAttribute("msg","没有此Cookie!");
-            return LdbzResult.build(400,"请先去购物!");
-        } else {
-            return cartService.decreOrIncre(pid, pcount,type,index, cookieUUID);
-        }
-
-    }
+//    @RequestMapping("/decreOrIncre")
+//    @ResponseBody
+//    public LdbzResult decreOrIncre(Long pid, Integer pcount,Integer type,Integer index, HttpServletRequest request, HttpServletResponse response, Model model) {
+//        String cookieUUID = CookieUtils.getCookieValue(request, Const.CART_KEY);
+//        if (StringUtils.isBlank(cookieUUID)) {
+//            model.addAttribute("msg","没有此Cookie!");
+//            return LdbzResult.build(400,"请先去购物!");
+//        } else {
+//            return cartService.decreOrIncre(pid, pcount,type,index, cookieUUID);
+//        }
+//
+//    }
 
 }
