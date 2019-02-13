@@ -1,15 +1,8 @@
 package cn.ldbz.order.controller;
 
-import cn.ldbz.cart.service.CartService;
-import cn.ldbz.constant.Const;
-import cn.ldbz.order.service.OrderService;
-import cn.ldbz.pojo.CartInfo;
-import cn.ldbz.pojo.LdbzResult;
-import cn.ldbz.redis.service.JedisClient;
-import cn.ldbz.utils.CookieUtils;
-import cn.ldbz.utils.FastJsonConvert;
-import cn.ldbz.utils.IDUtils;
-import com.alibaba.dubbo.config.annotation.Reference;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
+import com.alibaba.dubbo.config.annotation.Reference;
+
+import cn.ldbz.cart.service.CartService;
+import cn.ldbz.constant.Const;
+import cn.ldbz.order.service.OrderService;
+import cn.ldbz.pojo.LdbzResult;
+import cn.ldbz.redis.service.JedisClient;
+import cn.ldbz.utils.CookieUtils;
+import cn.ldbz.utils.IDUtils;
 
 /**
  * 订单Controller
@@ -56,8 +54,8 @@ public class OrderController {
         String cookieValue = CookieUtils.getCookieValue(request, Const.CART_KEY);
         String userCookieValue = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
 
-        List<CartInfo> cartInfoList = new ArrayList<>();
-        List<CartInfo> cartInfos = null;
+//        List<CartInfo> cartInfoList = new ArrayList<>();
+//        List<CartInfo> cartInfos = null;
         int totalPrices = 0;
         if (StringUtils.isNotBlank(cookieValue) && StringUtils.isNotBlank(ids)) {
 
@@ -65,18 +63,18 @@ public class OrderController {
             String[] indexArray = indexs.split(",");
             String[] numArray = nums.split(",");
 
-            cartInfos = cartService.getCartInfoListByCookiesId(cookieValue);
+//            cartInfos = cartService.getCartInfoListByCookiesId(cookieValue);
 
-            for (int i = 0; i < indexArray.length; i++) {
-                int index = Integer.parseInt(indexArray[i]);
-                CartInfo cartInfo = cartInfos.get(index);
-
-                cartInfoList.add(cartInfo);
-
-                totalPrices += cartInfo.getSum();
-                //cartInfos.remove(index);
-
-            }
+//            for (int i = 0; i < indexArray.length; i++) {
+//                int index = Integer.parseInt(indexArray[i]);
+//                CartInfo cartInfo = cartInfos.get(index);
+//
+//                cartInfoList.add(cartInfo);
+//
+//                totalPrices += cartInfo.getSum();
+//                //cartInfos.remove(index);
+//
+//            }
         } else {
             model.addAttribute("msg", "请先去购物！");
             return "error";
@@ -86,15 +84,15 @@ public class OrderController {
         String key = CART_ORDER_INFO_PROFIX + orderId;
         String key2 = CART_ORDER_INDEX_PROFIX + orderId;
         // 保存商品订单项
-        jedisClient.set(key, FastJsonConvert.convertObjectToJSON(cartInfoList));
-        // 保存商品Index --用于购物完成后删除购物车商品
-        jedisClient.set(key2, indexs);
-        jedisClient.expire(key, REDIS_ORDER_EXPIRE_TIME);
-        jedisClient.expire(key2, REDIS_ORDER_EXPIRE_TIME);
+//        jedisClient.set(key, FastJsonConvert.convertObjectToJSON(cartInfoList));
+//        // 保存商品Index --用于购物完成后删除购物车商品
+//        jedisClient.set(key2, indexs);
+//        jedisClient.expire(key, REDIS_ORDER_EXPIRE_TIME);
+//        jedisClient.expire(key2, REDIS_ORDER_EXPIRE_TIME);
 
         model.addAttribute("totalPrices", totalPrices);
         model.addAttribute("orderId", orderId);
-        model.addAttribute("cartInfos", cartInfoList);
+//        model.addAttribute("cartInfos", cartInfoList);
 
         return "order";
     }

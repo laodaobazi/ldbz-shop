@@ -109,8 +109,8 @@ public class OrderServiceImpl implements OrderService {
         order.setUpdateTime(new Date());
 
         Long payment = 0L;
-        List<CartInfo> cartInfos = null;
-        List<CartInfo> cartInfoAll = null;
+//        List<CartInfo> cartInfos = null;
+//        List<CartInfo> cartInfoAll = null;
         String[] split = null;
 
         try {
@@ -123,8 +123,8 @@ public class OrderServiceImpl implements OrderService {
                 return LdbzResult.build(400, "系统错误!");
             }
 
-            cartInfos = FastJsonConvert.convertJSONToArray(cartInfo, CartInfo.class);
-            cartInfoAll = FastJsonConvert.convertJSONToArray(cartInfoListString, CartInfo.class);
+//            cartInfos = FastJsonConvert.convertJSONToArray(cartInfo, CartInfo.class);
+//            cartInfoAll = FastJsonConvert.convertJSONToArray(cartInfoListString, CartInfo.class);
             split = cartIndex.split(",");
 
         } catch (Exception e) {
@@ -132,28 +132,28 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // 保存订单项️
-        if (cartInfos.size() > 0) {
-            for (int i = 0; i < cartInfos.size(); i++) {
-                CartInfo cartInfo = cartInfos.get(i);
-
-                String orderItemId = IDUtils.genOrderItemId();
-                TbOrderItem orderItem = new TbOrderItem();
-                orderItem.setId(orderItemId);
-                orderItem.setOrderId(orderId);
-                orderItem.setItemId(cartInfo.getId() + "");
-                orderItem.setTitle(cartInfo.getName());
-                orderItem.setNum(cartInfo.getNum());
-                orderItem.setPicPath(cartInfo.getImageUrl());
-                orderItem.setPrice(cartInfo.getPrice());
-                orderItem.setTotalFee(cartInfo.getSum());
-                orderItem.setWeights(cartInfo.getWeight() + "");
-                // 记录日志
-                orderItemMapper.insert(orderItem);
-
-                logger.info("保存订单项,订单:" + orderItem.toString());
-                payment += cartInfo.getSum();
-            }
-        }
+//        if (cartInfos.size() > 0) {
+//            for (int i = 0; i < cartInfos.size(); i++) {
+//                CartInfo cartInfo = cartInfos.get(i);
+//
+//                String orderItemId = IDUtils.genOrderItemId();
+//                TbOrderItem orderItem = new TbOrderItem();
+//                orderItem.setId(orderItemId);
+//                orderItem.setOrderId(orderId);
+//                orderItem.setItemId(cartInfo.getId() + "");
+//                orderItem.setTitle(cartInfo.getName());
+//                orderItem.setNum(cartInfo.getNum());
+//                orderItem.setPicPath(cartInfo.getImageUrl());
+//                orderItem.setPrice(cartInfo.getPrice());
+//                orderItem.setTotalFee(cartInfo.getSum());
+//                orderItem.setWeights(cartInfo.getWeight() + "");
+//                // 记录日志
+//                orderItemMapper.insert(orderItem);
+//
+//                logger.info("保存订单项,订单:" + orderItem.toString());
+//                payment += cartInfo.getSum();
+//            }
+//        }
 
         //设置总金额
         order.setPayment(payment + noAnnoyance + "");
@@ -164,19 +164,19 @@ public class OrderServiceImpl implements OrderService {
 
 
         // 移除购物车选中商品️
-        if (cartInfoAll.size() >= split.length) {
-            for (int i = split.length - 1; i >= 0; i--) {
-                cartInfoAll.remove(Integer.parseInt(split[i]));
-            }
-            logger.debug("移除购物车购买商品！数量:" + split.length);
-        } else {
-            logger.error("订单项数量小于和index数量");
-            return LdbzResult.build(400, "系统错误!");
-        }
+//        if (cartInfoAll.size() >= split.length) {
+//            for (int i = split.length - 1; i >= 0; i--) {
+//                cartInfoAll.remove(Integer.parseInt(split[i]));
+//            }
+//            logger.debug("移除购物车购买商品！数量:" + split.length);
+//        } else {
+//            logger.error("订单项数量小于和index数量");
+//            return LdbzResult.build(400, "系统错误!");
+//        }
 
         try {
 
-            jedisClient.set(key3, FastJsonConvert.convertObjectToJSON(cartInfoAll));
+//            jedisClient.set(key3, FastJsonConvert.convertObjectToJSON(cartInfoAll));
 
         } catch (Exception e) {
             logger.error("Redis 服务出错!", e);
