@@ -5,3 +5,7 @@ apollo:
 
 # 成功响应首页
 portal_path: 'http://localhost:8104/index'
+
+logging:
+  level:
+     cn.ldbz.mapper: debug
