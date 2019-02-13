@@ -1,16 +1,7 @@
 package cn.ldbz.order.service.impl;
 
-import cn.ldbz.constant.Const;
-import cn.ldbz.mapper.TbOrderItemMapper;
-import cn.ldbz.mapper.TbOrderMapper;
-import cn.ldbz.order.service.OrderService;
-import cn.ldbz.pojo.*;
-import cn.ldbz.redis.service.JedisClient;
-import cn.ldbz.sso.service.UserService;
-import cn.ldbz.utils.FastJsonConvert;
-import cn.ldbz.utils.IDUtils;
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.config.annotation.Service;
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +10,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.dubbo.config.annotation.Service;
+
+import cn.ldbz.constant.Const;
+import cn.ldbz.mapper.TbOrderItemMapper;
+import cn.ldbz.mapper.TbOrderMapper;
+import cn.ldbz.order.service.OrderService;
+import cn.ldbz.pojo.LdbzResult;
+import cn.ldbz.pojo.LdbzUser;
+import cn.ldbz.pojo.TbOrder;
+import cn.ldbz.redis.service.JedisClient;
+import cn.ldbz.sso.service.UserService;
+import cn.ldbz.utils.FastJsonConvert;
 
 /**
  * 订单Service
@@ -69,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         String data = (String) result.getData();
-        TbUser user = FastJsonConvert.convertJSONToObject(data, TbUser.class);
+        LdbzUser user = FastJsonConvert.convertJSONToObject(data, LdbzUser.class);
 
         String userId = user.getId() + "";
         userId = "0000" + userId;

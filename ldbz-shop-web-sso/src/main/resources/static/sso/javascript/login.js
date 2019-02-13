@@ -27,7 +27,7 @@ $(function(){
     	  
     	  //监听提交
     	  form.on('submit(btn_login)', function(data){
-    		  $.post(contextPath+"/user/login" , data.field , function(ret){
+    		  $.post(contextPath+"/sso/user/login" , data.field , function(ret){
     			  var json = $.parseJSON(ret) ;
     			  if(!json.success){
     				  layer.msg(json.info);

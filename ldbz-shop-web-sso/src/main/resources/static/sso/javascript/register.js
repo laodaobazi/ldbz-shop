@@ -9,7 +9,7 @@ $(function(){
     //发送邮件验证码
     $("#sendEmail").click(function(){
     	var email = $("#email").val();
-    	$.post(contextPath+"/notifyuser/emailCode" , {
+    	$.post(contextPath+"/sso/notifyuser/emailCode" , {
     		email : email 
     	} , function(ret){
     		var json = $.parseJSON(ret) ;
@@ -21,7 +21,7 @@ $(function(){
     $("#regName").blur(function(){
     	var _nick = $(this).val();
     	if($.trim(_nick).length>1){
-    		$.post(contextPath+"/validateuser/nick" , {
+    		$.post(contextPath+"/sso/validateuser/nick" , {
     			email : '' ,
     			regName : _nick
     		} , function(ret){
@@ -38,7 +38,7 @@ $(function(){
     $("#email").blur(function(){
     	var _email = $(this).val();
     	if($.trim(_email).length>1){
-    		$.post(contextPath+"/validateuser/email" , {
+    		$.post(contextPath+"/sso/validateuser/email" , {
     			regName : '' ,
     			email : _email
     		} , function(ret){
@@ -56,7 +56,7 @@ $(function(){
     	  
     	  //监听提交
     	  form.on('submit(btn_register)', function(data){
-    		  $.post(contextPath+"/registerByEmail" , data.field , function(ret){
+    		  $.post(contextPath+"/sso/registerByEmail" , data.field , function(ret){
     			  var json = $.parseJSON(ret) ;
     			  if(!json.success){
     				  layer.msg(json.info);

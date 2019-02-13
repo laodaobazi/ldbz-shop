@@ -1,8 +1,5 @@
 package cn.ldbz.cart.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -21,8 +19,7 @@ import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 
 import cn.ldbz.cart.service.CartService;
 import cn.ldbz.constant.Const;
-import cn.ldbz.pojo.LdbzCart;
-import cn.ldbz.pojo.TbUser;
+import cn.ldbz.pojo.LdbzUser;
 import cn.ldbz.redis.service.JedisClient;
 import cn.ldbz.utils.CookieUtils;
 import cn.ldbz.utils.FastJsonConvert;
@@ -81,16 +78,15 @@ public class CartController {
 
     @RequestMapping("/cart")
     public String showCart( HttpServletRequest request, HttpServletResponse response,Model model) {
-
-        String cookieUUID = CookieUtils.getCookieValue(request, Const.CART_KEY);
-        String tokenLogin = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
     	
     	model.addAttribute("itemUrl", NGINX_ITEM_URL);
     	model.addAttribute("searchUrl", SEARCH_WEB_URL);
     	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
 
+        String tokenLogin = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
+
         if (StringUtils.isNoneEmpty(tokenLogin)) {
-        	TbUser user = null;
+        	LdbzUser user = null;
         	String userJson = null;
             try {
                 userJson = jedisClient.get(USER_SESSION + tokenLogin);
@@ -98,30 +94,23 @@ public class CartController {
                 logger.error("Redis 错误", e);
             }
             if (StringUtils.isNoneEmpty(userJson)) {
-                user = FastJsonConvert.convertJSONToObject(userJson, TbUser.class);
+                user = FastJsonConvert.convertJSONToObject(userJson, LdbzUser.class);
+                
+                String cookieCart = CookieUtils.getCookieValue(request, Const.CART_KEY);
+                if(StringUtils.isNoneEmpty(cookieCart)) {
+                	//如果cookie里面不等于空，则使用浏览器cookie里面的值
+                	String itemsJSON = new String(Base64Utils.decodeFromString(cookieCart));
+                	cartService.setCartListByUserId(user.getId() , itemsJSON);
+//                	List<LdbzCart> itemsObj = FastJsonConvert.convertJSONToArray(itemsJSON, LdbzCart.class);
+                }else {
+                	//如果cookie里面没有商品，则到redis里面获取
+                	String itemsJSON= cartService.getCartListByUserId(user.getId());
+                	CookieUtils.setCookie(request, response, Const.CART_KEY, Base64Utils.encodeToString(itemsJSON.getBytes()), Integer.MAX_VALUE);
+                }
+                
             }
             model.addAttribute("user", user);
         }
-
-        List<LdbzCart> cartInfos = new ArrayList<>();
-        if (StringUtils.isNoneEmpty(cookieUUID)) {
-            cartInfos= cartService.getCartInfoListByCookiesId(cookieUUID);
-        }
-
-//        if (cartInfos.size() == 0) {
-//            model.addAttribute("cartInfos", null);
-//            return "cart";
-//        }
-
-//        int totalPrice = 0;
-//
-//        for (int i = 0; i < cartInfos.size(); i++) {
-//            CartInfo cartInfo = cartInfos.get(i);
-//            totalPrice += cartInfo.getSum();
-//        }
-//
-//        model.addAttribute("cartInfos", cartInfos);
-//        model.addAttribute("totalPrice", totalPrice);
 
         return "cart";
     }

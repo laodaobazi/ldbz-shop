@@ -1,13 +1,16 @@
 package cn.ldbz.pojo;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
 
+import lombok.Data;
+
 @Data
-public class TbUser implements Serializable {
-    private Long id;
+public class LdbzUser  implements Serializable {
+
+	private static final long serialVersionUID = -3435082897534297324L;
+
+	private Long id;
 
     private String username;
 
@@ -20,5 +23,5 @@ public class TbUser implements Serializable {
     private Date created;
 
     private Date updated;
-
+    
 }

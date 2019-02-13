@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzUserMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!--    表中的字段   -->
+  <sql id="Base_Column_List" >
+    id, username, password, phone, email, created, updated
+  </sql>
+  
+  <!--     用户登录    -->
+  <select id="selectByUser" resultMap="BaseResultMap" parameterType="cn.ldbz.pojo.LdbzUser" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_user u
+    <where>
+	    <if test="entity.username != null" >
+	    	u.username = #{entity.username , jdbcType=VARCHAR}
+	    </if>
+	    <if test="entity.email != null" >
+	    	and u.email = #{entity.email , jdbcType=VARCHAR}
+	    </if>
+	</where>
+  </select>
+  
+  <!--    用户注册    -->
+  <insert id="insertByEntity" parameterType="cn.ldbz.pojo.LdbzUser" >
+    insert into tb_user (id, username, password, phone, email, created, updated)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{updated,jdbcType=TIMESTAMP})
+  </insert>
+  
+</mapper>

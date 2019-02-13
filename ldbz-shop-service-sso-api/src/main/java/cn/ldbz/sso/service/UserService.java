@@ -1,7 +1,7 @@
 package cn.ldbz.sso.service;
 
 import cn.ldbz.pojo.LdbzResult;
-import cn.ldbz.pojo.TbUser;
+import cn.ldbz.pojo.LdbzUser;
 
 /**
  * 用户登录相关服务
@@ -19,7 +19,7 @@ public interface UserService {
      *           data: "fe5cb546aeb3ce1bf37abcb08a40493e" //登录成功，返回token
      *         }
      */
-    LdbzResult login(TbUser user);
+    LdbzResult login(LdbzUser user);
 
     /**
      * 请求格式 GET

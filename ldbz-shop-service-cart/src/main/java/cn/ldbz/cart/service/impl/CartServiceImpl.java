@@ -1,19 +1,18 @@
 package cn.ldbz.cart.service.impl;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.ctrip.framework.apollo.model.ConfigChange;
+import com.ctrip.framework.apollo.model.ConfigChangeEvent;
+import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 
 import cn.ldbz.cart.service.CartService;
 import cn.ldbz.constant.Const;
-import cn.ldbz.pojo.LdbzCart;
 import cn.ldbz.redis.service.JedisClient;
 
 /**
@@ -22,7 +21,6 @@ import cn.ldbz.redis.service.JedisClient;
  */
 @Component
 @Service(version = Const.LDBZ_SHOP_CART_VERSION)
-@Transactional
 public class CartServiceImpl implements CartService {
 
     private static final Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
@@ -31,26 +29,42 @@ public class CartServiceImpl implements CartService {
     private String CART_INFO_PROFIX;
     @Value("${redisKey.prefix.redis_cart_expire_time}")
     private Integer REDIS_CART_EXPIRE_TIME;
-    @Value("${redisKey.prefix.item_info_profix}")
-    private String ITEM_INFO_PROFIX;
-    @Value("${redisKey.prefix.item_info_base_suffix}")
-    private String ITEM_INFO_BASE_SUFFIX;
 
     @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
-    @Override
-    public List<LdbzCart> getCartInfoListByCookiesId(String cookieUUID) {
 
-//        String cartInfoString = jedisClient.get(CART_INFO_PROFIX + cookieUUID);
+    /**
+     * 监听配置项是否有修改
+     */
+    @ApolloConfigChangeListener
+	public void onChange(ConfigChangeEvent changeEvent) {
+		for (String key : changeEvent.changedKeys()) {
+			ConfigChange change = changeEvent.getChange(key);
+			logger.debug("Found change - key: {}, oldValue: {}, newValue: {}, changeType: {}",
+					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType());
+			switch(key) {
+				case "redisKey.prefix.cart_info_profix" : 
+					CART_INFO_PROFIX = change.getNewValue();
+				case "redisKey.prefix.redis_cart_expire_time" : 
+					REDIS_CART_EXPIRE_TIME = Integer.valueOf(change.getNewValue());
+			}
+		}
+	}
 
-//        if (StringUtils.isNotBlank(cartInfoString)) {
-//            List<CartInfo> cartInfos = FastJsonConvert.convertJSONToArray(cartInfoString, CartInfo.class);
-//
-//            return cartInfos;
-//        }
+	@Override
+	public String getCartListByUserId(Long userId) {
+		logger.debug("getCartListByUserId  userId:{}" , userId);
+		return jedisClient.get(CART_INFO_PROFIX + userId);
+	}
 
-        return null;
-    }
+	@Override
+	public boolean setCartListByUserId(Long userId, String items) {
+		String key = CART_INFO_PROFIX + userId ;
+		logger.debug("setCartListByUserId  userId:{}  ,  items:{}" , userId , items);
+		jedisClient.set(key , items);
+		jedisClient.expire(key , REDIS_CART_EXPIRE_TIME);
+		return true;
+	}
 
 }

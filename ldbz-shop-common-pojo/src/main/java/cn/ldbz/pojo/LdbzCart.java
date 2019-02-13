@@ -10,18 +10,18 @@ import lombok.Setter;
 public class LdbzCart  implements Serializable {
 	
 	private static final long serialVersionUID = 6006177874680486651L;
-	
-	private Long code;
-    private String title;
-    private String image;
-    private Long price;
+
+	private Long item_code;
+    private String item_title;
+    private String item_image;
+    private Float item_price;
     private Integer count;
     
     @Setter(value = AccessLevel.PRIVATE)
-    private Long total;
+    private Float total;
 
-    public Long getTotal() {
-        return price * count;
+    public Float getTotal() {
+        return item_price * count;
     }
 
 }
