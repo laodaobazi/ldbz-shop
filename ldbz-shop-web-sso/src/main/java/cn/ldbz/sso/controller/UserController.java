@@ -137,8 +137,8 @@ public class UserController {
         return "{\"success\":false , \"info\":\"用户名密码有误\"}";
     }
 
-    @RequestMapping(value = "/loginservice")
     @ResponseBody
+    @RequestMapping(value = "/loginservice")
     public String valida(String callback, String method, Integer uid) {
         return callback + "({\"Identity\":{\"Unick\":\"\",\"Name\":\"\",\"IsAuthenticated\":false}})";
     }
@@ -150,9 +150,10 @@ public class UserController {
      * @param email 邮箱
      * @return
      */
-    @RequestMapping("/validateuser/{isEngaged}")
     @ResponseBody
-    public String validateUser(@PathVariable String isEngaged, @RequestParam(defaultValue = "") String regName, @RequestParam(defaultValue = "") String email) {
+    @RequestMapping("/validateuser/{isEngaged}")
+    public String validateUser(@PathVariable String isEngaged, @RequestParam(defaultValue = "") String regName, 
+    		@RequestParam(defaultValue = "") String email) {
         return userService.validateUser(isEngaged, regName, email);
     }
 
@@ -161,8 +162,8 @@ public class UserController {
      * @param email 邮箱
      * @return
      */
-    @RequestMapping("/notifyuser/emailCode")
     @ResponseBody
+    @RequestMapping("/notifyuser/emailCode")
     public String emailCode(String email) {
         return notifyUserService.emailNotify(email);
     }
@@ -180,8 +181,8 @@ public class UserController {
      * @param uuid          Redis验证码uuid
      * @return
      */
-    @RequestMapping("/registerByEmail")
     @ResponseBody
+    @RequestMapping("/registerByEmail")
     public String sendRegEmail(String regName, String pwdRepeat, String pwd, String emailCode, String uuid, String authCode, String email) {
         return userService.register(regName, pwd, pwdRepeat, emailCode, uuid, authCode, email);
     }
