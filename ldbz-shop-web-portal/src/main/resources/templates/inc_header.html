@@ -8,10 +8,10 @@
 							<a href="javascript:;" title="">老刀把子欢迎你！</a>
 						</li>
 						<li>
-							<a href="javascript:;" title="">免费注册</a>
+							<a href="${request.contextPath}/sso/register" title="">免费注册</a>
 						</li>
 						<li>
-							<a href="javascript:;" title="">会员登录</a>
+							<a href="${request.contextPath}/sso/login" title="">会员登录</a>
 						</li>
 					</ul><!-- /.flat-support -->
 				</div><!-- /.col-md-4 -->
@@ -28,16 +28,16 @@
 							<a href="javascript:;" title="">我的淘宝<i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class="unstyled">
 								<li>
-									<a href="javascript:;" title="">登录</a>
+									<a href="${request.contextPath}/sso/login" title="">登录</a>
 								</li>
 								<li>
-									<a href="shop-cart.html" title="">购物车</a>
+									<a href="${request.contextPath}/cart" title="">购物车</a>
 								</li>
 								<li>
 									<a href="my-account.html" title="">个人信息</a>
 								</li>
 								<li>
-									<a href="my-account.html" title="">我的订单</a>
+									<a href="${request.contextPath}/order" title="">我的订单</a>
 								</li>
 							</ul><!-- /.unstyled -->
 						</li>
@@ -155,7 +155,7 @@
 										<ul>
 											<!-- 3级菜单 -->
 											<ldbz:category_tag level="3" fid="${category2.id}" ;category3>
-												<li><a href="${searchUrl}?category=${category.id}&cid=${category3.id}" title="">${category3.categoryName}</a></li>
+												<li><a href="${request.contextPath}?category=${category.id}&cid=${category3.id}" title="">${category3.categoryName}</a></li>
 											</ldbz:category_tag>
 										</ul>
 										<!-- <div class="show">
@@ -186,7 +186,7 @@
 														<ul class="submenu-child">
 															<!-- 3级菜单 -->
 															<ldbz:category_tag level="3" fid="${category2.id}" ;category3>
-																<li><a href="${searchUrl}?category=${category.id}&cid=${category3.id}" title="">${category3.categoryName}</a></li>
+																<li><a href="${request.contextPath}?category=${category.id}&cid=${category3.id}" title="">${category3.categoryName}</a></li>
 															</ldbz:category_tag>
 														</ul>
 														<!-- <div class="show">
@@ -228,15 +228,11 @@ $(function(){
 		var key = $("#input_serch").val();
 		var cid = $("#select_category").val();
 		if(!cid){
-			$('body').toast({
-				position:'fixed',
-				content:'请选择分类',
-				duration:1500,
-				isCenter:false,
-				background:'rgba(230,0,0,0.5)',
-				animateIn:'bounceIn-hastrans',
-				animateOut:'bounceOut-hastrans',
-			});
+			jqueryAlert({
+			    'icon'    : '${request.contextPath}/portal/alert/img/warning.png',
+			    'content' : '请选择分类',
+			    'closeTime' : 2000,
+			}).show();
 			return ;
 		}
 		

@@ -3,9 +3,6 @@ app:
 apollo:
   meta: http://192.168.136.133:8080
 
-# 成功响应首页
-portal_path: 'http://localhost:8104/index'
-
 logging:
   level:
      cn.ldbz.mapper: debug

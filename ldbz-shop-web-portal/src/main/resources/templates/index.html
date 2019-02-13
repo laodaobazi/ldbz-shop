@@ -67,11 +67,12 @@
 	
 	<script type="text/javascript">
 		var nginxImage = "${nginxImage}" ;
+		var contextPath = "${request.contextPath}";
 	</script>
 
 	<script type="text/javascript" src="${request.contextPath}/portal/javascript/main.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/portal/stylesheets/toast.css" />
-	<script type="text/javascript" src="${request.contextPath}/portal/javascript/toast.js"></script>
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/portal/alert/css/alert.css" />
+	<script type="text/javascript" src="${request.contextPath}/portal/alert/js/alert.min.js"></script>
 </body>	
 </html>

@@ -23,7 +23,7 @@
 							<div class="product-box style1">
 								<div class="imagebox style1">
 									<div class="box-image">
-										<a href="${itemUrl}/item/${item.CODE}" target="_blank">
+										<a href="${request.contextPath}/item/${item.CODE}" target="_blank">
 											<img src="${nginxImage}${item.IMAGE}" alt="">
 										</a>
 									</div><!-- /.box-image -->
@@ -32,7 +32,7 @@
 											<a href="javascript:;" title="">${item.CATEGORY_NAME}</a>
 										</div>
 										<div class="product-name">
-											<a href="${itemUrl}/item/${item.CODE}" target="_blank" title="${item.TITLE}">${item.TITLE}</a>
+											<a href="${request.contextPath}/item/${item.CODE}" target="_blank" title="${item.TITLE}">${item.TITLE}</a>
 										</div>
 										<div class="price">
 											<span class="regular">￥${item.PRICE,numberFormat}</span>

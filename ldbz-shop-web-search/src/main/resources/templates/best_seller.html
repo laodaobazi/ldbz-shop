@@ -7,13 +7,13 @@
 		<ldbz:sheet_item_tag key="Bestsellers" ;item>
 			<li>
 				<div class="img-product">
-					<a href="${itemUrl}/item/${item.CODE}" target="_blank">
+					<a href="${request.contextPath}/item/${item.CODE}" target="_blank">
 						<img src="${nginxImage}${item.IMAGE}" alt="" style="width:100px;height:100px;">
 					</a>
 				</div>
 				<div class="info-product">
 					<div class="name">
-						<a href="${itemUrl}/item/${item.CODE}" target="_blank" title="">${item.TITLE}</a>
+						<a href="${request.contextPath}/item/${item.CODE}" target="_blank" title="">${item.TITLE}</a>
 					</div>
 					<div class="queue">
 						<i class="fa fa-star" aria-hidden="true"></i>

@@ -30,12 +30,12 @@
 								<div class="imagebox">
 									 <ul class="box-image owl-carousel-1">
 										<li>
-											<a href="${itemUrl}/item/${item.CODE}" target="_blank">
+											<a href="${request.contextPath}/item/${item.CODE}" target="_blank">
 												<img src="${nginxImage}${item.IMAGE}" alt="">
 											</a>
 										</li>
 										<li>
-											<a href="${itemUrl}/item/${item.CODE}" target="_blank">
+											<a href="${request.contextPath}/item/${item.CODE}" target="_blank">
 												<img src="${nginxImage}${item.IMAGE}" alt="">
 											</a>
 										</li>
@@ -45,7 +45,7 @@
 											<a href="javascript:;" title="">${item.CATEGORY_NAME}</a>
 										</div>
 										<div class="product-name">
-											<a href="${itemUrl}/item/${item.CODE}" target="_blank">${item.TITLE}</a>
+											<a href="${request.contextPath}/item/${item.CODE}" target="_blank">${item.TITLE}</a>
 										</div>
 										<div class="price">
 											<span class="sale">￥${item.PRICE,numberFormat}</span>

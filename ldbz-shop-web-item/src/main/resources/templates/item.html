@@ -57,11 +57,12 @@
 	<script type="text/javascript">
 		var itemCode = "${itemCode}" ;
 		var nginxImage = "${nginxImage}" ;
+		var contextPath = "${request.contextPath}";
 	</script>
 	<script type="text/javascript" src="${request.contextPath}/item/javascript/main.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/item/stylesheets/toast.css" />
-	<script type="text/javascript" src="${request.contextPath}/item/javascript/toast.js"></script>
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/item/alert/css/alert.css" />
+	<script type="text/javascript" src="${request.contextPath}/item/alert/js/alert.min.js"></script>
 
 	</body>	
 </html>

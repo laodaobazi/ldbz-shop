@@ -46,7 +46,7 @@
 				<div class="product-box">
 					<div class="imagebox">
 						<div class="box-image owl-carousel-1">
-							<a href="${itemUrl}/item/{{item.code}}" title="" target="_blank" >
+							<a href="${request.contextPath}/item/{{item.code}}" title="" target="_blank" >
 								<img src="${nginxImage}{{item.image}}" alt="">
 							</a>
 						</div>
@@ -55,7 +55,7 @@
 								<a href="javascript:;" title="">{{item.categoryName}}</a>
 							</div>
 							<div class="product-name">
-								<a href="${itemUrl}/item/{{item.code}}" title="" target="_blank" >{{item.title}}</a>
+								<a href="${request.contextPath}/item/{{item.code}}" title="" target="_blank" >{{item.title}}</a>
 							</div>
 							<div class="price">
 								<span class="sale">￥{{item.price}}</span>
@@ -94,7 +94,7 @@
 			<div class="product-box style3">
 				<div class="imagebox style1 v3">
 					<div class="box-image">
-						<a href="${itemUrl}/item/{{item.code}}" title="" target="_blank">
+						<a href="${request.contextPath}/item/{{item.code}}" title="" target="_blank">
 							<img src="${nginxImage}{{item.image}}" alt="">
 						</a>
 					</div>
@@ -103,7 +103,7 @@
 							<a href="javascript:;" title="">￥{{item.categoryName}}</a>
 						</div>
 						<div class="product-name">
-							<a href="${itemUrl}/item/{{item.code}}" title="" target="_blank">￥{{item.title}}</a>
+							<a href="${request.contextPath}/item/{{item.code}}" title="" target="_blank">￥{{item.title}}</a>
 						</div>
 						<div class="info">
 							<p>
@@ -177,7 +177,7 @@ function getItemsBySolr(pageno){
 	
 	$.ajax({
 		contentType: 'application/x-www-form-urlencoded',
-		url: '/search/getItemPage',
+		url: '${request.contextPath}/search/getItemPage',
 		method: 'post',
 		data:{
 			limit : limit
@@ -236,15 +236,11 @@ function getItemsBySolr(pageno){
 	    			
 	    			setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
 	    			
-	    			$('body').toast({
-	    				position:'fixed',
-	    				content:'已添加到购物车',
-	    				duration:1500,
-	    				isCenter:false,
-	    				background:'rgba(230,0,0,0.5)',
-	    				animateIn:'bounceIn-hastrans',
-	    				animateOut:'bounceOut-hastrans',
-	    			});
+	    			jqueryAlert({
+						'icon'    : '${request.contextPath}/portal/alert/img/right.png',
+						'content' : '已添加到购物车',
+						'closeTime' : 2000,
+					}).show();
 	    			
 	        		//显示购物车中的商品数量变化
 	        		if(arr.length>0){

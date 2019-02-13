@@ -41,16 +41,9 @@ public class CartController {
     @Value("${redisKey.prefix.user_session}")
     private String USER_SESSION;
 
-
     //图片的URL路径
     @Value("${redisKey.nginxImage.url.key}")
     private String INDEX_NGINX_IMAGE_URL;
-    //商品的URL路径
-    @Value("${redisKey.item.url.key}")
-    private String NGINX_ITEM_URL;
-    //检索访问的URL路径
-    @Value("${search.web.url}")
-    private String SEARCH_WEB_URL;
 
 
     /**
@@ -65,10 +58,6 @@ public class CartController {
 			switch(key) {
 				case "redisKey.nginxImage.url.key" : 
 					INDEX_NGINX_IMAGE_URL = change.getNewValue();
-				case "redisKey.item.url.key" : 
-					NGINX_ITEM_URL = change.getNewValue();
-				case "search.web.url" : 
-					SEARCH_WEB_URL = change.getNewValue();
 				case "redisKey.prefix.user_session" : 
 					USER_SESSION = change.getNewValue();
 			}
@@ -79,8 +68,6 @@ public class CartController {
     @RequestMapping("/cart")
     public String showCart( HttpServletRequest request, HttpServletResponse response,Model model) {
     	
-    	model.addAttribute("itemUrl", NGINX_ITEM_URL);
-    	model.addAttribute("searchUrl", SEARCH_WEB_URL);
     	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
 
         String tokenLogin = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);

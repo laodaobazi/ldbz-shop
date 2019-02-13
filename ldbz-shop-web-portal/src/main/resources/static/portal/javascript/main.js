@@ -402,15 +402,11 @@
     			
     			setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
     			
-    			$('body').toast({
-    				position:'fixed',
-    				content:'已添加到购物车',
-    				duration:1500,
-    				isCenter:false,
-    				background:'rgba(230,0,0,0.5)',
-    				animateIn:'bounceIn-hastrans',
-    				animateOut:'bounceOut-hastrans',
-    			});
+    			jqueryAlert({
+					'icon'    : contextPath + '/portal/alert/img/right.png',
+					'content' : '已添加到购物车',
+					'closeTime' : 2000,
+				}).show();
     			
         		//显示购物车中的商品数量变化
         		if(arr.length>0){
