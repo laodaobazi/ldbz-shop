@@ -68,11 +68,12 @@
 			<div class="quanlity">
 				<span class="btn-down" name="span_btn_down" item_code="{{item.item_code}}"></span>
 				<input id="input_{{item.item_code}}" type="number" name="number" value="{{item.count}}" min="1" max="100" placeholder="数量" readonly=true >
-				<span class="btn-up" name="span_btn_up" item_code="{{item.item_code}}"></span>
+				<span class="btn-up" name="span_btn_up" item_code="{{item.item_code}}"
+					item_title="{{item.item_title}}" item_price="{{item.item_price}}" item_image="{{item.item_image}}"></span>
 			</div>
 		</td>
 		<td>
-			<div class="total" name="div_item_total" price="{{item.item_price * item.count}}">￥{{item.item_price * item.count}}</div>
+			<div class="total" name="div_item_total" price="{{(item.item_price * item.count).toFixed(2)}}">￥{{(item.item_price * item.count).toFixed(2)}}</div>
 		</td>
 		<td>
 			<a href="javascript:;" title="删除商品" name="a_del_item" item_code="{{item.item_code}}">
@@ -91,7 +92,6 @@ $(function(){
 		if(_cart){
 			_cart = Base64.decode(_cart);
 			var arr = $.parseJSON(_cart);
-			console.log(arr);
 			$("#cart_item_container").html(template('cart_item_template', arr));
 			
 			var item_price_total = 0;
@@ -100,16 +100,48 @@ $(function(){
 				item_price_total += ($(o).attr("price")*1); 
 			})
 			//小计
-			$("#td_cart_itemprice").text("￥"+item_price_total);
+			$("#td_cart_itemprice").text("￥"+item_price_total.toFixed(2));
 			//总计
-			$("#td_cart_pricetotal").text("￥"+(item_price_total+$("#span_shipping_count").attr("price")*1));
+			$("#td_cart_pricetotal").text("￥"+(item_price_total+$("#span_shipping_count").attr("price")*1).toFixed(2));
 			
 			//计数器加一
 			$("span[name='span_btn_up']").click(function(){
-				var item_code = $(this).attr("item_code");
 				var input_item_count = $(this).prev().val();
 				if(input_item_count<100){
 					$(this).prev().val(input_item_count*1+1);
+
+	        		var item_code = $(this).attr("item_code") ;
+	        		var item_title = $(this).attr("item_title") ;
+	        		var item_price = $(this).attr("item_price") ;
+	        		var item_image = $(this).attr("item_image") ;
+	    			$(arr).each(function(i , o){
+	    				if(item_code == o.item_code){
+	    					//已经在购物车里面
+	    					arr.splice(i , 1);
+	    					arr.unshift({'item_code':item_code , 'item_title':item_title , 'item_price':item_price , 'item_image':item_image,'count':o.count*1+1});
+	    				}
+	    			});
+	    			
+	    			setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
+	    			jqueryAlert({
+						'icon'    : '${request.contextPath}/cart/alert/img/right.png',
+						'content' : '商品数量加一',
+						'closeTime' : 2000,
+					}).show();
+	    			
+	        		//显示购物车中的商品数量变化
+	        		if(arr.length>0){
+	        			var item_count = 0 , item_price = 0 ;
+	        			$(arr).each(function(i , o){
+	        				item_count += (o.count*1) ;
+	        				item_price += (o.item_price*o.count) ;
+	        			});
+	        			$("#span_cart_itemcount").text(item_count).show();
+	        		}else{
+	        			$("#span_cart_itemcount").text('').hide();
+	        		}
+	    			showCartList();
+	    			
 				}else{
 					jqueryAlert({
 					    'icon'    : '${request.contextPath}/cart/alert/img/warning.png',
@@ -117,7 +149,6 @@ $(function(){
 					    'closeTime' : 2000,
 					}).show();
 				}
-				console.log(item_code);
 			});
 			//计数器减一
 			$("span[name='span_btn_down']").click(function(){
@@ -137,8 +168,6 @@ $(function(){
 			//移除商品
 			$("a[name='a_del_item']").click(function(){
 				var item_code = $(this).attr("item_code");
-				console.log(item_code);
-				
 				var delItemDialog = jqueryAlert({
 				    'content' : "确定删除所选商品" ,
 				    'modal'   : true,
@@ -174,6 +203,5 @@ $(function(){
 	}
 	
 	showCartList();
-	
 })
 </script>
