@@ -23,9 +23,7 @@ import cn.ldbz.utils.IDUtils;
 
 /**
  * 订单Controller
- *
  */
-
 @Controller
 public class OrderController {
 
@@ -98,8 +96,6 @@ public class OrderController {
     }
     @RequestMapping("/success")
     public String showSuccess() {
-
-
         return "success";
     }
 
@@ -123,7 +119,6 @@ public class OrderController {
         String userCookieValue = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
 
         LdbzResult result = orderService.generateOrder(userCookieValue,cartCookieValue,addrId, noAnnoyance, paymentType,orderId, shippingName);
-
 
         return "success";
     }

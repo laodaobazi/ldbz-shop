@@ -15,9 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 拦截用户登录
- *
  */
-
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Value("${sso_login_page}")
