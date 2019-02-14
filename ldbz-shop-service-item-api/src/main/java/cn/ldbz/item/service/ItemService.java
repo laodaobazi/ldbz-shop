@@ -35,6 +35,7 @@ public interface ItemService {
 	 * @return
 	 */
 	String getItemImageByRedis(Object itemCode , Object type);
+	
 	String getItemImage(Object itemCode , Object type);
-
+	
 }

@@ -7,10 +7,11 @@
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 	<title>购物车-ldbz-shop</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/style.css">
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/responsive.css">
-	<link rel="shortcut icon" href="${request.contextPath}/favicon.ico" /> 
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/cart/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/cart/stylesheets/style.css">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/cart/stylesheets/responsive.css">
+	<link rel="shortcut icon" href="${request.contextPath}/cart/favicon.ico" />
+	<script type="text/javascript" src="${request.contextPath}/cart/javascript/jquery.min.js"></script>
 </head>
 <body class="header_sticky">
 	<div class="boxed">
@@ -45,22 +46,20 @@
 	</div><!-- /.boxed -->
 
 		<!-- Javascript -->
-		<script type="text/javascript" src="${request.contextPath}/javascript/jquery.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/tether.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/bootstrap.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/waypoints.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/jquery.circlechart.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/easing.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/jquery.flexslider-min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/owl.carousel.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/smoothscroll.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/jquery-ui.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/jquery.mCustomScrollbar.js"></script>
-	   	<script type="text/javascript" src="${request.contextPath}/javascript/gmap3.min.js"></script>
-	   	<script type="text/javascript" src="${request.contextPath}/javascript/waves.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/jquery.countdown.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/cart/javascript/tether.min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/cart/javascript/bootstrap.min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/cart/javascript/jquery.mCustomScrollbar.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/cart/javascript/base64.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/cart/javascript/template.js"></script>
 
-		<script type="text/javascript" src="${request.contextPath}/javascript/main.js"></script>
-
+		<script type="text/javascript" src="${request.contextPath}/cart/javascript/main.js"></script>
+		
+		<link rel="stylesheet" href="${request.contextPath}/cart/alert/css/alert.css">
+		<script src='${request.contextPath}/cart/alert/js/alert.js'></script>
+		
+		<script type="text/javascript">
+			var nginxImage = "${nginxImage}" ;
+		</script>
+		
 </body>	
 </html>

@@ -13,7 +13,6 @@ spring:
           enabled: true
   data:
     solr:
-      host: http://127.0.0.131:8080/solr/collection1
-#      zkHost:
+      zk-host: 127.0.0.1:2181
       repositories:
-        enabled: false
+        enabled: true

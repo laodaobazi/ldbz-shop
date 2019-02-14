@@ -63,11 +63,6 @@ public class ItemController {
     	LdbzResult ret2 = itemService.selectByCode(itemCode);
     	model.addAttribute("item", ret2.getData());
     	
-//        TbItemDesc itemDesc = itemService.getItemDescById(itemId);
-//
-//        model.addAttribute("item", item);
-//        model.addAttribute("itemDesc", itemDesc);
-
         return "item";
     }
 

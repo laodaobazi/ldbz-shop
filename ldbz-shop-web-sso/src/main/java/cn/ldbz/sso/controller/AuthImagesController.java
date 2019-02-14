@@ -20,6 +20,7 @@ import java.io.IOException;
  * 验证码 Controller
  */
 @Controller
+@RequestMapping("sso")
 public class AuthImagesController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthImagesController.class);

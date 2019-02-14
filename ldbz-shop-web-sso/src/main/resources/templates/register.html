@@ -7,10 +7,11 @@
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 	<title>用户注册-ldbz-shop</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/style.css">
-	<link rel="stylesheet" type="text/css" href="${request.contextPath}/stylesheets/responsive.css">
-	<link rel="shortcut icon" href="${request.contextPath}/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/sso/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/sso/stylesheets/style.css">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/sso/stylesheets/responsive.css">
+	<link rel="shortcut icon" href="${request.contextPath}/sso/favicon.ico" />
+	<script type="text/javascript" src="${request.contextPath}/sso/javascript/jquery.min.js"></script>
 </head>
 <body class="header_sticky">
 	<div class="boxed">
@@ -34,11 +35,11 @@
 					<div class="col-md-12">
 						<ul class="breadcrumbs">
 							<li class="trail-item">
-								<a href="#" title="">Home</a>
-								<span><img src="images/icons/arrow-right.png" alt=""></span>
+								<a href="${request.contextPath}/" title="">首页</a>
+								<span><img src="${request.contextPath}/sso/images/icons/arrow-right.png" alt=""></span>
 							</li>
 							<li class="trail-end">
-								<a href="javascript:;" title="">Register</a>
+								<a href="javascript:;" title="">用户注册</a>
 							</li>
 						</ul><!-- /.breacrumbs -->
 					</div><!-- /.col-md-12 -->
@@ -52,38 +53,38 @@
 					<div class="col-md-12">
 						<div class="form-register" style="height:526px;">
 							<div class="title">
-								<h3>Register</h3>
+								<h3>新用户注册</h3>
 							</div>
 							<form action="return false;" method="post" accept-charset="utf-8" class="col-md-12 layui-form">
 								
 								<div class="col-md-6 pull-left">
 									<div class="form-box">
-										<label for="name-register">Username * </label>
+										<label for="name-register">用户名 * </label>
 										<input type="text" id="regName" name="regName" lay-verify="required" placeholder="请输入Username" autocomplete="off" >
 									</div>
 									<div class="form-box">
-										<label for="password-register">Password * </label>
+										<label for="password-register">密 码 * </label>
 										<input type="password" id="pwd" name="pwd" lay-verify="required" placeholder="请输入密码" autocomplete="off">
 									</div>
 									<div class="form-box">
-										<label for="name-register" class="col-md-12">Image Code * </label>
-										<input type="text" id="authCode" name="authCode"  class="col-md-8 pull-left" lay-verify="required" placeholder="请输入Code" autocomplete="off">
-										<img id="refreshCode" alt="" src="${request.contextPath}/verify/image?uid=${uid}"  class="col-md-4 pull-right">
+										<label for="name-register" class="col-md-12">验证码 * </label>
+										<input type="text" id="authCode" name="authCode"  class="col-md-8 pull-left" lay-verify="required" placeholder="请输入验证码" autocomplete="off">
+										<img id="refreshCode" alt="" src="${request.contextPath}/sso/verify/image?uid=${uid}"  class="col-md-4 pull-right">
 									</div>
 								</div>
 								
 								<div class="col-md-6 pull-right">
 									<div class="form-box">
-										<label for="name-register" class="col-md-12">Email address * </label>
+										<label for="name-register" class="col-md-12">邮箱账号 * </label>
 										<input type="text" id="email" name="email" class="col-md-8 " lay-verify="required|email" placeholder="请输入email" autocomplete="off">
-										<a id="sendEmail" href="javascript:;"  class="col-md-4 pull-right">get code</a>
+										<a id="sendEmail" href="javascript:;"  class="col-md-4 pull-right">获取验证码</a>
 									</div>
 									<div class="form-box">
-										<label for="password-register">Repeat Password * </label>
+										<label for="password-register">再次输入密码 * </label>
 										<input type="password" id="pwdRepeat" name="pwdRepeat" lay-verify="required" placeholder="再次输入密码" autocomplete="off">
 									</div>
 									<div class="form-box">
-										<label for="name-register">Email Code * </label>
+										<label for="name-register">邮箱验证码 * </label>
 										<input type="text" id="emailCode" name="emailCode" lay-verify="required" placeholder="请输入获取的Email" autocomplete="off">
 									</div>
 								</div>
@@ -91,7 +92,7 @@
 								<input type="hidden" id="uuid" name="uuid" value="${uid}">
 								
 								<div class="form-box" style="text-align:center;">
-									<button type="submit" class="register" lay-submit="" lay-filter="btn_register">Register</button>
+									<button type="submit" class="register" lay-submit="" lay-filter="btn_register">注册</button>
 								</div>
 							</form>
 						</div><!-- /.form-register -->
@@ -108,17 +109,18 @@
 
 	</div><!-- /.boxed -->
 
-		<script type="text/javascript" src="${request.contextPath}/javascript/jquery.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/tether.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/bootstrap.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/waypoints.min.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/layui/layui.all.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/sso/javascript/tether.min.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/sso/javascript/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/sso/javascript/waypoints.min.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/sso/layui/layui.all.js"></script>
 
-		<script type="text/javascript">
-			var contextPath = "${request.contextPath}";
-		</script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/main.js"></script>
-		<script type="text/javascript" src="${request.contextPath}/javascript/register.js"></script>
+	<script type="text/javascript">
+		var nginxImage = "${nginxImage}" ;
+		var contextPath = "${request.contextPath}";
+	</script>
+	<script type="text/javascript" src="${request.contextPath}/sso/javascript/base64.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/sso/javascript/main.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/sso/javascript/register.js"></script>
 
 </body>	
 </html>

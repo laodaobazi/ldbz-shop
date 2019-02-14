@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+	<script src='js/alert.min.js'></script>
+	<link rel="stylesheet" href="css/alert.css">
+</head>
+<body>
+	<button id="sheet-btn">click me</button>
+</body>
+<script type="text/javascript">
+	var M = {};
+	$("#sheet-btn").click(function(){
+		if(M.actionsheet){
+			return M.actionsheet.show();
+		}
+	M.actionsheet = jqueryAlert({
+			'style' : 'actionsheet',
+			'title'   : '我是一个标题',
+			"className"    : '', //添加类名
+			'modal'   : true,
+			'actionsheetCloseText' : '取消',
+			'buttons' :{
+				'分享' : function(){
+					if(M.actionsheet11){
+						return M.actionsheet11.show();
+					}
+					M.actionsheet11 = jqueryAlert({
+						'content' : '您点击了分享操作'
+					})
+				},
+				'菜单' : function(){
+					if(M.actionsheet12){
+						return M.actionsheet12.show();
+					}
+					M.actionsheet12 = jqueryAlert({
+						'content' : '您点击了菜单操作...'
+					})
+				},
+				'示例一' : function(){
+					if(M.actionsheet13){
+						return M.actionsheet13.show();
+					}
+					M.actionsheet13 = jqueryAlert({
+						'content' : '您点击了示例一操作...'
+					})
+				},
+				'示例二' : function(){
+					if(M.actionsheet14){
+						return M.actionsheet14.show();
+					}
+					M.actionsheet14 = jqueryAlert({
+						'content' : '您点击了示例二操作...'
+					})
+				},
+			}
+	})
+	})
+</script>
+</html>

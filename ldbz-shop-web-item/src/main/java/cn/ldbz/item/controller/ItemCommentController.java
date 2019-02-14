@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
  * 商品评论查询 Controller
  */
 @Controller
-@RequestMapping("comment")
+@RequestMapping("item/comment")
 public class ItemCommentController {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemCommentController.class);

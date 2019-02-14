@@ -133,5 +133,13 @@ public class AdminItemController {
     	entity.setUpdated(date);
     	return adminItemService.updateByKey(entity);
     }
+
+    @ApiOperation(value="商品同步到Solr", notes="根据商品code同步商品信息到Solr")
+    @ApiImplicitParam(name = "code", value = "商品编号", required = true, dataType = "long",paramType = "path")
+    @ResponseBody
+    @RequestMapping(value="/syncItemToSolrByCode/{code}" , method = RequestMethod.POST)
+    public LdbzResult syncItemToSolrByCode(@PathVariable("code")long code) {
+    	return adminItemService.syncItemToSolrByCode(code);
+    }
     
 }

@@ -1,33 +1,14 @@
 package cn.ldbz.search.service;
 
-
 import cn.ldbz.pojo.LdbzResult;
-
-/**
- * Solr Service
- *
- */
-
+import cn.ldbz.pojo.LdbzSolrItem;
 
 public interface SearchService {
 
-    //http://localhost:8512/search/SolrService/importAllItems/TztyomXxDyi92
-    /**
-     * 导入全部商品索引
-     *
-     * @return
-     */
-    LdbzResult importAllItems();
-
-    //http://localhost:8512/search/SolrService/search/查询条件/1/60
-    /**
-     * 查询商品
-     * @param queryString 查询条件
-     * @param page 第几页
-     * @param rows 每页几条
-     * @return 返回商品Json
-     * @throws Exception
-     */
-
-    cn.ldbz.pojo.SearchResult search(String queryString, Integer page, Integer rows) throws Exception;
+	LdbzResult getItemPage(LdbzSolrItem entity , int pn , int limit) ;
+	
+	LdbzSolrItem selectByCode(long code);
+	
+	LdbzResult syncItemToSolrByCode(long code) ;
+	
 }

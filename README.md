@@ -52,7 +52,7 @@
 ## Apollo 配置中心
 ![apollo.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/apollo.png)
 
-## SolrCloud 分片
+## SolrCloud 检索
 ![solrcloud.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/solrcloud.png)
 
 ## mavne 构建
@@ -62,10 +62,16 @@
 ![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/frame.png)
 
 ## 首页效果图
-![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/index.png)
+![index.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/index.png)
 
 ## 商品明细页效果图
-![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/item.png)
+![item.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/item.png)
+
+## 商品检索页效果图
+![search.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/search.png)
+
+## 购物车页效果图
+![cart.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/cart.png)
 
 ## 后台管理页效果图
-![frame.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/admin.png)
+![admin.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/admin.png)

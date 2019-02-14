@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>商品-列表</title>
-<link rel="stylesheet" href="${request.contextPath}/layui-admin/frame/layui/css/layui.css">
+<link rel="stylesheet" href="${request.contextPath}/admin_res/layui-admin/frame/layui/css/layui.css">
 </head>
 <body>
 
@@ -40,6 +40,7 @@
     <button class="layui-btn layui-btn-warm layui-btn-sm" lay-event="add">新建</button>
     <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="edit">修改</button>
     <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</button>
+    <button class="layui-btn layui-btn-info layui-btn-sm" lay-event="solr">索引</button>
   </div>
 	</script>
 	 
@@ -49,8 +50,8 @@
 	</script>
 	
 
-	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/layui/layui.js"></script>
-	<script type="text/javascript" src="${request.contextPath}/layui-admin/frame/static/js/ldbz_util.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/admin_res/layui-admin/frame/layui/layui.js"></script>
+	<script type="text/javascript" src="${request.contextPath}/admin_res/layui-admin/frame/static/js/ldbz_util.js"></script>
 	<script>
     layui.use(['table','jquery','laydate'], function(){
       var table = layui.table
@@ -151,6 +152,21 @@
                   });
         	  }else{
 	          	layer.msg("请选择要删除的记录。");
+        	  }
+          break;
+          case 'solr':
+        	  if(data.length==1){
+        		  layer.confirm('是否确定索引选中行记录', function(index){
+                	  $.post("${request.contextPath}/admin/item/syncItemToSolrByCode/" + data[0].code , function(ret){
+                		  if(ret.status==200 && ret.msg=='OK'){
+                			  layer.msg("索引成功。");
+                		  }else{
+                			  layer.msg("索引失败。");
+                		  }
+                	  });
+                  });
+        	  }else{
+	          	layer.msg("请选择要索引的一条记录。");
         	  }
           break;
         };

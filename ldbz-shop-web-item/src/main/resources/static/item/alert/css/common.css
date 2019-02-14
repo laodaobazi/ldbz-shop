@@ -1,0 +1,159 @@
+*{
+	margin:0;
+	padding:0;
+}
+.w1004{
+	width:1004px;
+	margin:0 auto;
+}
+html body{
+	overflow: visible;
+	height:100%;
+	width:100%;
+}
+
+body{
+	font-family:"Microsoft YaHei", Arial, "Helvetica Neue", Helvetica, sans-serif;
+	color:#333;
+	background: #fff;
+	font-size: 14px;
+	overflow: auto;
+
+}
+
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, table, td, img, div, tr {
+	margin:0; padding:0;
+}
+
+li {
+	list-style-type:none;
+}
+
+img {
+	border:0 none;
+}
+
+a {
+	color:#333;
+	text-decoration:none;
+	outline: none;
+}
+/*这句话的意思是链接 a 在获得焦点的同时失去焦点.如果你用的是图片链接什么的,他不会显示周边的虚线.*/
+a {blr:expression_r(this.onFocus=this.blur());}
+
+a:hover {
+	color:#b09865;
+}
+
+h1 { font-size:24px; }
+h2 { font-size:20px; }
+h3 { font-size:18px; }
+h4 { font-size:16px; }
+h5 { font-size:14px; }
+h6 { font-size:12px; }
+
+.pointer{
+	cursor:pointer;
+}
+
+.left{
+	float: left;
+}
+
+.right{
+	float: right;
+}
+
+.clearfix:before{
+	content:"";
+	display: table;
+}
+
+.clearfix:after{
+	content: "";
+	display: table;
+	clear:both;
+}
+.hidden{
+	overflow: hidden;
+}
+.red{
+	color:#f00;
+}
+.blue{
+	color: #0074d9;
+}
+/*英文不断词换行*/
+textarea, input {word-wrap:break-word; word-break:break-all; padding:0px;}
+
+.t_l{text-align: left;}
+.t_c{text-align: center;}
+.t-r{text-align: right;}
+
+.absolute { position:absolute; }
+.relative { position:relative; }
+
+.none{display: none;}
+.block{display:block;}
+
+.f12 { font-size:12px; }
+.f14 { font-size:14px; }
+.f16 { font-size:16px; }
+.f18 { font-size:18px; }
+.f20 { font-size:20px; }
+.f24 { font-size:24px; }
+/*配置页面常用颜色*/
+.col{
+	color:#b09865;
+}
+
+/*垂直居中方式  添加在父级上*/
+.table_cell{
+	display: table-cell;
+	vertical-align:middle;
+	text-align:center;
+	*display: block;
+	*font-size: 175px;
+	*font-family:Arial;
+}
+.table_cell>img{
+	vertical-align:middle;
+}
+
+/*根据页面配置大多部分按钮的 height 和 color */
+.btn{
+	border:0;
+	display: block;
+	text-align: center;
+	line-height: 35px;
+	height:35px;
+	cursor:pointer;
+	color:#fff;
+	border-radius: 3px;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	-o-border-radius:3px;
+	background: #b09865;
+}
+
+/*配置btn的hover状态*/
+.btn:hover{
+	color:;
+	background:;
+}
+
+.m10{margin-top:10px;}
+.m12{margin-top:12px;}
+.m15{margin-top:15px;}
+.m18{margin-top:18px;}
+.m20{margin-top:20px;}
+.m25{margin-top:25px;}
+.m30{margin-top:30px;}
+
+.p10{padding-top:10px;}
+.p12{padding-top:12px;}
+.p15{padding-top:15px;}
+.p18{padding-top:18px;}
+.p20{padding-top:20px;}
+.p25{padding-top:25px;}
+.p30{padding-top:30px;}

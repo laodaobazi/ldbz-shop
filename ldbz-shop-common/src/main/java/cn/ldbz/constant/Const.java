@@ -83,7 +83,7 @@ public final class Const {
     /**cookie 用户登录token*/
     public static final String TOKEN_LOGIN = "_ldbzlg";
     /**cookie 购物车 key*/
-    public static final String CART_KEY = "_ldbzca";
+    public static final String CART_KEY = "_cart";
 
     // Dubbo版本
     public static final String LDBZ_SHOP_REDIS_VERSION = "1.0.0";

@@ -30,9 +30,6 @@ public class IndexController {
     //图片的URL路径
     @Value("${redisKey.nginxImage.url.key}")
     private String INDEX_NGINX_IMAGE_URL;
-    //商品的URL路径
-    @Value("${redisKey.item.url.key}")
-    private String NGINX_ITEM_URL;
 
     /**
      * 监听配置项是否有修改
@@ -46,18 +43,13 @@ public class IndexController {
 			switch(key) {
 				case "redisKey.nginxImage.url.key" : 
 					INDEX_NGINX_IMAGE_URL = change.getNewValue();
-				case "redisKey.item.url.key" : 
-					NGINX_ITEM_URL = change.getNewValue();
 			}
 		}
 	}
 
 	@RequestMapping("/index")
     public String index(Model model) {
-    	
-    	model.addAttribute("itemUrl", NGINX_ITEM_URL);
     	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
-    	
     	return "index";
     }
     

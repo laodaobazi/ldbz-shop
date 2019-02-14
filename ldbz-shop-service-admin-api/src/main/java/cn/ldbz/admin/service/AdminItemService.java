@@ -18,5 +18,7 @@ public interface AdminItemService {
 	LdbzResult insertByEntity(LdbzItem entity) ;
 	
 	LdbzResult updateByKey(LdbzItem entity) ;
+
+	LdbzResult syncItemToSolrByCode(long code) ;
 	
 }
