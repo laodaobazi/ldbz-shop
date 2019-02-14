@@ -43,7 +43,6 @@ public class UserServiceImpl implements UserService {
     private static final String IS_EMAIL_ENGAGED = "email" ;
     private static final String EMAIL_LOGIN_CODE = "EMAIL_LOGIN_CODE:";
 
-    private static final String REDIS_KEY_USER_SESSION = "ldbz-session-";
     private final String REDIS_KEY_VERIFYCODE = "VERIFYCODE:" ;
 
     @Autowired
@@ -108,7 +107,7 @@ public class UserServiceImpl implements UserService {
             return LdbzResult.build(401, "用户名或密码错误");
         }
         String token = UUID.randomUUID().toString().replaceAll("-","");
-        String key = REDIS_KEY_USER_SESSION + token;
+        String key = Const.REDIS_KEY_USER_SESSION + token;
         jedisClient.set(key, FastJsonConvert.convertObjectToJSON(dbUser));
         jedisClient.expire(key, EXPIRE_TIME);
         return LdbzResult.ok(token);
@@ -131,7 +130,7 @@ public class UserServiceImpl implements UserService {
             return LdbzResult.ok(callback);
         }
         try {
-            String user = jedisClient.get(REDIS_KEY_USER_SESSION + token);
+            String user = jedisClient.get(Const.REDIS_KEY_USER_SESSION + token);
             if (StringUtils.isNotBlank(user)) {
                 return LdbzResult.ok(user);
             }
@@ -158,7 +157,7 @@ public class UserServiceImpl implements UserService {
             return LdbzResult.ok(callback);
         }
         try {
-            jedisClient.del(REDIS_KEY_USER_SESSION + token);
+            jedisClient.del(Const.REDIS_KEY_USER_SESSION + token);
         } catch (Exception e) {
             logger.error("没有登录", e);
             return LdbzResult.build(400, "没有登录");

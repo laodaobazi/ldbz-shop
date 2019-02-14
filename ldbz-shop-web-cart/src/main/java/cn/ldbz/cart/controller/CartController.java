@@ -38,9 +38,6 @@ public class CartController {
     @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
-    @Value("${redisKey.prefix.user_session}")
-    private String USER_SESSION;
-
     //图片的URL路径
     @Value("${redisKey.nginxImage.url.key}")
     private String INDEX_NGINX_IMAGE_URL;
@@ -58,8 +55,6 @@ public class CartController {
 			switch(key) {
 				case "redisKey.nginxImage.url.key" : 
 					INDEX_NGINX_IMAGE_URL = change.getNewValue();
-				case "redisKey.prefix.user_session" : 
-					USER_SESSION = change.getNewValue();
 			}
 		}
 	}
@@ -76,7 +71,7 @@ public class CartController {
         	LdbzUser user = null;
         	String userJson = null;
             try {
-                userJson = jedisClient.get(USER_SESSION + tokenLogin);
+                userJson = jedisClient.get(Const.REDIS_KEY_USER_SESSION + tokenLogin);
             } catch (Exception e) {
                 logger.error("Redis 错误", e);
             }

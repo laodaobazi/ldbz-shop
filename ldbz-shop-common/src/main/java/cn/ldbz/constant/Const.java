@@ -2,9 +2,6 @@ package cn.ldbz.constant;
 
 public final class Const {
 
-    /**
-     * <B>构造方法</B><BR>
-     */
     private Const() {
     }
     
@@ -82,6 +79,8 @@ public final class Const {
     public static final Integer EVALUATE_YES = 8;
     /**cookie 用户登录token*/
     public static final String TOKEN_LOGIN = "_ldbzlg";
+    /**用户登录成功后放入redis中的key*/
+    public static final String REDIS_KEY_USER_SESSION = "ldbz-session-";
     /**cookie 购物车 key*/
     public static final String CART_KEY = "_cart";
 

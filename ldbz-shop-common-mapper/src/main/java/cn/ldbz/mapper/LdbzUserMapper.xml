@@ -21,7 +21,7 @@
   <select id="selectByUser" resultMap="BaseResultMap" parameterType="cn.ldbz.pojo.LdbzUser" >
     select
     <include refid="Base_Column_List" />
-    from tb_user u
+    from ldbz_user u
     <where>
 	    <if test="entity.username != null" >
 	    	u.username = #{entity.username , jdbcType=VARCHAR}
@@ -34,7 +34,7 @@
   
   <!--    用户注册    -->
   <insert id="insertByEntity" parameterType="cn.ldbz.pojo.LdbzUser" >
-    insert into tb_user (id, username, password, phone, email, created, updated)
+    insert into ldbz_user (id, username, password, phone, email, created, updated)
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
       #{updated,jdbcType=TIMESTAMP})
