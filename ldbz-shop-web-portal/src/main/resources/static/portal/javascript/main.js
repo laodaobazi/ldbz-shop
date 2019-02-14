@@ -533,11 +533,18 @@
         //隐藏加载状态
         var removePreloader = function() { 
             $(window).on('load', function() {
-                setTimeout(function() {
-                    $('.preloader').hide(); }, 300           
-                ); 
+            	$('.preloader').hide(); 
             });  
         };
+        
+        var loadImage = function(){
+        	$("img").each(function(i , o){
+        		var data_src = $(o).attr("data-src");
+        		if(data_src){
+        			$(o).attr("src" , data_src);
+        		}
+        	});
+        }
 
     // Dom Ready
     $(function() {
@@ -556,6 +563,7 @@
         goTop();//置顶
         popup();//首页弹出框
         removePreloader();//隐藏加载状态
+        loadImage();
     });
 
 })(jQuery);

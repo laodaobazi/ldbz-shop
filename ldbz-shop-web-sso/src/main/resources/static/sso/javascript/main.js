@@ -334,9 +334,7 @@
 
         var removePreloader = function() { 
             $(window).on('load', function() {
-                setTimeout(function() {
-                    $('.preloader').hide(); }, 300           
-                ); 
+            	$('.preloader').hide();
             });  
         }; //remove Preloader
 

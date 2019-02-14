@@ -559,9 +559,7 @@
         //隐藏加载状态
         var removePreloader = function() { 
             $(window).on('load', function() {
-                setTimeout(function() {
-                    $('.preloader').hide(); }, 300           
-                ); 
+            	$('.preloader').hide();
             });  
         };
 
