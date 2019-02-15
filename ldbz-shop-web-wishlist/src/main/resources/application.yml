@@ -1,0 +1,5 @@
+app:
+  id: ldbz-shop-web-wishlist
+apollo:
+  meta: http://192.168.136.133:8080
+  

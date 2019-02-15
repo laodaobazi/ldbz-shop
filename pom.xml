@@ -36,6 +36,9 @@
         <module>ldbz-shop-service-order-api</module>
         <module>ldbz-shop-service-order</module>
         <module>ldbz-shop-web-order</module>
+        <module>ldbz-shop-service-wishlist-api</module>
+        <module>ldbz-shop-service-wishlist</module>
+        <module>ldbz-shop-web-wishlist</module>
         <module>ldbz-shop-service-advertisement-api</module>
         <module>ldbz-shop-service-advertisement</module>
     </modules>

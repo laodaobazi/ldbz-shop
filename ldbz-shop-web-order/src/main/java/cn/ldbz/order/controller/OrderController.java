@@ -47,7 +47,7 @@ public class OrderController {
 
 
     @RequestMapping("/order/getOrderInfo")
-    public String showOrder(String ids,String indexs,String nums, Model model, HttpServletResponse response, HttpServletRequest request) {
+    public String showOrder(String ids, String nums, Model model, HttpServletResponse response, HttpServletRequest request) {
 
         String cookieValue = CookieUtils.getCookieValue(request, Const.CART_KEY);
         String userCookieValue = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
@@ -58,7 +58,6 @@ public class OrderController {
         if (StringUtils.isNotBlank(cookieValue) && StringUtils.isNotBlank(ids)) {
 
             String[] idArray = ids.split(",");
-            String[] indexArray = indexs.split(",");
             String[] numArray = nums.split(",");
 
 //            cartInfos = cartService.getCartInfoListByCookiesId(cookieValue);
@@ -75,7 +74,7 @@ public class OrderController {
 //            }
         } else {
             model.addAttribute("msg", "请先去购物！");
-            return "error";
+//            return "error";
         }
 
         String orderId = IDUtils.genOrderId();
@@ -93,10 +92,6 @@ public class OrderController {
 //        model.addAttribute("cartInfos", cartInfoList);
 
         return "order";
-    }
-    @RequestMapping("/success")
-    public String showSuccess() {
-        return "success";
     }
 
     /**

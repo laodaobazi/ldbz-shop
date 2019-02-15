@@ -22,29 +22,31 @@
 
 ## Web应用的端口
 |名称|端口|
-|:---------------:|:---------------:|
-| Admin|8100 |
-| Cart  |8101 |
-| Item  |8102 |
-| Order |8103|
-| Portal |8104|
-| Search |8105|
-| SSO|8106|
+|:---------------:|:---------------:|:---------------:|
+| Admin|8100 |管理端|
+| Cart  |8101 |购物车|
+| Item  |8102 |商品详细|
+| Order |8103|订单|
+| Portal |8104|首页|
+| Search |8105|检索商品|
+| SSO|8106|单点|
+| Wishlist|8107|商品收藏|
 
 
 ## Dubbo服务端口
-| 服务名称|Dubbo服务端口|
-|:---------------:|:---------------:|
-| Admin-Service      | 20880 |
-| Advertisement-Service |20881 |
-| Cart-Service     | 20882 |
-| Item-Service     | 20883 |
-| Notify-Service   | 20884 |
-| Order-Service    | 20885 |
-| Portal-Service   | 20886 |
-| Redis-Service    | 20887 |
-| Search-Service   | 20888 |
-| SSO-Service      | 20889 |
+| 服务名称|Dubbo服务端口|服务说明|Web端口|
+|:---------------:|:---------------:|:---------------:|:---------------:|
+| Admin-Service      | 20880 |管理端服务| 8510 |
+| Advertisement-Service |20881 |广告服务| 8511 |
+| Cart-Service     | 20882 |购物车服务| 8512 |
+| Item-Service     | 20883 |商品详细服务| 8513 |
+| Notify-Service   | 20884 |消息服务| 8514 |
+| Order-Service    | 20885 |订单服务| 8515 |
+| Portal-Service   | 20886 |首页服务| 8516|
+| Redis-Service    | 20887 |缓存服务| 8517|
+| Search-Service   | 20888 |检索服务| 8518 |
+| SSO-Service      | 20889 |单点服务| 8519 |
+| Wishlist-Service      | 20890 |收藏服务| 8520 |
 
 ## Dubbo Admin 管控台
 ![dubbo.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/dubbo.png)
