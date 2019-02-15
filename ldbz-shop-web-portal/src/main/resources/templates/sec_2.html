@@ -31,12 +31,14 @@
 									 <ul class="box-image owl-carousel-1">
 										<li>
 											<a href="${request.contextPath}/item/${item.CODE}" target="_blank">
-												<img src="${request.contextPath}/portal/images/squares.svg" data-src="${nginxImage}${item.IMAGE}" alt="">
+												<img src="${request.contextPath}/portal/images/squares.svg" 
+													style="max-width:230px;max-height:185px;" data-src="${nginxImage}${item.IMAGE}" alt="">
 											</a>
 										</li>
 										<li>
 											<a href="${request.contextPath}/item/${item.CODE}" target="_blank">
-												<img src="${request.contextPath}/portal/images/squares.svg" data-src="${nginxImage}${item.IMAGE}" alt="">
+												<img src="${request.contextPath}/portal/images/squares.svg" 
+													style="max-width:230px;max-height:185px;" data-src="${nginxImage}${item.IMAGE}" alt="">
 											</a>
 										</li>
 									</ul><!-- /.box-image -->
@@ -57,14 +59,14 @@
 											<a name="a_add_cart" href="javascript:;" title="加入购物车"
 												item_code="${item.CODE}" item_image="${item.IMAGE}"
 												item_price="${item.PRICE}" item_title="${item.TITLE}">
-												<img src="${request.contextPath}/portal/images/squares.svg" data-src="${request.contextPath}/portal/images/icons/add-cart.png" alt="">加入购物车
+												<img src="${request.contextPath}/portal/images/icons/add-cart.png" alt="">加入购物车
 											</a>
 										</div>
 										<div class="compare-wishlist">
 											<a href="javascript:;" class="compare" title="">
 												<img src="${request.contextPath}/portal/images/icons/compare.png" alt="">比较
 											</a>
-											<a href="javascript:;" class="wishlist" title="">
+											<a name="a_wishlist" href="javascript:;" class="wishlist" title="" item_code="${item.CODE}">
 												<img src="${request.contextPath}/portal/images/icons/wishlist.png" alt="">收藏
 											</a>
 										</div>

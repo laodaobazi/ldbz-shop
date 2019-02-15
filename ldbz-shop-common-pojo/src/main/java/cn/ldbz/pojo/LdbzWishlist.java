@@ -14,7 +14,7 @@ public class LdbzWishlist  implements Serializable {
     
     private Date created;
 
-    private String creator;
+    private Long creator;
     
     private String creatorName;
     

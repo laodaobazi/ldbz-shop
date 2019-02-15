@@ -30,8 +30,14 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         if (StringUtils.isBlank(cookieValue) ||
         		userService.token(cookieValue, "").getStatus() != 200) {
-            //跳转登录页面
-        	response.sendRedirect(request.getContextPath() + "/sso/login?returnUrl=" + url);
+        	if(request.getRequestURI().equals("/wishlist/insertByEntity")) {
+        		response.setCharacterEncoding("utf-8"); 
+        		response.setContentType("application/json; charset=utf-8");
+        		response.getWriter().print("{\"IsAuthenticated\" : false , \"returnUrl\" : \"" + request.getContextPath() + "/sso/login\"}");
+        	}else {
+        		//跳转登录页面
+        		response.sendRedirect(request.getContextPath() + "/sso/login?returnUrl=" + url);
+        	}
             //拦截
             return false;
         }

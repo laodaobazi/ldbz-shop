@@ -72,9 +72,13 @@ public class WishlistServiceImpl implements WishlistService {
 
 	@Override
 	public LdbzResult insertByEntity(LdbzWishlist entity) {
+		logger.debug("insertByEntity ==>>>  selectByCode entity : {} " , entity);
+		if(mapper.selectByCode(entity)!=null) {
+			return LdbzResult.ok("exist");
+		}
 		logger.debug("insertByEntity entity : {} " , entity);
 		if(mapper.insertByEntity(entity)>=1) {
-			return LdbzResult.ok();
+			return LdbzResult.ok("success");
 		}else {
 			return LdbzResult.build(500, "添加失败");
 		}

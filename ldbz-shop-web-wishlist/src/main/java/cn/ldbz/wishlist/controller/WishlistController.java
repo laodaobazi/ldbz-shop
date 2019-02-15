@@ -1,5 +1,7 @@
 package cn.ldbz.wishlist.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -81,6 +83,19 @@ public class WishlistController {
     	LdbzWishlist entity = new LdbzWishlist();
     	entity.setUserId(user.getId());
     	return wishlistService.getItemPage(entity, pn, limit);
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/wishlist/insertByEntity" , method=RequestMethod.POST)
+    public LdbzResult insertByEntity(HttpServletRequest request,LdbzWishlist entity) {
+    	String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
+    	LdbzResult ret = userService.token(token, "") ;
+    	LdbzUser user = FastJsonConvert.convertJSONToObject(ret.getData().toString(), LdbzUser.class);
+    	entity.setUserId(user.getId());
+    	entity.setCreated(new Date());
+    	entity.setCreator(user.getId());
+    	entity.setCreatorName(user.getUsername());
+    	return wishlistService.insertByEntity(entity);
     }
 
 }

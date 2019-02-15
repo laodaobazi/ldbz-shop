@@ -545,6 +545,52 @@
         		}
         	});
         }
+        
+        var addWishlist = function(){
+        	$("a[name='a_wishlist']").click(function(){
+        		var item_code = $(this).attr("item_code");
+        		$.post(contextPath + "/wishlist/insertByEntity" , {
+        			itemCode : item_code
+        		} , function(ret){
+        			if(ret.IsAuthenticated==false){
+        				var loginWarn = jqueryAlert({
+    						'title'   : '系统提示',
+        					'content' : "当前您不在线，请先登录" ,
+        					'modal'   : true,
+        					'contentTextAlign' : 'left',
+        					'animateType' : 'linear',
+        					'buttons' :{
+        						'确定' : function(){
+        							location.href = ret.returnUrl ;
+        						},
+        						'取消' : function(){
+        							loginWarn.close();
+        						}
+        					}
+        				});
+        				loginWarn.show();
+        			}else if(ret.data=="success"){
+        				jqueryAlert({
+        					'icon'    : contextPath + '/portal/alert/img/right.png',
+        					'content' : '商品收藏成功',
+        					'closeTime' : 2000,
+        				}).show();
+        			}else if(ret.data=="exist"){
+        				jqueryAlert({
+        					'icon'    : contextPath + '/portal/alert/img/warning.png',
+        					'content' : '商品已被收藏过',
+        					'closeTime' : 2000,
+        				}).show();
+        			}else{
+        				jqueryAlert({
+        					'icon'    : contextPath + '/portal/alert/img/warning.png',
+        					'content' : '系统繁忙，稍后再试',
+        					'closeTime' : 2000,
+        				}).show();
+        			}
+        		});
+        	});
+        }
 
     // Dom Ready
     $(function() {
@@ -563,7 +609,8 @@
         goTop();//置顶
         popup();//首页弹出框
         removePreloader();//隐藏加载状态
-        loadImage();
+        loadImage();//加载图片的src
+        addWishlist();//添加收藏
     });
 
 })(jQuery);
