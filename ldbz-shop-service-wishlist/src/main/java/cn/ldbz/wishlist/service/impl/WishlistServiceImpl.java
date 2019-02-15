@@ -1,5 +1,11 @@
 package cn.ldbz.wishlist.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +16,9 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 
 import cn.ldbz.constant.Const;
-import cn.ldbz.mapper.TbOrderMapper;
+import cn.ldbz.mapper.LdbzWishlistMapper;
+import cn.ldbz.pojo.LdbzWishlist;
+import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.redis.service.JedisClient;
 import cn.ldbz.sso.service.UserService;
 import cn.ldbz.wishlist.service.WishlistService;
@@ -32,6 +40,44 @@ public class WishlistServiceImpl implements WishlistService {
     private JedisClient jedisClient;
 
     @Autowired
-    private TbOrderMapper orderMapper;
+    private LdbzWishlistMapper mapper;
+
+	@Override
+	public LdbzResult getItemPage(LdbzWishlist entity, int pn, int limit) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		long total = mapper.countByEntity(entity);
+		map.put("total", total) ;
+		logger.debug("getItemPage count : {} " , total);
+		if(total>0 && pn>0) {
+			int start = (pn-1)*limit ;
+			List<LdbzWishlist> ret = mapper.selectByEntity(entity, start, limit);
+			map.put("list", ret) ;
+		}
+		return LdbzResult.build(0, "", map);
+	}
+
+	@Override
+	public LdbzResult deleteByKey(String id) {
+		logger.debug("deleteByKey id : {} " , id);
+		if(StringUtils.contains(id, ",")) {
+			List<Long> ids = new ArrayList<Long>();
+			for(String _id : StringUtils.split(id , ",")) {
+				ids.add(Long.valueOf(_id));
+			}
+			return LdbzResult.ok(mapper.deleteByKeys(ids));
+		}else {
+			return LdbzResult.ok(mapper.deleteByKey(Long.valueOf(id)));
+		}
+	}
+
+	@Override
+	public LdbzResult insertByEntity(LdbzWishlist entity) {
+		logger.debug("insertByEntity entity : {} " , entity);
+		if(mapper.insertByEntity(entity)>=1) {
+			return LdbzResult.ok();
+		}else {
+			return LdbzResult.build(500, "添加失败");
+		}
+	}
 
 }

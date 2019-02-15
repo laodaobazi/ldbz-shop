@@ -4,7 +4,7 @@
 			<div class="col-md-12">
 				<div class="wishlist">
 					<div class="title">
-						<h3>我的订单</h3>
+						<h3>我的收藏</h3>
 					</div>
 					<div class="wishlist-content">
 						<table class="table-wishlist">
@@ -12,19 +12,34 @@
 								<tr>
 									<th>商品名称</th>
 									<th>单价</th>
-									<th>Stock Status</th>
+									<th>库存</th>
 									<th></th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="item_container_1"></tbody>
+							<div>
+								<ul class="pagination"></ul>
+							</div>
+						</table><!-- /.table-wishlist -->
+					</div><!-- /.wishlist-content -->
+				</div><!-- /.wishlist -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</section>
+
+
+
+<script id="item_template_1" type="text/html">
+		{{each $data as item i}}
 								<tr>
 									<td>
 										<div class="delete">
-											<a href="#" title=""><img src="images/icons/delete.png" alt=""></a>
+											<a href="#" title=""><img src="${request.contextPath}/wishlist/images/icons/delete.png" alt=""></a>
 										</div>
 										<div class="product">
 											<div class="image">
-												<img src="images/product/other/01.jpg" alt="">
+												<img src="${request.contextPath}/wishlist/images/product/other/01.jpg" alt="">
 											</div>
 											<div class="name">
 												Tablet Red Elite Book <br />Revolve 810 G2
@@ -44,16 +59,51 @@
 									<td>
 										<div class="add-cart">
 											<a href="#" title="">
-												<img src="images/icons/add-cart.png" alt="">Add to Cart
+												<img src="${request.contextPath}/wishlist/images/icons/add-cart.png" alt="">加入购物车
 											</a>
 										</div>
 									</td>
 								</tr>
-							</tbody>
-						</table><!-- /.table-wishlist -->
-					</div><!-- /.wishlist-content -->
-				</div><!-- /.wishlist -->
-			</div><!-- /.col-md-12 -->
-		</div><!-- /.row -->
-	</div><!-- /.container -->
-</section><!-- /.flat-wishlish -->
+		{{/each}}
+</script>
+
+
+<script>
+$(function(){
+	getItemPage();
+	
+	function getItemPage(pageno){
+		var pn = pageno||1 ,  limit = 10;
+		$.ajax({
+			contentType: 'application/x-www-form-urlencoded',
+			url: '${request.contextPath}/wishlist/getItemPage',
+			method: 'post',
+			data:{
+				limit : limit
+				, pn : pn
+			},
+			success:function(ret){
+				if(ret.status==200 && ret.data && ret.data.total>0){
+					
+					$("#item_container_1").html(template('item_template_1', ret.data.list));
+					
+					if(pn==1){
+							$(".pagination").jBootstrapPage({
+					            pageSize : limit,
+					            total : ret.data.total ,
+					            maxPageButton:8,
+					            onPageClicked: function(obj, pageIndex) {
+					            	getItemPage(pageIndex+1);
+					            }
+					        });
+					}
+					
+				}
+				
+			},
+			error:function(ret){
+			}
+		});
+	}
+})
+</script>

@@ -1,4 +1,4 @@
-package cn.ldbz.order.interceptor;
+package cn.ldbz.wishlist.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
