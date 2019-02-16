@@ -132,6 +132,8 @@ public class UserServiceImpl implements UserService {
         try {
             String user = jedisClient.get(Const.REDIS_KEY_USER_SESSION + token);
             if (StringUtils.isNotBlank(user)) {
+            	//重新设置有效期
+                jedisClient.expire(Const.REDIS_KEY_USER_SESSION + token, EXPIRE_TIME);
                 return LdbzResult.ok(user);
             }
         } catch (Exception e) {
