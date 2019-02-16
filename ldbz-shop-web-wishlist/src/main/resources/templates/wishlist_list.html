@@ -17,10 +17,10 @@
 								</tr>
 							</thead>
 							<tbody id="item_container_1"></tbody>
-							<div>
-								<ul class="pagination"></ul>
-							</div>
-						</table><!-- /.table-wishlist -->
+						</table>
+						<div>
+							<ul class="pagination"></ul>
+						</div>
 					</div><!-- /.wishlist-content -->
 				</div><!-- /.wishlist -->
 			</div><!-- /.col-md-12 -->
@@ -31,40 +31,50 @@
 
 
 <script id="item_template_1" type="text/html">
-		{{each $data as item i}}
-								<tr>
-									<td>
-										<div class="delete">
-											<a href="#" title=""><img src="${request.contextPath}/wishlist/images/icons/delete.png" alt=""></a>
-										</div>
-										<div class="product">
-											<div class="image">
-												<img src="${request.contextPath}/wishlist/images/product/other/01.jpg" alt="">
-											</div>
-											<div class="name">
-												Tablet Red Elite Book <br />Revolve 810 G2
-											</div>
-										</div>
-									</td>
-									<td>
-										<div class="price">
-											$6,250.00
-										</div>
-									</td>
-									<td>
-										<div class="status-product">
-											<span>In stock</span>
-										</div>
-									</td>
-									<td>
-										<div class="add-cart">
-											<a href="#" title="">
-												<img src="${request.contextPath}/wishlist/images/icons/add-cart.png" alt="">加入购物车
-											</a>
-										</div>
-									</td>
-								</tr>
-		{{/each}}
+{{each $data as item i}}
+	<tr>
+		<td title="{{item.title}}">
+			<div class="delete">
+				<a name="a_del_wishlist" href="javascript:;" title="" wishlist_id="{{item.id}}"><img src="${request.contextPath}/wishlist/images/icons/delete.png" alt=""></a>
+			</div>
+			<div class="product">
+			<a href="${request.contextPath}/item/{{item.itemCode}}">
+				<div class="image">
+					<img src="${nginxImage}/{{item.image}}" alt="">
+				</div>
+				<div class="name" style="text-overflow: ellipsis;white-space: nowrap; overflow: hidden;max-width:350px;">
+					{{item.title}}
+				</div>
+			</a>
+			</div>
+		</td>
+		<td>
+			<div class="price">
+				￥{{item.price}}
+			</div>
+		</td>
+		<td>
+			<div class="status-product">
+				<span>
+					{{if item.status==1}}
+						{{item.num}}
+					{{else}}
+						已下架
+					{{/if}}
+				</span>
+			</div>
+		</td>
+		<td>
+			<div class="add-cart">
+				<a name="a_add_cart" href="javascript:;"  title="加入购物车"
+								item_code="{{item.itemCode}}" item_image="{{item.image}}"
+								item_price="{{item.price}}" item_title="{{item.title}}" >
+					<img src="${request.contextPath}/wishlist/images/icons/add-cart.png" alt="">加入购物车
+				</a>
+			</div>
+		</td>
+	</tr>
+{{/each}}
 </script>
 
 
@@ -73,7 +83,7 @@ $(function(){
 	getItemPage();
 	
 	function getItemPage(pageno){
-		var pn = pageno||1 ,  limit = 10;
+		var pn = pageno||1 ,  limit = 8;
 		$.ajax({
 			contentType: 'application/x-www-form-urlencoded',
 			url: '${request.contextPath}/wishlist/getItemPage',
@@ -86,6 +96,94 @@ $(function(){
 				if(ret.status==200 && ret.data && ret.data.total>0){
 					
 					$("#item_container_1").html(template('item_template_1', ret.data.list));
+					//删除
+					$("a[name='a_del_wishlist']").click(function(){
+						var wishlist_id = $(this).attr("wishlist_id");
+						var delWarn = jqueryAlert({
+							'title'   : '系统提示',
+							'content' : "是否删除所选的商品？" ,
+							'modal'   : true,
+							'contentTextAlign' : 'left',
+							'animateType' : 'linear',
+							'buttons' :{
+								'确定' : function(){
+									$.post("${request.contextPath}/wishlist/deleteByKey/"+wishlist_id , function(ret2){
+										if(ret2.status==200){
+											getItemPage(pageno);
+											jqueryAlert({
+												'icon'    : contextPath + '/wishlist/alert/img/right.png',
+												'content' : '删除成功',
+												'closeTime' : 2000,
+											}).show();
+										}
+									});
+								},
+								'取消' : function(){
+									delWarn.close();
+								}
+							}
+						});
+						delWarn.show();
+					});
+					
+					//添加到购物车
+					$("a[name='a_add_cart']").click(function(){
+		        		var arr = [] ;
+		            	var _cart = getCookie("_cart");
+		            	if(_cart){
+		            		_cart = Base64.decode(_cart);
+		        			arr = $.parseJSON(_cart);
+		        			var item_count = 0 , item_price = 0 ;
+		        			$(arr).each(function(i , o){
+		        				item_count += (o.count*1) ;
+		        				item_price += (o.count * o.item_price);
+		        			});
+		        			$("#span_cart_itemcount").text(item_count).show();
+		        			$("#span_cart_itemprice").text("￥"+item_price).show();
+		            	}else{
+		            		$("#span_cart_itemcount").text('').hide();
+		            	}
+		            	
+		        		var item_code = $(this).attr("item_code") ;
+		        		var item_title = $(this).attr("item_title") ;
+		        		var item_price = $(this).attr("item_price") ;
+		        		var item_image = $(this).attr("item_image") ;
+		        		
+		        		var itemNotInCart = true ;
+		    			$(arr).each(function(i , o){
+		    				if(item_code == o.item_code){
+		    					//已经在购物车里面
+		    					arr.splice(i , 1);
+		    					arr.push({'item_code':item_code , 'item_title':item_title , 'item_price':item_price , 'item_image':item_image,'count':o.count*1+1});
+		    					itemNotInCart = false ;
+		    				}
+		    			});
+		    			//如果不在购物车里面
+		    			if(itemNotInCart){
+		    				arr.push({'item_code':item_code , 'item_title':item_title , 'item_price':item_price , 'item_image':item_image,'count':1});
+		    			}
+		    			
+		    			setCookie("_cart" , Base64.encode(JSON.stringify(arr)));
+		    			
+		    			jqueryAlert({
+							'icon'    : '${request.contextPath}/wishlist/alert/img/right.png',
+							'content' : '已添加到购物车',
+							'closeTime' : 2000,
+						}).show();
+		    			
+		        		//显示购物车中的商品数量变化
+		        		if(arr.length>0){
+		        			var item_count = 0 , item_price = 0 ;
+		        			$(arr).each(function(i , o){
+		        				item_count += (o.count*1) ;
+		        				item_price += (o.item_price*o.count) ;
+		        			});
+		        			$("#span_cart_itemcount").text(item_count).show();
+		        			$("#span_cart_itemprice").text("￥"+item_price).show();
+		        		}else{
+		        			$("#span_cart_itemcount").text('').hide();
+		        		}
+					});
 					
 					if(pn==1){
 							$(".pagination").jBootstrapPage({

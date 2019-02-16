@@ -53,7 +53,7 @@ public class WishlistServiceImpl implements WishlistService {
 			List<LdbzWishlist> ret = mapper.selectByEntity(entity, start, limit);
 			map.put("list", ret) ;
 		}
-		return LdbzResult.build(0, "", map);
+		return LdbzResult.build(200, "", map);
 	}
 
 	@Override

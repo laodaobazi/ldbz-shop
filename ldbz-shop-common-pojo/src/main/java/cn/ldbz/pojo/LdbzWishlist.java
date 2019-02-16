@@ -18,12 +18,6 @@ public class LdbzWishlist  implements Serializable {
     
     private String creatorName;
     
-    private Date updated;
-    
-    private String updator;
-    
-    private String updatorName;
-    
     private Long itemCode ;
     
     private Long userId ;
@@ -33,5 +27,9 @@ public class LdbzWishlist  implements Serializable {
     private Integer status ;
     
     private String image ;
+    
+    private String title ;
+    
+    private Float price ;
     
 }

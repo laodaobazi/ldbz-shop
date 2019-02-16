@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,9 @@ import cn.ldbz.sso.service.UserService;
 import cn.ldbz.utils.CookieUtils;
 import cn.ldbz.utils.FastJsonConvert;
 import cn.ldbz.wishlist.service.WishlistService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 收藏Controller
@@ -72,6 +76,11 @@ public class WishlistController {
     	return "wishlist";
     }
 
+    @ApiOperation(value="分页获取收藏的商品", notes="根据当前登录用户获取其收藏的商品")
+    @ApiImplicitParams({
+			@ApiImplicitParam(name = "page", value = "查询的页数", required = true, dataType = "int"),
+			@ApiImplicitParam(name = "limit", value = "每页显示的条数", required = true, dataType = "int")
+	})
     @ResponseBody
     @RequestMapping(value="/wishlist/getItemPage" , method=RequestMethod.POST)
     public LdbzResult getItemPage(HttpServletRequest request,
@@ -85,6 +94,8 @@ public class WishlistController {
     	return wishlistService.getItemPage(entity, pn, limit);
     }
 
+    @ApiOperation(value="收藏商品", notes="收藏一条商品")
+    @ApiImplicitParam(name = "entity", value = "LdbzWishlist实体", required = true, dataType = "LdbzWishlist")
     @ResponseBody
     @RequestMapping(value="/wishlist/insertByEntity" , method=RequestMethod.POST)
     public LdbzResult insertByEntity(HttpServletRequest request,LdbzWishlist entity) {
@@ -96,6 +107,14 @@ public class WishlistController {
     	entity.setCreator(user.getId());
     	entity.setCreatorName(user.getUsername());
     	return wishlistService.insertByEntity(entity);
+    }
+
+    @ApiOperation(value="删除收藏的商品", notes="根据id物理删除一条收藏的商品")
+    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String",paramType = "path")
+    @ResponseBody
+    @RequestMapping(value="/wishlist/deleteByKey/{id}" , method=RequestMethod.POST)
+    public LdbzResult deleteByKey(@PathVariable("id")String id) {
+    	return wishlistService.deleteByKey(id);
     }
 
 }
