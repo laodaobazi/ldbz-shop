@@ -2,7 +2,7 @@
 [![License](https://img.shields.io/badge/license-GPL-blue.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/laodaobazi/ldbz-shop.svg?style=social&label=Stars)](https://github.com/laodaobazi/ldbz-shop)[![GitHub forks](https://img.shields.io/github/forks/laodaobazi/ldbz-shop.svg?style=social&label=Fork)](https://github.com/laodaobazi/ldbz-shop)
 
-使用技术(个人时间好精力有限，项目不定期更新中....):
+使用技术(个人时间和精力有限，项目不定期更新中....):
 
 * 后台
 	* 使用`Spring Boot` 构建整个项目 去除 XML 配置

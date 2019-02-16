@@ -83,6 +83,7 @@ public final class Const {
     public static final String REDIS_KEY_USER_SESSION = "ldbz-session-";
     /**cookie 购物车 key*/
     public static final String CART_KEY = "_cart";
+    public static final String CART_TIMESTAMP_KEY = "_cart_timestamp";
 
     // Dubbo版本
     public static final String LDBZ_SHOP_REDIS_VERSION = "1.0.0";

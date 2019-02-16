@@ -1,5 +1,6 @@
 package cn.ldbz.cart.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +34,6 @@ public class CartServiceImpl implements CartService {
     @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
-
     /**
      * 监听配置项是否有修改
      */
@@ -57,6 +57,15 @@ public class CartServiceImpl implements CartService {
 		logger.debug("getCartListByUserId  userId:{}" , userId);
 		return jedisClient.get(CART_INFO_PROFIX + userId);
 	}
+	
+	@Override
+	public Long getCartOptTime(Long userId) {
+		String timestamp = jedisClient.get(CART_INFO_PROFIX + userId+"opttime");
+		if(StringUtils.isNoneEmpty(timestamp)) {
+			return Long.valueOf(timestamp);
+		}
+		return 0L;
+	}
 
 	@Override
 	public boolean setCartListByUserId(Long userId, String items) {
@@ -64,6 +73,9 @@ public class CartServiceImpl implements CartService {
 		logger.debug("setCartListByUserId  userId:{}  ,  items:{}" , userId , items);
 		jedisClient.set(key , items);
 		jedisClient.expire(key , REDIS_CART_EXPIRE_TIME);
+		//操作的时间
+		jedisClient.set(key+"opttime" , String.valueOf(System.currentTimeMillis()));
+		jedisClient.expire(key+"opttime" , REDIS_CART_EXPIRE_TIME);
 		return true;
 	}
 

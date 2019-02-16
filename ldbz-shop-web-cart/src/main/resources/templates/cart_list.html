@@ -67,7 +67,7 @@
 		<td>
 			<div class="quanlity">
 				<span class="btn-down" name="span_btn_down" item_code="{{item.item_code}}"></span>
-				<input id="input_{{item.item_code}}" type="number" name="number" value="{{item.count}}" min="1" max="100" placeholder="数量" readonly=true >
+				<input id="input_{{item.item_code}}" type="text" name="number" value="{{item.count}}" min="1" max="100" placeholder="数量" readonly=true >
 				<span class="btn-up" name="span_btn_up" item_code="{{item.item_code}}"
 					item_title="{{item.item_title}}" item_price="{{item.item_price}}" item_image="{{item.item_image}}"></span>
 			</div>
@@ -163,7 +163,6 @@ $(function(){
 					    'closeTime' : 2000,
 					}).show();
 				}
-				console.log(item_code);
 			});
 			//移除商品
 			$("a[name='a_del_item']").click(function(){

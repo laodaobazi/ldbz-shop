@@ -366,6 +366,7 @@ function setCookie(name,value)
 	var exp = new Date();
 	exp.setTime(exp.getTime() + Days*24*60*60*1000);
 	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ";domain=" + document.domain + ";path=/";
+	document.cookie = name + "_timestamp="+ new Date().getTime() + ";expires=" + exp.toGMTString() + ";domain=" + document.domain + ";path=/";;
 }
 
 
