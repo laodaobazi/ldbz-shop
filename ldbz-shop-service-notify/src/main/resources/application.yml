@@ -14,4 +14,4 @@ spring:
 
 logging:
   level:
-     cn.ldbz.mapper: debug
+     cn.ldbz: debug
