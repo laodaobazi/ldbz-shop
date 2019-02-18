@@ -39,7 +39,7 @@
 								</tr>
 								<tr>
 									<td>总计</td>
-									<td class="price-total" id="td_cart_pricetotal"></td>
+									<td class="price-total" id="td_cart_pricetotal" total_price=0></td>
 								</tr>
 								<tr>
 									<td>地址</td>
@@ -63,8 +63,7 @@
 							</tbody>
 						</table>
 						<div class="btn-cart-totals">
-<!-- 							<a href="javascript:;" class="update" >邮寄地址</a> -->
-							<a href="javascript:;" class="checkout" >下单支付</a>
+							<a id="a_pay_now" href="javascript:;" class="checkout" >立即支付</a>
 						</div><!-- /.btn-cart-totals -->
 					</form><!-- /form -->
 				</div><!-- /.cart-totals -->
@@ -124,7 +123,9 @@ $(function(){
 			//小计
 			$("#td_cart_itemprice").text("￥"+item_price_total.toFixed(2));
 			//总计
-			$("#td_cart_pricetotal").text("￥"+(item_price_total+$("#span_shipping_count").attr("price")*1).toFixed(2));
+			var total_price = (item_price_total+$("#span_shipping_count").attr("price")*1).toFixed(2) ;
+			$("#td_cart_pricetotal").text("￥" + total_price);
+			$("#td_cart_pricetotal").attr("total_price" , total_price);
 			
 			//计数器加一
 			$("span[name='span_btn_up']").click(function(){
@@ -233,6 +234,22 @@ $(function(){
 	//改变默认地址
 	$("#a_select_addr").click(function(){
 		editAddress();
+	});
+	
+	//立即支付
+	$("#a_pay_now").click(function(){
+		var addr_info = $("#p_addr").text();
+		var total_price = $("#td_cart_pricetotal").attr("total_price");
+		
+		var items = null ;
+		var _cart = getCookie("_cart");
+		if(_cart){
+			_cart = Base64.decode(_cart);
+			items = $.parseJSON(_cart);
+		}
+		
+		console.log(addr_info , total_price , items);
+		
 	});
 	
 });

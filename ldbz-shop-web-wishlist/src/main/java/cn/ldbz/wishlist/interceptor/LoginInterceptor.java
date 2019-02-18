@@ -28,8 +28,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         //获取访问URL
         String url = request.getRequestURL().toString();
 
-        if (StringUtils.isBlank(cookieValue) ||
-        		userService.token(cookieValue, "").getStatus() != 200) {
+        if (StringUtils.isBlank(cookieValue) || userService.token(cookieValue) != null) {
         	if(request.getRequestURI().equals("/wishlist/insertByEntity")) {
         		response.setCharacterEncoding("utf-8"); 
         		response.setContentType("application/json; charset=utf-8");

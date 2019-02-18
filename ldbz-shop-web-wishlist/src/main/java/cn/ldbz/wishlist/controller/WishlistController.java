@@ -27,7 +27,6 @@ import cn.ldbz.pojo.LdbzWishlist;
 import cn.ldbz.redis.service.JedisClient;
 import cn.ldbz.sso.service.UserService;
 import cn.ldbz.utils.CookieUtils;
-import cn.ldbz.utils.FastJsonConvert;
 import cn.ldbz.wishlist.service.WishlistService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -87,8 +86,7 @@ public class WishlistController {
     		@RequestParam(defaultValue = "1")int pn , 
     		@RequestParam(defaultValue = "10")int limit) {
     	String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
-    	LdbzResult ret = userService.token(token, "") ;
-    	LdbzUser user = FastJsonConvert.convertJSONToObject(ret.getData().toString(), LdbzUser.class);
+    	LdbzUser user = userService.token(token) ;
     	LdbzWishlist entity = new LdbzWishlist();
     	entity.setUserId(user.getId());
     	return wishlistService.getItemPage(entity, pn, limit);
@@ -100,8 +98,7 @@ public class WishlistController {
     @RequestMapping(value="/wishlist/insertByEntity" , method=RequestMethod.POST)
     public LdbzResult insertByEntity(HttpServletRequest request,LdbzWishlist entity) {
     	String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
-    	LdbzResult ret = userService.token(token, "") ;
-    	LdbzUser user = FastJsonConvert.convertJSONToObject(ret.getData().toString(), LdbzUser.class);
+    	LdbzUser user = userService.token(token) ;
     	entity.setUserId(user.getId());
     	entity.setCreated(new Date());
     	entity.setCreator(user.getId());

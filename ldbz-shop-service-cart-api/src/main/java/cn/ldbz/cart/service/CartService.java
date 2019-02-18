@@ -11,4 +11,5 @@ public interface CartService {
 
     boolean setCartListByUserId(Long userId , String items);
     
+    boolean deleteCartListByUserId(Long userId);
 }

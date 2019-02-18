@@ -79,4 +79,13 @@ public class CartServiceImpl implements CartService {
 		return true;
 	}
 
+	@Override
+	public boolean deleteCartListByUserId(Long userId) {
+		String key = CART_INFO_PROFIX + userId ;
+		logger.debug("deleteCartListByUserId  userId:{} " , userId);
+		jedisClient.expire(key , 0);
+		jedisClient.expire(key+"opttime" , 0);
+		return true;
+	}
+	
 }

@@ -113,33 +113,21 @@ public class UserServiceImpl implements UserService {
         return LdbzResult.ok(token);
     }
 
-    /**
-     * 根据token值获取用户信息
-     *
-     * @param token    token值
-     * @param callback 可选参数 有参表示jsonp调用
-     * @return {
-     *          status: 200 //200 成功 400 没有此token 500 系统异常
-     *          msg: "OK" //错误 没有此token.
-     *          data: {"username":"ldbz","id":"id"} //返回用户名
-     *         }
-     */
     @Override
-    public LdbzResult token(String token, String callback) {
-        if (StringUtils.isNotBlank(callback)) {
-            return LdbzResult.ok(callback);
-        }
+    public LdbzUser token(String token) {
         try {
-            String user = jedisClient.get(Const.REDIS_KEY_USER_SESSION + token);
+        	String key = Const.REDIS_KEY_USER_SESSION + token ;
+            String user = jedisClient.get(key);
             if (StringUtils.isNotBlank(user)) {
             	//重新设置有效期
-                jedisClient.expire(Const.REDIS_KEY_USER_SESSION + token, EXPIRE_TIME);
-                return LdbzResult.ok(user);
+                jedisClient.expire(key , EXPIRE_TIME);
+                LdbzUser entity = FastJsonConvert.convertJSONToObject(user, LdbzUser.class);
+                return entity;
             }
         } catch (Exception e) {
             logger.error("Redis服务出错");
         }
-        return LdbzResult.build(400, "没有此用户");
+        return null;
     }
 
     /**

@@ -28,8 +28,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         //获取访问URL
         String url = request.getRequestURL().toString();
 
-        if (StringUtils.isBlank(cookieValue) ||
-        		userService.token(cookieValue, "").getStatus() != 200) {
+        if (StringUtils.isBlank(cookieValue) || userService.token(cookieValue)!=null) {
             //跳转登录页面
         	response.sendRedirect(request.getContextPath() + "/sso/login?returnUrl=" + url);
             //拦截

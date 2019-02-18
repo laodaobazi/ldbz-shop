@@ -12,12 +12,10 @@ import org.springframework.stereotype.Service;
 import com.alibaba.dubbo.config.annotation.Reference;
 
 import cn.ldbz.constant.Const;
-import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.pojo.LdbzUser;
 import cn.ldbz.sso.service.UserService;
 import cn.ldbz.tags.annotation.BeetlTagName;
 import cn.ldbz.utils.CookieUtils;
-import cn.ldbz.utils.FastJsonConvert;
 
 @Service
 @Scope("prototype")
@@ -37,18 +35,16 @@ public class CurrentUserTag  extends GeneralVarTagBinding {
 		HttpServletRequest request = (HttpServletRequest)this.ctx.getGlobal("request");
 		String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
         if(StringUtils.isNoneEmpty(token)) {
-        	LdbzResult ret = userService.token(token, null);
-        	if(ret.getStatus()==200) {
+        	LdbzUser user = userService.token(token);
+        	if(user!=null) {
         		//用户在线
         		if("username".equals(attr)) {
         			//获取指定属性
-        			LdbzUser user = FastJsonConvert.convertJSONToObject(ret.getData().toString(), LdbzUser.class);
         			this.binds(user.getUsername()+"欢迎你！");
         	        this.doBodyRender();
         	        return ;
         		}else if("id".equals(attr)) {
         			//获取指定属性
-        			LdbzUser user = FastJsonConvert.convertJSONToObject(ret.getData().toString(), LdbzUser.class);
         			this.binds(user.getId());
         	        this.doBodyRender();
         	        return ;

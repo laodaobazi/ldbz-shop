@@ -21,7 +21,6 @@ import cn.ldbz.pojo.LdbzResult;
 import cn.ldbz.pojo.LdbzUser;
 import cn.ldbz.sso.service.UserService;
 import cn.ldbz.utils.CookieUtils;
-import cn.ldbz.utils.FastJsonConvert;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
@@ -47,8 +46,7 @@ public class AddressController {
     	logger.debug("insertByEntity entity : {} " ,  entity);
 
 		String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
-    	LdbzResult ret = userService.token(token, null);
-    	LdbzUser user = FastJsonConvert.convertJSONToObject(ret.getData().toString(), LdbzUser.class);
+		LdbzUser user = userService.token(token);
     	
     	Date date = new Date() ;
     	entity.setCreated(date);
@@ -62,8 +60,7 @@ public class AddressController {
     @RequestMapping(value="/cart/address/selectByEntity" , method = RequestMethod.POST)
     public LdbzResult selectByEntity(HttpServletRequest request) {
 		String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
-    	LdbzResult ret = userService.token(token, null);
-    	LdbzUser user = FastJsonConvert.convertJSONToObject(ret.getData().toString(), LdbzUser.class);
+		LdbzUser user = userService.token(token);
     	LdbzAddress entity = new LdbzAddress();
     	entity.setUserId(user.getId());
     	return addressService.selectByEntity(entity);
@@ -74,8 +71,7 @@ public class AddressController {
     @RequestMapping(value="/cart/address/updateDefaultById" , method = RequestMethod.POST)
     public LdbzResult updateDefaultById(LdbzAddress entity , HttpServletRequest request) {
 		String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
-    	LdbzResult ret = userService.token(token, null);
-    	LdbzUser user = FastJsonConvert.convertJSONToObject(ret.getData().toString(), LdbzUser.class);
+		LdbzUser user = userService.token(token);
     	entity.setUserId(user.getId());
     	return addressService.updateDefaultById(entity);
     }

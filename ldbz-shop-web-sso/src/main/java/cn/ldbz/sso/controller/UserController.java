@@ -79,7 +79,7 @@ public class UserController {
 
         String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
         if(StringUtils.isNoneEmpty(token)) {
-        	if(userService.token(token, null).getStatus()==200) {
+        	if(userService.token(token)!=null) {
         		//已经在线
         		return "redirect:" + PORTAL_PATH;
         	}
@@ -101,7 +101,7 @@ public class UserController {
 
         String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
         if(StringUtils.isNoneEmpty(token)) {
-        	if(userService.token(token, null).getStatus()==200) {
+        	if(userService.token(token)!=null) {
         		//已经在线
         		return "redirect:" + PORTAL_PATH;
         	}

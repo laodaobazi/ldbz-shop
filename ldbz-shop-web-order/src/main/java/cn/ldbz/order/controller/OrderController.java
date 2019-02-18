@@ -113,7 +113,7 @@ public class OrderController {
         String cartCookieValue = CookieUtils.getCookieValue(request, Const.CART_KEY);
         String userCookieValue = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
 
-        LdbzResult result = orderService.generateOrder(userCookieValue,cartCookieValue,addrId, noAnnoyance, paymentType,orderId, shippingName);
+//        LdbzResult result = orderService.generateOrder(userCookieValue,cartCookieValue,addrId, noAnnoyance, paymentType,orderId, shippingName);
 
         return "success";
     }
