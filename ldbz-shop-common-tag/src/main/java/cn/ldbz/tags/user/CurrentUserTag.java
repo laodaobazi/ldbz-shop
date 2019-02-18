@@ -46,6 +46,12 @@ public class CurrentUserTag  extends GeneralVarTagBinding {
         			this.binds(user.getUsername()+"欢迎你！");
         	        this.doBodyRender();
         	        return ;
+        		}else if("id".equals(attr)) {
+        			//获取指定属性
+        			LdbzUser user = FastJsonConvert.convertJSONToObject(ret.getData().toString(), LdbzUser.class);
+        			this.binds(user.getId());
+        	        this.doBodyRender();
+        	        return ;
         		}else {
         			//仅仅判断用户是否在线
         			this.binds("true");
