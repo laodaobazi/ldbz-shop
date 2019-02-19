@@ -84,8 +84,9 @@
 ## 微信交流群
 ![wechat.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/wechat.png)
 
-##个人联系方式
-![](biao.li@neusoft.com)
-QQ ![](http://sighttp.qq.com/msgrd?v=1&uin=444823046)
-如果这个项目让你有所收获，请Star✨ and Fork有时间我会持续更新下去的。
-注：如果遇到问题还请Issues,我会尽快回复。
+##个人联系方式##个人联系方式
+### 📮：biao.li@neusoft.com
+- 个人QQ [![](http://pub.idqqimg.com/wpa/images/group.png)](http://sighttp.qq.com/msgrd?v=1&uin=444823046)
+
+- 如果这个项目让你有所收获，请Star✨ and Fork有时间我会持续更新下去的。
+- 注：如果遇到问题还请Issues,我会尽快回复。
