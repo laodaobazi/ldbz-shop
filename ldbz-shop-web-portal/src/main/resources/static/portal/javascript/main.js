@@ -533,11 +533,64 @@
         //隐藏加载状态
         var removePreloader = function() { 
             $(window).on('load', function() {
-                setTimeout(function() {
-                    $('.preloader').hide(); }, 300           
-                ); 
+            	$('.preloader').hide(); 
             });  
         };
+        
+        var loadImage = function(){
+        	$("img").each(function(i , o){
+        		var data_src = $(o).attr("data-src");
+        		if(data_src){
+        			$(o).attr("src" , data_src);
+        		}
+        	});
+        }
+        
+        var addWishlist = function(){
+        	$("a[name='a_wishlist']").click(function(){
+        		var item_code = $(this).attr("item_code");
+        		$.post(contextPath + "/wishlist/insertByEntity" , {
+        			itemCode : item_code
+        		} , function(ret){
+        			if(ret.IsAuthenticated==false){
+        				var loginWarn = jqueryAlert({
+    						'title'   : '系统提示',
+        					'content' : "当前您不在线，请先登录" ,
+        					'modal'   : true,
+        					'contentTextAlign' : 'left',
+        					'animateType' : 'linear',
+        					'buttons' :{
+        						'确定' : function(){
+        							location.href = ret.returnUrl ;
+        						},
+        						'取消' : function(){
+        							loginWarn.close();
+        						}
+        					}
+        				});
+        				loginWarn.show();
+        			}else if(ret.data=="success"){
+        				jqueryAlert({
+        					'icon'    : contextPath + '/portal/alert/img/right.png',
+        					'content' : '商品收藏成功',
+        					'closeTime' : 2000,
+        				}).show();
+        			}else if(ret.data=="exist"){
+        				jqueryAlert({
+        					'icon'    : contextPath + '/portal/alert/img/warning.png',
+        					'content' : '商品已被收藏过',
+        					'closeTime' : 2000,
+        				}).show();
+        			}else{
+        				jqueryAlert({
+        					'icon'    : contextPath + '/portal/alert/img/warning.png',
+        					'content' : '系统繁忙，稍后再试',
+        					'closeTime' : 2000,
+        				}).show();
+        			}
+        		});
+        	});
+        }
 
     // Dom Ready
     $(function() {
@@ -556,6 +609,8 @@
         goTop();//置顶
         popup();//首页弹出框
         removePreloader();//隐藏加载状态
+        loadImage();//加载图片的src
+        addWishlist();//添加收藏
     });
 
 })(jQuery);
@@ -565,7 +620,8 @@ function setCookie(name,value)
 	var Days = 30;
 	var exp = new Date();
 	exp.setTime(exp.getTime() + Days*24*60*60*1000);
-	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ";domain=" + document.domain + ";path=/";
+	document.cookie = name + "_timestamp="+ new Date().getTime() + ";expires=" + exp.toGMTString() + ";domain=" + document.domain + ";path=/";;
 }
 
 
@@ -584,5 +640,5 @@ function delCookie(name)
 	exp.setTime(exp.getTime() - 1);
 	var cval=getCookie(name);
 	if(cval!=null)
-		document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+		document.cookie= name + "="+cval+";expires="+exp.toGMTString() + ";domain=" + document.domain + ";path=/";
 }

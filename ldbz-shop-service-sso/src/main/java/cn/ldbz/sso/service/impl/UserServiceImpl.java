@@ -43,7 +43,6 @@ public class UserServiceImpl implements UserService {
     private static final String IS_EMAIL_ENGAGED = "email" ;
     private static final String EMAIL_LOGIN_CODE = "EMAIL_LOGIN_CODE:";
 
-    private static final String REDIS_KEY_USER_SESSION = "ldbz-session-";
     private final String REDIS_KEY_VERIFYCODE = "VERIFYCODE:" ;
 
     @Autowired
@@ -108,37 +107,27 @@ public class UserServiceImpl implements UserService {
             return LdbzResult.build(401, "用户名或密码错误");
         }
         String token = UUID.randomUUID().toString().replaceAll("-","");
-        String key = REDIS_KEY_USER_SESSION + token;
+        String key = Const.REDIS_KEY_USER_SESSION + token;
         jedisClient.set(key, FastJsonConvert.convertObjectToJSON(dbUser));
         jedisClient.expire(key, EXPIRE_TIME);
         return LdbzResult.ok(token);
     }
 
-    /**
-     * 根据token值获取用户信息
-     *
-     * @param token    token值
-     * @param callback 可选参数 有参表示jsonp调用
-     * @return {
-     *          status: 200 //200 成功 400 没有此token 500 系统异常
-     *          msg: "OK" //错误 没有此token.
-     *          data: {"username":"ldbz","id":"id"} //返回用户名
-     *         }
-     */
     @Override
-    public LdbzResult token(String token, String callback) {
-        if (StringUtils.isNotBlank(callback)) {
-            return LdbzResult.ok(callback);
-        }
+    public LdbzUser token(String token) {
         try {
-            String user = jedisClient.get(REDIS_KEY_USER_SESSION + token);
+        	String key = Const.REDIS_KEY_USER_SESSION + token ;
+            String user = jedisClient.get(key);
             if (StringUtils.isNotBlank(user)) {
-                return LdbzResult.ok(user);
+            	//重新设置有效期
+                jedisClient.expire(key , EXPIRE_TIME);
+                LdbzUser entity = FastJsonConvert.convertJSONToObject(user, LdbzUser.class);
+                return entity;
             }
         } catch (Exception e) {
             logger.error("Redis服务出错");
         }
-        return LdbzResult.build(400, "没有此用户");
+        return null;
     }
 
     /**
@@ -158,7 +147,7 @@ public class UserServiceImpl implements UserService {
             return LdbzResult.ok(callback);
         }
         try {
-            jedisClient.del(REDIS_KEY_USER_SESSION + token);
+            jedisClient.del(Const.REDIS_KEY_USER_SESSION + token);
         } catch (Exception e) {
             logger.error("没有登录", e);
             return LdbzResult.build(400, "没有登录");

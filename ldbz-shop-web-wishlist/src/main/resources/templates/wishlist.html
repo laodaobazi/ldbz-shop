@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"><!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+	<title>我的收藏-ldbz-shop</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/wishlist/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/wishlist/stylesheets/style.css">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/wishlist/stylesheets/responsive.css">
+	<link rel="stylesheet" type="text/css" href="${request.contextPath}/search/pagination/pagination.css">
+	<link rel="shortcut icon" href="${request.contextPath}/wishlist/favicon.ico" />
+	<script type="text/javascript" src="${request.contextPath}/wishlist/javascript/jquery.min.js"></script>
+</head>
+<body class="header_sticky">
+	<div class="boxed">
+
+		<div class="overlay"></div>
+
+		<!-- Preloader -->
+		<div class="preloader">
+			<div class="clear-loading loading-effect-2">
+				<span></span>
+			</div>
+		</div><!-- /.preloader -->
+
+		<!-- 页头 -->
+		<%include("/inc_header.html"){}%>
+
+		<!-- 面包屑 -->
+		<%include("/inc_breadcrumb.html"){}%>
+
+		<!-- 面包屑 -->
+		<%include("/wishlist_list.html"){}%>
+
+		<!-- 网站信息 -->
+		<%include("/order_desc.html"){}%>
+		
+		<!-- 网站信息 -->
+		<%include("/inc_footer.html"){}%>
+		
+		<!-- copyright -->
+		<%include("/inc_copyright.html"){}%>
+
+	</div><!-- /.boxed -->
+
+		<!-- Javascript -->
+		<script type="text/javascript" src="${request.contextPath}/wishlist/javascript/base64.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/wishlist/javascript/template.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/wishlist/javascript/tether.min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/wishlist/javascript/bootstrap.min.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/wishlist/pagination/jquery.pagination.js"></script>
+		<script type="text/javascript" src="${request.contextPath}/wishlist/javascript/jquery.mCustomScrollbar.js"></script>
+
+		<script type="text/javascript" src="${request.contextPath}/wishlist/javascript/main.js"></script>
+		
+		<link rel="stylesheet" href="${request.contextPath}/wishlist/alert/css/alert.css">
+		<script src='${request.contextPath}/wishlist/alert/js/alert.js'></script>
+		
+		<script type="text/javascript">
+			var nginxImage = "${nginxImage}" ;
+		</script>
+</body>	
+</html>

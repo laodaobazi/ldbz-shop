@@ -38,9 +38,6 @@ public class CartController {
     @Reference(version = Const.LDBZ_SHOP_REDIS_VERSION)
     private JedisClient jedisClient;
 
-    @Value("${redisKey.prefix.user_session}")
-    private String USER_SESSION;
-
     //图片的URL路径
     @Value("${redisKey.nginxImage.url.key}")
     private String INDEX_NGINX_IMAGE_URL;
@@ -58,8 +55,6 @@ public class CartController {
 			switch(key) {
 				case "redisKey.nginxImage.url.key" : 
 					INDEX_NGINX_IMAGE_URL = change.getNewValue();
-				case "redisKey.prefix.user_session" : 
-					USER_SESSION = change.getNewValue();
 			}
 		}
 	}
@@ -72,33 +67,41 @@ public class CartController {
 
         String tokenLogin = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
 
+        //如果用户在线
         if (StringUtils.isNoneEmpty(tokenLogin)) {
-        	LdbzUser user = null;
         	String userJson = null;
             try {
-                userJson = jedisClient.get(USER_SESSION + tokenLogin);
+                userJson = jedisClient.get(Const.REDIS_KEY_USER_SESSION + tokenLogin);
             } catch (Exception e) {
                 logger.error("Redis 错误", e);
             }
             if (StringUtils.isNoneEmpty(userJson)) {
-                user = FastJsonConvert.convertJSONToObject(userJson, LdbzUser.class);
+            	//当前登录用户
+            	LdbzUser user = FastJsonConvert.convertJSONToObject(userJson, LdbzUser.class);
                 
                 String cookieCart = CookieUtils.getCookieValue(request, Const.CART_KEY);
                 if(StringUtils.isNoneEmpty(cookieCart)) {
-                	//如果cookie里面不等于空，则使用浏览器cookie里面的值
-                	String itemsJSON = new String(Base64Utils.decodeFromString(cookieCart));
-                	cartService.setCartListByUserId(user.getId() , itemsJSON);
-//                	List<LdbzCart> itemsObj = FastJsonConvert.convertJSONToArray(itemsJSON, LdbzCart.class);
+                	//如果cookie里面不等于空，则获取cookie的最后更新的时间
+                	String cookieTimestamp = CookieUtils.getCookieValue(request, Const.CART_TIMESTAMP_KEY);
+                	Long redisTimestamp = cartService.getCartOptTime(user.getId());
+                	if(StringUtils.isNoneEmpty(cookieTimestamp) && Long.valueOf(cookieTimestamp)>redisTimestamp) {
+                		//如果cookie中的商品比redis里面维护的时间比较新，则将cookie里面的写入redis
+                		String itemsJSON = new String(Base64Utils.decodeFromString(cookieCart));
+                		cartService.setCartListByUserId(user.getId() , itemsJSON);
+                	}else {
+                		//否则使用redis中的商品覆盖到cookie中额商品
+                		String itemsJSON= cartService.getCartListByUserId(user.getId());
+                		CookieUtils.setCookie(request, response, Const.CART_KEY, Base64Utils.encodeToString(itemsJSON.getBytes()), 2592000);//30天
+                		CookieUtils.setCookie(request, response, Const.CART_TIMESTAMP_KEY, String.valueOf(System.currentTimeMillis()), 2592000);//30天
+                	}
                 }else {
                 	//如果cookie里面没有商品，则到redis里面获取
                 	String itemsJSON= cartService.getCartListByUserId(user.getId());
-                	CookieUtils.setCookie(request, response, Const.CART_KEY, Base64Utils.encodeToString(itemsJSON.getBytes()), Integer.MAX_VALUE);
+                	CookieUtils.setCookie(request, response, Const.CART_KEY, Base64Utils.encodeToString(itemsJSON.getBytes()), 2592000);//30天
+                	CookieUtils.setCookie(request, response, Const.CART_TIMESTAMP_KEY, String.valueOf(System.currentTimeMillis()), 2592000);//30天
                 }
-                
             }
-            model.addAttribute("user", user);
         }
-
         return "cart";
     }
 

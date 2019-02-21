@@ -39,12 +39,31 @@
 								</tr>
 								<tr>
 									<td>总计</td>
-									<td class="price-total" id="td_cart_pricetotal"></td>
+									<td class="price-total" id="td_cart_pricetotal" total_price=0></td>
+								</tr>
+								<tr>
+									<td>地址</td>
+									<td>
+										<ldbz:current_user_tag attr="id" ;user>
+											<%if(user=="false"){%>
+												请先<a href="${request.contextPath}/sso/login?returnUrl=${request.contextPath}/cart" >【登录】</a>后维护默认地址
+											<%}else{%>
+												<ldbz:default_address_tag userId="${user}" ; address>
+													<%if(address==null){%>
+														<a id="a_select_default_addr" href="javascript:;">请先维护默认地址</a>
+													<%}else{%>
+														<p id="p_addr">${address.userAddress}</p>
+														<a id="a_select_addr" href="javascript:;">选择其他地址</a>
+													<%}%>
+												</ldbz:default_address_tag>
+											<%}%>
+										</ldbz:current_user_tag>
+									</td>
 								</tr>
 							</tbody>
 						</table>
 						<div class="btn-cart-totals">
-							<a href="#" class="checkout" title="">下单支付</a>
+							<a id="a_pay_now" href="javascript:;" class="checkout" >立即支付</a>
 						</div><!-- /.btn-cart-totals -->
 					</form><!-- /form -->
 				</div><!-- /.cart-totals -->
@@ -67,7 +86,7 @@
 		<td>
 			<div class="quanlity">
 				<span class="btn-down" name="span_btn_down" item_code="{{item.item_code}}"></span>
-				<input id="input_{{item.item_code}}" type="number" name="number" value="{{item.count}}" min="1" max="100" placeholder="数量" readonly=true >
+				<input id="input_{{item.item_code}}" type="text" name="number" value="{{item.count}}" min="1" max="100" placeholder="数量" readonly=true >
 				<span class="btn-up" name="span_btn_up" item_code="{{item.item_code}}"
 					item_title="{{item.item_title}}" item_price="{{item.item_price}}" item_image="{{item.item_image}}"></span>
 			</div>
@@ -84,6 +103,8 @@
 {{/each}}
 </script>
 <script>
+var addressWin = null ;
+
 $(function(){
 	
 	var showCartList = function(){
@@ -102,7 +123,9 @@ $(function(){
 			//小计
 			$("#td_cart_itemprice").text("￥"+item_price_total.toFixed(2));
 			//总计
-			$("#td_cart_pricetotal").text("￥"+(item_price_total+$("#span_shipping_count").attr("price")*1).toFixed(2));
+			var total_price = (item_price_total+$("#span_shipping_count").attr("price")*1).toFixed(2) ;
+			$("#td_cart_pricetotal").text("￥" + total_price);
+			$("#td_cart_pricetotal").attr("total_price" , total_price);
 			
 			//计数器加一
 			$("span[name='span_btn_up']").click(function(){
@@ -163,7 +186,6 @@ $(function(){
 					    'closeTime' : 2000,
 					}).show();
 				}
-				console.log(item_code);
 			});
 			//移除商品
 			$("a[name='a_del_item']").click(function(){
@@ -203,5 +225,198 @@ $(function(){
 	}
 	
 	showCartList();
-})
+	
+	//维护默认地址
+	$("#a_select_default_addr").click(function(){
+		editAddress();
+	});
+	
+	//改变默认地址
+	$("#a_select_addr").click(function(){
+		editAddress();
+	});
+	
+	//立即支付
+	$("#a_pay_now").click(function(){
+		var addr_info = $("#p_addr").text();
+		var total_price = $("#td_cart_pricetotal").attr("total_price");
+		
+		var items = null ;
+		var _cart = getCookie("_cart");
+		if(_cart){
+			_cart = Base64.decode(_cart);
+			items = $.parseJSON(_cart);
+		}
+		
+		console.log(addr_info , total_price , items);
+		
+	});
+	
+});
+
+
+
+var editAddress = function(){
+	var li = "";
+	$.ajax({
+		contentType: 'application/x-www-form-urlencoded',
+		url: '${request.contextPath}/cart/address/selectByEntity',
+		method: 'post',
+		async : false ,
+		success:function(ret){
+			if(ret.status==200 && ret.data && ret.data.length>0){
+				$(ret.data).each(function(i , o){
+					var isDefault = "" , setDefault="";
+					if(o.isDefault){
+						isDefault = "text-success";
+					}else{
+						setDefault='<a href="javascript:;" onclick="updateDefaultById(this)" title="设置为默认地址" addr_id='+o.id+' addr_info="'+o.userAddress+'"><p class="pull-right text-primary" style="margin-right:10px;"><i class="fa fa-map-signs" aria-hidden="true"></i></p></a>';
+					}
+					li += ('<li class="list-group-item" style="display:block;">'+
+						'<p class="'+isDefault+' pull-left">'+o.userAddress+'</p>' +
+						'<a href="javascript:delAddrByid('+o.id+');" ><p class="text-danger pull-right" style="font-size:16px;"><i class="fa fa-trash-o" aria-hidden="true"></i></p></a>'+setDefault+
+						'</li>');
+				});
+			}
+		},
+		error:function(ret){
+		}
+	});
+	var html = '<ul class="list-group">'+
+				        '<li class="list-group-item" style="display:block;">'+
+						'	<a id="a_add_addr" href="javascript:addAddressFunc();"><p class="text-warning pull-left">新建地址信息</p></a>'+
+						'</li>'+ li
+				    '</ul>';
+	addressWin = jqueryAlert({
+		'style'   : 'pc',
+		'title'   : '地址维护',
+		'content' :  html ,
+		'modal'   : true,
+		'contentTextAlign' : 'center',
+		'width'   : '90%',
+		'height'  : '90%',
+		'animateType': 'scale',
+		'bodyScroll' : 'true',
+		'buttons' : {
+			'关闭' : function(){
+				addressWin.close();
+			}
+		}
+	});
+	addressWin.show();
+}
+
+//新建邮寄地址
+var addAddressFunc = function(){
+	addressWin.close();
+	var addAddressWin = jqueryAlert({
+		'style'   : 'pc',
+		'title'   : '新建地址',
+		'content' :  "<textarea id='textarea_address' style='height:100px;margin-top:5px;'></textarea> 设置为默认：<input id='input_check_default' style='opacity:1;' type='checkbox' />" ,
+		'modal'   : true,
+		'width'   : '400',
+		'height'  : '230',
+		'contentTextAlign' : 'center',
+		'animateType': 'scale',
+		'buttons' : {
+			'关闭' : function(){
+				addAddressWin.close();
+			},
+			'确定' : function(){
+
+				var textarea_address = $("#textarea_address").val();
+				var input_check_default = $("#input_check_default").is(":checked"); 
+				
+				$.ajax({
+					contentType: 'application/x-www-form-urlencoded',
+					url: '${request.contextPath}/cart/address/insertByEntity',
+					method: 'post',
+					data:{
+						userAddress : textarea_address 
+						,isDefault : input_check_default?1:0
+					},
+					success:function(ret){
+						if(ret.status==200){
+							addAddressWin.close();
+							editAddress();
+						}
+					},
+					error:function(ret){
+					}
+				});
+			}
+		}
+	});
+}
+
+var delAddrByid = function(id){
+
+	var delWarn = jqueryAlert({
+		'title'   : '系统提示',
+		'content' : "是否删除所选的记录？" ,
+		'modal'   : true,
+		'contentTextAlign' : 'left',
+		'animateType' : 'linear',
+		'buttons' :{
+			'确定' : function(){
+				$.ajax({
+					contentType: 'application/x-www-form-urlencoded',
+					url: '${request.contextPath}/cart/address/deleteByKey/'+id,
+					method: 'post',
+					success:function(ret){
+						if(ret.status==200){
+							addressWin.close();
+							delWarn.close();
+							editAddress();
+						}
+					}
+				});
+			},
+			'取消' : function(){
+				delWarn.close();
+			}
+		}
+	});
+	delWarn.show();
+}
+
+var updateDefaultById = function(_this){
+	console.log($(_this).attr("addr_info"));
+	var updateWarn = jqueryAlert({
+		'title'   : '系统提示',
+		'content' : "是否设置为默认地址？" ,
+		'modal'   : true,
+		'contentTextAlign' : 'left',
+		'animateType' : 'linear',
+		'buttons' :{
+			'确定' : function(){
+				$.ajax({
+					contentType: 'application/x-www-form-urlencoded',
+					url: '${request.contextPath}/cart/address/updateDefaultById/',
+					method: 'post',
+					data : {
+						id : $(_this).attr("addr_id") 
+					},
+					success:function(ret){
+						if(ret.status==200){
+							$("#p_addr").text($(_this).attr("addr_info"));
+							updateWarn.close();
+							addressWin.close();
+							editAddress();
+							jqueryAlert({
+								'icon'    : '${request.contextPath}/cart/alert/img/right.png',
+								'content' : '设置成功',
+								'closeTime' : 2000,
+							}).show();
+						}
+					}
+				});
+			},
+			'取消' : function(){
+				delWarn.close();
+			}
+		}
+	});
+	updateWarn.show();
+}
 </script>

@@ -5,7 +5,13 @@
 				<div class="col-md-4">
 					<ul class="flat-support">
 						<li>
-							<a href="javascript:;" title="">老刀把子欢迎你！</a>
+							<a href="javascript:;" title=""><ldbz:current_user_tag attr="username" ;user>
+								<%if(user=="false"){%>
+									游客 欢迎你！
+								<%}else{%>
+									${user}
+								<%}%>
+							</ldbz:current_user_tag></a>
 						</li>
 						<li>
 							<a href="${request.contextPath}/sso/register" title="">免费注册</a>
@@ -28,13 +34,16 @@
 							<a href="javascript:;" title="">我的淘宝<i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class="unstyled">
 								<li>
-									<a href="${request.contextPath}/sso/login" title="">登录</a>
+									<ldbz:current_user_tag ;user>
+										<%if(user=="false"){%>
+											<a href="${request.contextPath}/sso/login" title="">登录</a>
+										<%}else{%>
+											<a href="${request.contextPath}/sso/logout" title="">退出</a>
+										<%}%>
+									</ldbz:current_user_tag>
 								</li>
 								<li>
 									<a href="${request.contextPath}/cart" title="">购物车</a>
-								</li>
-								<li>
-									<a href="my-account.html" title="">个人信息</a>
 								</li>
 								<li>
 									<a href="${request.contextPath}/order" title="">我的订单</a>
@@ -101,7 +110,7 @@
 									</a>
 								</li>
 								<li class="wishlist">
-									<a href="wishlist.html" title="">
+									<a href="${request.contextPath}/wishlist" title="">
 										<img src="${request.contextPath}/item/images/icons/wishlist.png" alt="">
 									</a>
 								</li>
@@ -121,7 +130,7 @@
 									<span class="price" id="span_cart_itemprice">￥0</span>
 								</div>
 								<div class="btn-cart">
-									<a href="shop-cart.html" class="view-cart" title="">查看</a>
+									<a href="${request.contextPath}/cart" class="view-cart" title="">查看</a>
 									<a href="shop-checkout.html" class="check-out" title="">结算</a>
 								</div>
 							</div>

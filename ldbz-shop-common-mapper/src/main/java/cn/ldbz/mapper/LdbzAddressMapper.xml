@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzAddressMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzAddress" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_address" property="userAddress" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id , created , updated , user_id , user_address , is_default
+  </sql>
+  
+  <select id="selectByEntity" resultMap="BaseResultMap"  parameterType="cn.ldbz.pojo.LdbzAddress">
+    select
+    <include refid="Base_Column_List" />
+    from ldbz_address
+    <where>
+      <if test="entity.userId != null and entity.userId != '' " >
+        and user_id = #{entity.userId ,jdbcType=BIGINT}
+      </if>
+      <if test="entity.isDefault != null and entity.isDefault != '' " >
+        and is_default = #{entity.isDefault ,jdbcType=INTEGER}
+      </if>
+    </where>
+    order by is_default desc , created desc 
+  </select>
+  
+  <select id="getDefaultAddressByUser" resultMap="BaseResultMap"  parameterType="cn.ldbz.pojo.LdbzAddress">
+    select
+    <include refid="Base_Column_List" />
+    from ldbz_address
+    where user_id = #{entity.userId ,jdbcType=BIGINT}
+    and is_default = 1
+  </select>
+  
+  <select id="selectByKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ldbz_address
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByKey" parameterType="java.lang.Long" >
+    delete from ldbz_address
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByKeys" parameterType="java.util.List" >
+    delete from ldbz_address
+    where id in
+    <foreach collection="list" item="id" open="(" close=")" separator="," >
+      #{id}
+    </foreach>
+  </delete>
+  
+  <insert id="insertByEntity" parameterType="cn.ldbz.pojo.LdbzAddress" >
+    insert into ldbz_address (
+	    id , created , user_id , user_address , is_default
+    )
+    values (#{id,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP} ,
+    	#{userId,jdbcType=VARCHAR} , #{userAddress,jdbcType=VARCHAR},#{isDefault,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <update id="updateByKey" parameterType="cn.ldbz.pojo.LdbzAddress" >
+    update ldbz_address
+    set 
+      updated = #{updated,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=VARCHAR} ,
+      user_address = #{userAddress,jdbcType=VARCHAR} ,
+      is_default = #{isDefault,jdbcType=INTEGER}
+    where 
+      id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateDefaultByUser" parameterType="cn.ldbz.pojo.LdbzAddress" >
+    update ldbz_address set is_default = 0
+    where  user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateDefaultById" parameterType="cn.ldbz.pojo.LdbzAddress" >
+    update ldbz_address set is_default = #{isDefault , jdbcType=INTEGER}
+    where  id = #{id,jdbcType=BIGINT}
+  </update>
+  
+</mapper>

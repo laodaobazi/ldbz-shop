@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50723
 File Encoding         : 65001
 
-Date: 2019-02-13 15:07:24
+Date: 2019-02-16 18:51:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -375,6 +375,29 @@ INSERT INTO `ldbz_item_sheet_assign` VALUES ('51', '7', '特色', '1486308319729
 INSERT INTO `ldbz_item_sheet_assign` VALUES ('52', '8', '热卖', '148630831972911', '1547954716229', '迷你苹果平板电脑 Apple iPad Mini2系列', null, null, '2019-01-20 11:25:36', null, null, null, '1');
 INSERT INTO `ldbz_item_sheet_assign` VALUES ('53', '8', '热卖', '148630831972912', '1547954837980', '南极人NanJiren 被子 水洗棉夏被空调被', null, null, '2019-01-20 11:27:26', null, null, null, '2');
 INSERT INTO `ldbz_item_sheet_assign` VALUES ('54', '8', '热卖', '148630831972913', '1547955203765', '爱普生（EPSON）LQ-680KII 针式打印机', null, null, '2019-01-20 11:33:33', null, null, null, '3');
+
+-- ----------------------------
+-- Table structure for ldbz_wishlist
+-- ----------------------------
+DROP TABLE IF EXISTS `ldbz_wishlist`;
+CREATE TABLE `ldbz_wishlist` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `item_code` bigint(11) NOT NULL COMMENT '商品ID',
+  `user_id` bigint(11) NOT NULL COMMENT '用户ID',
+  `creator` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '创建人',
+  `creator_name` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '创建人姓名',
+  `created` datetime DEFAULT NULL COMMENT '创建时间',
+  `updator_name` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '修改人姓名',
+  `updator` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '修改人',
+  `updated` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='商品收藏';
+
+-- ----------------------------
+-- Records of ldbz_wishlist
+-- ----------------------------
+INSERT INTO `ldbz_wishlist` VALUES ('1', '1546694754124', '58', '58', 'libiao', '2019-02-15 22:01:31', null, null, null);
+INSERT INTO `ldbz_wishlist` VALUES ('4', '1546693967755', '58', '58', 'libiao', '2019-02-15 22:09:17', null, null, null);
 
 -- ----------------------------
 -- Function structure for getCategoryTree

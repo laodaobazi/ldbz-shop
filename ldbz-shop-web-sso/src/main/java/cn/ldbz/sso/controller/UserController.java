@@ -49,12 +49,6 @@ public class UserController {
     //图片的URL路径
     @Value("${redisKey.nginxImage.url.key}")
     private String INDEX_NGINX_IMAGE_URL;
-    //商品的URL路径
-    @Value("${redisKey.item.url.key}")
-    private String NGINX_ITEM_URL;
-    //检索访问的URL路径
-    @Value("${search.web.url}")
-    private String SEARCH_WEB_URL;
     
     /**
      * 监听配置项是否有修改
@@ -70,10 +64,6 @@ public class UserController {
 					PORTAL_PATH = change.getNewValue();
 				case "redisKey.nginxImage.url.key" : 
 					INDEX_NGINX_IMAGE_URL = change.getNewValue();
-				case "redisKey.item.url.key" : 
-					NGINX_ITEM_URL = change.getNewValue();
-				case "search.web.url" : 
-					SEARCH_WEB_URL = change.getNewValue();
 			}
 		}
 	}
@@ -85,10 +75,17 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/register",method = RequestMethod.GET)
-    public String showRegister(Model model, String returnUrl) {
+    public String showRegister(HttpServletRequest request, Model model, String returnUrl) {
+
+        String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
+        if(StringUtils.isNoneEmpty(token)) {
+        	if(userService.token(token)!=null) {
+        		//已经在线
+        		return "redirect:" + PORTAL_PATH;
+        	}
+        }
+        //尚未登录
         model.addAttribute("uid", UUID.randomUUID().toString());
-    	model.addAttribute("itemUrl", NGINX_ITEM_URL);
-    	model.addAttribute("searchUrl", SEARCH_WEB_URL);
     	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
         return "register";
     }
@@ -100,10 +97,17 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String showLogin(Model model, String returnUrl) {
+    public String showLogin(HttpServletRequest request, Model model, String returnUrl) {
+
+        String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
+        if(StringUtils.isNoneEmpty(token)) {
+        	if(userService.token(token)!=null) {
+        		//已经在线
+        		return "redirect:" + PORTAL_PATH;
+        	}
+        }
+        //尚未登录
         model.addAttribute("returnUrl", returnUrl);
-    	model.addAttribute("itemUrl", NGINX_ITEM_URL);
-    	model.addAttribute("searchUrl", SEARCH_WEB_URL);
     	model.addAttribute("nginxImage", INDEX_NGINX_IMAGE_URL);
         return "login";
     }
@@ -185,6 +189,20 @@ public class UserController {
     @RequestMapping("/registerByEmail")
     public String sendRegEmail(String regName, String pwdRepeat, String pwd, String emailCode, String uuid, String authCode, String email) {
         return userService.register(regName, pwd, pwdRepeat, emailCode, uuid, authCode, email);
+    }
+    
+    /**
+     * 用户注销
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    	String token = CookieUtils.getCookieValue(request, Const.TOKEN_LOGIN);
+    	userService.logout(token, null);
+    	CookieUtils.setCookie(request, response, Const.TOKEN_LOGIN, "", -1);
+        return "redirect:" + PORTAL_PATH;
     }
 
 }

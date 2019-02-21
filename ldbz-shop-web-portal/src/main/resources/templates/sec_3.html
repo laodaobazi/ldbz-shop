@@ -1,69 +1,70 @@
-	<section class="flat-imagebox style1">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="flat-row-title">
-							<h3>商品推荐</h3>
-						</div>
-					</div><!-- /.col-md-12 -->
-				</div><!-- /.row -->
-				<div class="row ">
-					<div class="col-md-12 owl-carousel-10">
-						<%
-							var ad_index = 0 ;
-						%>
-						<ldbz:sheet_item_tag key="Recommend" ;item>
-						<%
-						++ad_index ;
-						if(ad_index%2==1){
-						%>
-						<div class="owl-carousel-item">
-						<%}%>
-						
-							<div class="product-box style1">
-								<div class="imagebox style1">
-									<div class="box-image">
-										<a href="${request.contextPath}/item/${item.CODE}" target="_blank">
-											<img src="${nginxImage}${item.IMAGE}" alt="">
-										</a>
-									</div><!-- /.box-image -->
-									<div class="box-content">
-										<div class="cat-name">
-											<a href="javascript:;" title="">${item.CATEGORY_NAME}</a>
-										</div>
-										<div class="product-name">
-											<a href="${request.contextPath}/item/${item.CODE}" target="_blank" title="${item.TITLE}">${item.TITLE}</a>
-										</div>
-										<div class="price">
-											<span class="regular">￥${item.PRICE,numberFormat}</span>
-											<span class="sale">￥${item.OLD_PRICE,numberFormat}</span>
-										</div>
-									</div><!-- /.box-content -->
-									<div class="box-bottom">
-										<div class="compare-wishlist">
-											<a href="javascript:;" class="compare" title="">
-												<img src="${request.contextPath}/portal/images/icons/compare.png" alt="">比较
-											</a>
-											<a href="javascript:;" class="wishlist" title="">
-												<img src="${request.contextPath}/portal/images/icons/wishlist.png" alt="">收藏
-											</a>
-										</div>
-										<div class="btn-add-cart">
-											<a name="a_add_cart" href="javascript:;" title="加入购物车"
-												item_code="${item.CODE}" item_image="${item.IMAGE}"
-												item_price="${item.PRICE}" item_title="${item.TITLE}">加入购物车</a>
-										</div>
-									</div><!-- /.box-bottom -->
-								</div><!-- /.imagebox style1 -->
-							</div>
-							
-						<%if(ad_index%2==0){%>
-						</div>
-						<%}%>
-						
-						</ldbz:sheet_item_tag>
-						
+<section class="flat-imagebox style1">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="flat-row-title">
+					<h3>商品推荐</h3>
+				</div>
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+		<div class="row ">
+			<div class="col-md-12 owl-carousel-10">
+				<%
+					var ad_index = 0 ;
+				%>
+				<ldbz:sheet_item_tag key="Recommend" ;item>
+				<%
+				++ad_index ;
+				if(ad_index%2==1){
+				%>
+				<div class="owl-carousel-item">
+				<%}%>
+				
+					<div class="product-box style1">
+						<div class="imagebox style1">
+							<div class="box-image">
+								<a href="${request.contextPath}/item/${item.CODE}" target="_blank">
+									<img src="${request.contextPath}/portal/images/squares.svg" 
+										style="max-width:170px;max-height:120px;" data-src="${nginxImage}${item.IMAGE}" alt="">
+								</a>
+							</div><!-- /.box-image -->
+							<div class="box-content">
+								<div class="cat-name">
+									<a href="javascript:;" title="">${item.CATEGORY_NAME}</a>
+								</div>
+								<div class="product-name">
+									<a href="${request.contextPath}/item/${item.CODE}" target="_blank" title="${item.TITLE}">${item.TITLE}</a>
+								</div>
+								<div class="price">
+									<span class="regular">￥${item.PRICE,numberFormat}</span>
+									<span class="sale">￥${item.OLD_PRICE,numberFormat}</span>
+								</div>
+							</div><!-- /.box-content -->
+							<div class="box-bottom">
+								<div class="compare-wishlist">
+									<a href="javascript:;" class="compare" title="">
+										<img src="${request.contextPath}/portal/images/icons/compare.png" alt="">比较
+									</a>
+									<a name="a_wishlist" href="javascript:;" class="wishlist" title="" item_code="${item.CODE}">
+										<img src="${request.contextPath}/portal/images/icons/wishlist.png" alt="">收藏
+									</a>
+								</div>
+								<div class="btn-add-cart">
+									<a name="a_add_cart" href="javascript:;" title="加入购物车"
+										item_code="${item.CODE}" item_image="${item.IMAGE}"
+										item_price="${item.PRICE}" item_title="${item.TITLE}">加入购物车</a>
+								</div>
+							</div><!-- /.box-bottom -->
+						</div><!-- /.imagebox style1 -->
 					</div>
-				</div><!-- /.row -->
-			</div><!-- /.container -->
-		</section><!-- /.flat-imagebox style1 -->
+					
+				<%if(ad_index%2==0){%>
+				</div>
+				<%}%>
+				
+				</ldbz:sheet_item_tag>
+				
+			</div>
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</section>

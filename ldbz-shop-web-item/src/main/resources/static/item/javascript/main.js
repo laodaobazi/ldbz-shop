@@ -376,7 +376,7 @@
         	//减去商品购物车数量
         	$("#span_down_count").click(function(){
         		var count = $("#input_item_count").val();
-        		if(count>0){
+        		if(count>1){
         			var _cart = getCookie("_cart");
         			_cart = Base64.decode(_cart);
         			var arr = $.parseJSON(_cart);
@@ -407,8 +407,13 @@
         			}else{
         				$("#span_cart_itemcount").text('').hide();
         			}
+        		}else{
+        			jqueryAlert({
+    					'icon'    : contextPath + '/item/alert/img/warning.png',
+    					'content' : '商品数量不能小于1',
+    					'closeTime' : 2000,
+    				}).show();
         		}
-        		
         	});
         	
         	//添加商品购物车数量
@@ -559,9 +564,7 @@
         //隐藏加载状态
         var removePreloader = function() { 
             $(window).on('load', function() {
-                setTimeout(function() {
-                    $('.preloader').hide(); }, 300           
-                ); 
+            	$('.preloader').hide();
             });  
         };
 
@@ -588,7 +591,8 @@ function setCookie(name,value)
 	var Days = 30;
 	var exp = new Date();
 	exp.setTime(exp.getTime() + Days*24*60*60*1000);
-	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString() + ";domain=" + document.domain + ";path=/";
+	document.cookie = name + "_timestamp="+ new Date().getTime() + ";expires=" + exp.toGMTString() + ";domain=" + document.domain + ";path=/";;
 }
 
 
@@ -607,5 +611,5 @@ function delCookie(name)
 	exp.setTime(exp.getTime() - 1);
 	var cval=getCookie(name);
 	if(cval!=null)
-		document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+		document.cookie= name + "="+cval+";expires="+exp.toGMTString() + ";domain=" + document.domain + ";path=/";
 }

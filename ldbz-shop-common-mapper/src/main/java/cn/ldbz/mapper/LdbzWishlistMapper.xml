@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ldbz.mapper.LdbzWishlistMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.ldbz.pojo.LdbzWishlist" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    
+    <result column="item_code" property="itemCode" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="FLOAT" />
+  </resultMap>
+
+  <select id="selectByEntity" resultMap="BaseResultMap"  parameterType="cn.ldbz.pojo.LdbzWishlist">
+    select w.id , w.created , w.creator , w.creator_name, w.user_id , w.item_code , i.num , i.status , i.image , i.price , i.title
+    from ldbz_wishlist w join ldbz_item i on w.item_code = i.code
+    where user_id = #{entity.userId}
+    order by created desc
+    limit #{start} , #{limit}
+  </select>
+  
+  <select id="selectByCode" resultMap="BaseResultMap"  parameterType="java.lang.Long" >
+    select w.id , w.created , w.creator , w.creator_name , w.user_id , w.item_code
+    from ldbz_wishlist w
+    where item_code = #{itemCode , jdbcType=BIGINT}
+    and user_id = #{userId  , jdbcType=BIGINT}
+  </select>
+  
+  <select id="countByEntity" parameterType="cn.ldbz.pojo.LdbzWishlist" resultType="java.lang.Long" >
+    select count(*) from ldbz_wishlist w join ldbz_item i on w.item_code = i.code
+    where user_id = #{userId}
+  </select>
+  
+  <delete id="deleteByKey" parameterType="java.lang.Long" >
+    delete from ldbz_wishlist
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByKeys" parameterType="java.util.List" >
+    delete from ldbz_wishlist
+    where id in
+    <foreach collection="list" item="id" open="(" close=")" separator="," >
+      #{id}
+    </foreach>
+  </delete>
+  
+  <insert id="insertByEntity" parameterType="cn.ldbz.pojo.LdbzWishlist" >
+    insert into ldbz_wishlist ( id , created , creator , creator_name, item_code , user_id )
+    values (#{id,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{creator,jdbcType=BIGINT} , 
+    	#{creatorName,jdbcType=VARCHAR}, #{itemCode,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT} )
+  </insert>
+  
+</mapper>
