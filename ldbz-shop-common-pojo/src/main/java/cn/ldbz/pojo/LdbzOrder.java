@@ -25,4 +25,6 @@ public class LdbzOrder implements Serializable {
 	
 	private Float totalPrice ;
 	
+	private Float shippingPrice ;
+	
 }

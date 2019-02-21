@@ -12,35 +12,37 @@
         <module>ldbz-shop-common</module>
         <module>ldbz-shop-common-mapper</module>
         <module>ldbz-shop-common-pojo</module>
-        <module>ldbz-shop-service-redis</module>
-        <module>ldbz-shop-service-portal-api</module>
-        <module>ldbz-shop-service-portal</module>
-        <module>ldbz-shop-web-portal</module>
-        <module>ldbz-shop-service-search-api</module>
-        <module>ldbz-shop-service-search</module>
-        <module>ldbz-shop-web-search</module>
-        <module>ldbz-shop-service-item</module>
-        <module>ldbz-shop-service-item-api</module>
-        <module>ldbz-shop-web-item</module>
         <module>ldbz-shop-service-sso-api</module>
-        <module>ldbz-shop-service-sso</module>
-        <module>ldbz-shop-web-sso</module>
-        <module>ldbz-shop-service-notify-api</module>
-        <module>ldbz-shop-service-notify</module>
+        <module>ldbz-shop-service-item-api</module>
         <module>ldbz-shop-service-cart-api</module>
-        <module>ldbz-shop-service-cart</module>
-        <module>ldbz-shop-web-cart</module>
-        <module>ldbz-shop-service-admin-api</module>
-        <module>ldbz-shop-service-admin</module>
-        <module>ldbz-shop-web-admin</module>
+        <module>ldbz-shop-service-redis-api</module>
         <module>ldbz-shop-service-order-api</module>
-        <module>ldbz-shop-service-order</module>
-        <module>ldbz-shop-web-order</module>
+        <module>ldbz-shop-service-admin-api</module>
+        <module>ldbz-shop-service-portal-api</module>
+        <module>ldbz-shop-service-notify-api</module>
+        <module>ldbz-shop-service-search-api</module>
         <module>ldbz-shop-service-wishlist-api</module>
-        <module>ldbz-shop-service-wishlist</module>
-        <module>ldbz-shop-web-wishlist</module>
         <module>ldbz-shop-service-advertisement-api</module>
+        <module>ldbz-shop-common-tag</module>
+        <module>ldbz-shop-service-sso</module>
+        <module>ldbz-shop-service-cart</module>
+        <module>ldbz-shop-service-item</module>
+        <module>ldbz-shop-service-order</module>
+        <module>ldbz-shop-service-redis</module>
+        <module>ldbz-shop-service-portal</module>
+        <module>ldbz-shop-service-search</module>
+        <module>ldbz-shop-service-notify</module>
+        <module>ldbz-shop-service-admin</module>
+        <module>ldbz-shop-service-wishlist</module>
         <module>ldbz-shop-service-advertisement</module>
+        <module>ldbz-shop-web-item</module>
+        <module>ldbz-shop-web-portal</module>
+        <module>ldbz-shop-web-search</module>
+        <module>ldbz-shop-web-sso</module>
+        <module>ldbz-shop-web-cart</module>
+        <module>ldbz-shop-web-order</module>
+        <module>ldbz-shop-web-wishlist</module>
+        <module>ldbz-shop-web-admin</module>
     </modules>
     <name>ldbz-shop</name>
     <url>https://github.com/laodaobazi/ldbz-shop</url>

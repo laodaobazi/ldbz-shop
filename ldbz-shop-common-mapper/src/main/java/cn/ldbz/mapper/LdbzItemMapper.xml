@@ -249,7 +249,14 @@
 	    	a.detail_image
 	    </if>
     from ldbz_item a
-    where a.code = #{code,jdbcType=VARCHAR}
+    where a.code = #{code,jdbcType=BIGINT}
+    and a.status = 1
+  </select>
+  
+  <select id="getItemPriceByCode" parameterType="string"  resultType="float" >
+    select a.price
+    from ldbz_item a
+    where a.code = #{code,jdbcType=BIGINT}
     and a.status = 1
   </select>
   

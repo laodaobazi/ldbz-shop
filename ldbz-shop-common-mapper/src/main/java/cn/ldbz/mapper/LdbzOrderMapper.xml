@@ -9,11 +9,12 @@
     <result column="creator" property="creator" jdbcType="BIGINT" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="total_rice" property="totalPrice" jdbcType="FLOAT" />
+    <result column="total_price" property="totalPrice" jdbcType="FLOAT" />
+    <result column="shipping_price" property="shippingPrice" jdbcType="FLOAT" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    id, order_code, created, creator, status, address, total_rice
+    id, order_code, created, creator, status, address, total_price, shipping_price
   </sql>
   
   

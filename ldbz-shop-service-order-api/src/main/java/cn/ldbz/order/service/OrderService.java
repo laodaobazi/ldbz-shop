@@ -2,8 +2,8 @@ package cn.ldbz.order.service;
 
 import java.util.List;
 
+import cn.ldbz.pojo.LdbzCart;
 import cn.ldbz.pojo.LdbzOrder;
-import cn.ldbz.pojo.LdbzOrderItem;
 import cn.ldbz.pojo.LdbzResult;
 
 public interface OrderService {
@@ -16,8 +16,9 @@ public interface OrderService {
 	
 	LdbzResult deleteByKey(String id);
 	
-	LdbzResult insertByEntity(LdbzOrder order , List<LdbzOrderItem> orderItems);
-
 	LdbzResult updateStatusByKey(LdbzOrder entity);
+
+	boolean generateOrder(String userCookieValue, List<LdbzCart> cookieItems, String orderItemCodes, String orderNums,
+			String address, float shippingPrice);
 	
 }

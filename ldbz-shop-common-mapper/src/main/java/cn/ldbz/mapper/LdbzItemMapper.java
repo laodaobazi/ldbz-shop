@@ -19,4 +19,6 @@ public interface LdbzItemMapper extends LdbzBaseMapper<LdbzItem>{
 	 * @return
 	 */
 	String getItemImageByType(@Param("code")Object code , @Param("type")Object type);
+
+	float getItemPriceByCode(long itemCode);
 }

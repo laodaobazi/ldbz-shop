@@ -5,19 +5,20 @@
 使用技术(个人时间和精力有限，项目不定期更新中....):
 
 * 后台
-	* 使用`Spring Boot` 构建整个项目 去除 XML 配置
-	* `Maven`构建项目
+	* ![使用`Spring Boot` 构建整个项目 去除 XML 配置](https://github.com/spring-projects/spring-boot)
+	* ![`Maven`构建项目](http://maven.apache.org/)
 	* `Jenkins`作为持续集成
-	* 采用`Dubbo`作为RPC框架
-	* 使用 `Apollo` 分布式配置中心
+	* ![采用`Dubbo`作为RPC框架](http://dubbo.apache.org/zh-cn/)
+	* ![使用 `Apollo` 分布式配置中心](https://github.com/ApolloAuto/apollo/blob/master/README_cn.md)
 	* 使用`Spring`+`Spring MVC`+`MyBatis`SSM框架
-	* 数据库连接池使用`druid`
+	* ![数据库连接池使用`druid`](https://github.com/alibaba/druid/)
 	* 数据存储使用`MySQL`和`Redis`
-	* 页面引擎采用 `Beetl`
+	* ![页面引擎采用 `Beetl`](http://ibeetl.com/guide/)
 	* 网页采用`freemarker`生成静态化页面
-	* 采用`SolrCloud`实现搜索服务
-	* `Swagger2` 生成 RESTful Apis文档
+	* ![采用`SolrCloud`实现搜索服务](https://lucene.apache.org/solr/)
+	* ![`Swagger2` 生成 RESTful Apis文档](https://swagger.io/)
 	* 负载均衡使用`Nginx`、`keepalived`实现高可用
+	* ![tcc-transaction分布式事务](https://github.com/changmingxie/tcc-transaction/blob/master-1.2.x/README.md)
 
 
 ## Web应用的端口
@@ -84,7 +85,7 @@
 ## 微信交流群
 ![wechat.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/wechat.png)
 
-##个人联系方式##个人联系方式
+##个人联系方式
 ### 📮：biao.li@neusoft.com
 - 个人QQ [![](http://pub.idqqimg.com/wpa/images/group.png)](http://sighttp.qq.com/msgrd?v=1&uin=444823046)
 

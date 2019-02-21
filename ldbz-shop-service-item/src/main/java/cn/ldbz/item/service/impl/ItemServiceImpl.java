@@ -222,5 +222,10 @@ public class ItemServiceImpl implements ItemService {
 	public String getItemImage(Object itemCode , Object type) {
 		return mapper.getItemImageByType(itemCode , type);
 	}
+
+	@Override
+	public float getItemPriceByCode(long itemCode) {
+		return mapper.getItemPriceByCode(itemCode);
+	}
 	
 }
