@@ -57,8 +57,8 @@ public class ItemServiceImpl implements ItemService {
 	public void onChange(ConfigChangeEvent changeEvent) {
 		for (String key : changeEvent.changedKeys()) {
 			ConfigChange change = changeEvent.getChange(key);
-			logger.debug(String.format("Found change - key: %s, oldValue: %s, newValue: %s, changeType: %s",
-					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType()));
+			logger.debug("Found change - key: {}, oldValue: {}, newValue: {}, changeType: {}",
+					change.getPropertyName(), change.getOldValue(), change.getNewValue(), change.getChangeType());
 			switch(key) {
 			case "redisKey.prefix.item_info_profix" : 
 				ITEM_INFO_PROFIX = change.getNewValue();
