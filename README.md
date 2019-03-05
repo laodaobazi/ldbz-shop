@@ -58,7 +58,7 @@
 ## SolrCloud 检索
 ![solrcloud.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/solrcloud.png)
 
-## mavne 构建
+## maven 构建
 ![build.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/build.png)
 
 ## project 骨架
