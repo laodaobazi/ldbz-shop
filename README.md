@@ -35,19 +35,19 @@
 
 
 ## Dubbo服务端口
-| 服务名称|Dubbo服务端口|服务说明|Web端口|
-|:---------------:|:---------------:|:---------------:|:---------------:|
-| Admin-Service      | 20880 |管理端服务| 8510 |
-| Advertisement-Service |20881 |广告服务| 8511 |
-| Cart-Service     | 20882 |购物车服务| 8512 |
-| Item-Service     | 20883 |商品详细服务| 8513 |
-| Notify-Service   | 20884 |消息服务| 8514 |
-| Order-Service    | 20885 |订单服务| 8515 |
-| Portal-Service   | 20886 |首页服务| 8516|
-| Redis-Service    | 20887 |缓存服务| 8517|
-| Search-Service   | 20888 |检索服务| 8518 |
-| SSO-Service      | 20889 |单点服务| 8519 |
-| Wishlist-Service      | 20890 |收藏服务| 8520 |
+| 服务名称|Dubbo服务端口|服务说明|
+|:---------------:|:---------------:|:---------------:|
+| Admin-Service      | 20880 |管理端服务|
+| Advertisement-Service |20881 |广告服务| 
+| Cart-Service     | 20882 |购物车服务| 
+| Item-Service     | 20883 |商品详细服务|
+| Notify-Service   | 20884 |消息服务| 
+| Order-Service    | 20885 |订单服务| 
+| Portal-Service   | 20886 |首页服务| 
+| Redis-Service    | 20887 |缓存服务| 
+| Search-Service   | 20888 |检索服务|
+| SSO-Service      | 20889 |单点服务|
+| Wishlist-Service      | 20890 |收藏服务|
 
 ## Dubbo Admin 管控台
 ![dubbo.png](https://github.com/laodaobazi/ldbz-shop/blob/master/ldbz-images/dubbo.png)
