@@ -106,7 +106,7 @@
         <zkclient.version>0.7</zkclient.version>
         <activemq.version>5.11.2</activemq.version>
         <freemarker.version>2.3.23</freemarker.version>
-        <quartz.version>2.2.2</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
         <fastjson.version>1.2.28</fastjson.version>
         <tomcat.embed.version>8.5.13</tomcat.embed.version>
         <tomcat.embed.logging.version>8.5.2</tomcat.embed.logging.version>
