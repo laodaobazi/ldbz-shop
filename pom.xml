@@ -119,7 +119,7 @@
         <sorcerer.version>0.8</sorcerer.version>
         <curator.version>2.4.2</curator.version>
         <xmemcached.version>1.3.6</xmemcached.version>
-        <cxf.version>2.6.1</cxf.version>
+        <cxf.version>2.6.7</cxf.version>
         <thrift.version>0.8.0</thrift.version>
         <jfreechart.version>1.0.13</jfreechart.version>
         <hessian.version>4.0.7</hessian.version>
